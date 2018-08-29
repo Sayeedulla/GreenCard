@@ -6,7 +6,7 @@
 
 	<groupId>com.mindtree</groupId>
 	<artifactId>GreenCard</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>GreenCard</name>
