@@ -24,7 +24,7 @@ public class BeanConfig {
 		
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/greencard");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/ayushi");
 		dataSource.setUsername("root");
 		dataSource.setPassword("Welcome123");
 		return dataSource;
