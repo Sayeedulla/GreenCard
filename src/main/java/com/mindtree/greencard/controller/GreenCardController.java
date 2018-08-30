@@ -26,7 +26,7 @@ public class GreenCardController {
 
 	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestBody DTOClass dtoClass) {
-		// System.out.println(newGreenCard.getLandmark()+"Hi");
+
 		return this.saveNewGreenCardService.saveNewGreenCard(dtoClass);
 	}
 
