@@ -1,11 +1,10 @@
 package com.mindtree.greencard.dto;
 
-
 import java.time.LocalDate;
 
 public class DTOClass {
 	int greenCardId;
-	int mid;
+	String mid;
 	String password;
 	String name;
 	String type;
@@ -20,7 +19,7 @@ public class DTOClass {
 	LocalDate submittedTime;
 	String status;
 	String timePeriod;
-	
+
 	public String getWhatHappened() {
 		return whatHappened;
 	}
@@ -93,11 +92,11 @@ public class DTOClass {
 		this.greenCardId = greenCardId;
 	}
 
-	public int getMid() {
+	public String getMid() {
 		return mid;
 	}
 
-	public void setMid(int mid) {
+	public void setMid(String mid) {
 		this.mid = mid;
 	}
 

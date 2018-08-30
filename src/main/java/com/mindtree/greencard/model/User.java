@@ -1,38 +1,42 @@
 package com.mindtree.greencard.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int greenCardId;
-	int mid;
+	int userId;
+	@Column(unique=true)
+	String mid;
 	String password;
 	String name;
 	String type;
+	@Column(unique=true)
 	String emailId;
+	@Column(unique=true)
 	String phoneNo;
 
-	public int getMid() {
+	public String getMid() {
 		return mid;
 	}
 
-	public int getGreenCardId() {
-		return greenCardId;
-	}
-
-	public void setGreenCardId(int greenCardId) {
-		this.greenCardId = greenCardId;
-	}
-
-	public void setMid(int mid) {
+	public void setMid(String mid) {
 		this.mid = mid;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {
