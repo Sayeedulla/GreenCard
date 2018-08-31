@@ -16,18 +16,18 @@ import com.mindtree.greencard.service.SaveNewGreenCardService;
 @RequestMapping(value = "/GreenCard")
 public class GreenCardController {
 
-	@Autowired
+	/*@Autowired
 	SaveNewGreenCardService saveNewGreenCardService;
-
+*/
 	@GetMapping("/")
 	public String get() {
 		return "hello world";
 	}
 
-	@PostMapping(value = "/add/greenCard")
+/*	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestBody DTOClass dtoClass) {
 
 		return this.saveNewGreenCardService.saveNewGreenCard(dtoClass);
 	}
-
+*/
 }
