@@ -16,20 +16,19 @@ import org.hibernate.annotations.Parameter;
 @Entity
 @Table(name = "greencardlifecycle")
 public class GreenCardLifeCycle {
-	@Id
-	@GeneratedValue(generator="newGenerator")
-	@GenericGenerator(name="newGenerator",strategy="foreign",parameters= {@Parameter (value="user",name="property")})
+	@Id@GeneratedValue(generator="newGenerator")
+	@GenericGenerator(name="newGenerator",strategy="foreign",parameters= {@Parameter(value="newgreencard",name="property")})
 	int greenCardId;
 	LocalDateTime submittedTime;
 	String status;
 	String timePeriod;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="greenCardId")
-	private User user;
-	public int getGreenCardId() {
+	NewGreenCard newgreencard;
+	public int getgreenCardId() {
 		return greenCardId;
 	}
-	public void setGreenCardId(int greenCardId) {
+	public void setgreenCardId(int greenCardId) {
 		this.greenCardId = greenCardId;
 	}
 	public LocalDateTime getSubmittedTime() {
@@ -51,10 +50,11 @@ public class GreenCardLifeCycle {
 	public void setTimePeriod(String timePeriod) {
 		this.timePeriod = timePeriod;
 	}
-	public User getUser() {
-		return user;
+	public NewGreenCard getNewGreenCard() {
+		return newgreencard;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setNewGreenCard(NewGreenCard newGreenCard) {
+		this.newgreencard = newGreenCard;
 	}
+	
 }
