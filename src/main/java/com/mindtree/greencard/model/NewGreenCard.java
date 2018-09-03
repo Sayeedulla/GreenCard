@@ -1,7 +1,6 @@
 package com.mindtree.greencard.model;
 
 import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,12 +11,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "newgreencard")
 public class NewGreenCard {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Integer greenCardId;
 	String whatHappened;
 	String landmark;
 	LocalDateTime submittedDate;
+	
 	@Lob
 	byte[] image;
 	
