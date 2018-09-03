@@ -22,15 +22,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private CategoryRepository categoryRepo;
 	@Autowired
 	private SubAdminCategoryRepository subAdminCategoryRepo;
-
+    
 	public void updateUser(User user) {
 		this.userRepo.save(user);
-
 	}
 
 	public List<User> getUsers() {
 		return this.userRepo.findAll();
-
 	}
 
 	public Optional<User> getUser(String mid) {
@@ -38,19 +36,27 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return this.userRepo.findById(user.getUserId());
 	}
 
-	public void deleteUser(String mid) {
+	public String deleteUser(String mid) {
 		User user = this.userRepo.findUser(mid);
 		this.userRepo.deleteById(user.getUserId());
+		if(user.getType().equals("SubAdmin"))
+			this.subAdminCategoryRepo.deleteById(user.getMid());
+		return user.getMid();
 
 	}
 
-	public void addCategory(Category category) {
+	public String addCategory(Category category) {
 		this.categoryRepo.save(category);
+		return category.getCategory_Name();
 	}
 
-	public void deleteCategory(String Category_name) {
+	public String deleteCategory(String Category_name) {
 		Category category = this.categoryRepo.getCategory(Category_name);
 		this.categoryRepo.deleteById(category.getCategory_Id());
+		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(Category_name);
+		for(SubAdminCategory subAdminCategory:list)
+			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
+		return Category_name;
 	}
 
 	public List<Category> getCategories() {
@@ -59,6 +65,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	public void mapSubAdminToCategory(SubAdminCategory subAdminCategory) {
 		this.subAdminCategoryRepo.save(subAdminCategory);
+	}
+
+	@Override
+	public void deleteMappedSubAdmin(String mid) {
+		this.subAdminCategoryRepo.deleteById(mid);
+	}
+
+	@Override
+	public String getMappedCategory(String mid) {
+		Optional<SubAdminCategory> subAdminCategory= this.subAdminCategoryRepo.findById(mid);
+		SubAdminCategory sub=subAdminCategory.get();
+		return sub.getCategory_Name();
 	}
 
 }

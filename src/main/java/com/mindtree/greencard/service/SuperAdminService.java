@@ -2,30 +2,31 @@ package com.mindtree.greencard.service;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
 
-@Service
-public interface SuperAdminService {
 
-	public void updateUser(User user);
+public interface SuperAdminService {
 
 	public List<User> getUsers();
 
 	public Optional<User> getUser(String mid);
 
-	public void deleteUser(String mid);
+	public String deleteUser(String mid);
 
-	public void addCategory(Category category);
+	public void updateUser(User user);
 
-	public void deleteCategory(String Category_name);
+	public String addCategory(Category category);
+
+	public String deleteCategory(String Category_name);
 
 	public List<Category> getCategories();
 
 	public void mapSubAdminToCategory(SubAdminCategory subAdminCategory);
+
+	public void deleteMappedSubAdmin(String mid);
+
+	public String getMappedCategory(String mid);
 
 }
