@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,17 +16,24 @@ import javax.persistence.Table;
 public class NewGreenCard {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int greenCardId;
+	Integer greenCardId;
 	String whatHappened;
 	String landmark;
 	LocalDateTime submittedDate;
-	@ManyToOne(cascade=CascadeType.ALL)
-	private User user;
-	public int getGreenCardId() {
+	@Lob
+	byte[] image;
+	
+	public Integer getGreenCardId() {
 		return greenCardId;
 	}
-	public void setGreenCardId(int greenCardId) {
+	public void setGreenCardId(Integer greenCardId) {
 		this.greenCardId = greenCardId;
+	}
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	public String getWhatHappened() {
 		return whatHappened;
@@ -44,12 +52,6 @@ public class NewGreenCard {
 	}
 	public void setSubmittedDate(LocalDateTime submittedDate) {
 		this.submittedDate = submittedDate;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	

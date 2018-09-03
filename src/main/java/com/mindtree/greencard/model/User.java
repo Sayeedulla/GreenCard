@@ -1,5 +1,6 @@
 package com.mindtree.greencard.model;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,19 +17,19 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int userId;
+	Integer userId;
 	String mid;
 	String password;
 	String name;
 	String type;
 	String emailId;
-	String phoneNo;
-	@OneToMany(cascade=CascadeType.ALL)
+	BigInteger phoneNo;
+	@OneToMany
 	private Set<NewGreenCard> newGreenCards=new HashSet<>();
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	
@@ -62,10 +63,10 @@ public class User {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	public String getPhoneNo() {
+	public BigInteger getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(String phoneNo) {
+	public void setPhoneNo(BigInteger phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public Set<NewGreenCard> getNewGreenCards() {

@@ -1,4 +1,4 @@
-package com.mindtree.greencard.jprepository.UserRepository;
+package com.mindtree.greencard.jprepository.GreenCardRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

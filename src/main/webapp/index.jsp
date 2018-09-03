@@ -10,7 +10,7 @@
 		<title>Green Card</title>
 	</head> 
 	<body>
-		<c:url value="/showMessage.html" var="messageUrl" />
+		
 		<h1 >Welcome to Green Card</h1>
 	</body>
 </html>
