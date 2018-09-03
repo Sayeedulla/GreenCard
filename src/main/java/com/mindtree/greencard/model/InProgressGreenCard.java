@@ -12,18 +12,25 @@ public class InProgressGreenCard {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int lId;
-	int gc_id;
-	String priority;
-	String category;
-	int assigned_person_id;
-	String corrective_action;
-	String root_cause;
+	private int lId;
+	private int gc_id;
+	private String priority;
+	private String category;
+	private int assigned_person_id;
+	private String corrective_action;
+	private String root_cause;
+	private String status;
 	public int getlId() {
 		return lId;
 	}
 	public void setlId(int lId) {
 		this.lId = lId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public int getGc_id() {
 		return gc_id;

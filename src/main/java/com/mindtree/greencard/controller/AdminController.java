@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.service.AdminService;
@@ -47,6 +48,19 @@ public class AdminController {
 		
 		return this.adminservice.assigncard(card);
 
+	}
+	
+	@GetMapping("/gethistory")
+	public List<GreenCardHistory> getAllFromHistory()
+	{
+		return this.adminservice.getAllFromHistory();
+	}
+	
+	@GetMapping("/downloadxl")
+	public void downloadXl()
+	{
+		this.adminservice.generateXl();
+		
 	}
 
 }
