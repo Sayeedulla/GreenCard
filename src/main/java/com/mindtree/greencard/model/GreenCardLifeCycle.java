@@ -11,11 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 @Entity
-@Table(name = "greencardlifecycle")
+@Table
 public class GreenCardLifeCycle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
