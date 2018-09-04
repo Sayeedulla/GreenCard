@@ -50,13 +50,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return category.getCategory_Name();
 	}
 
-	public String deleteCategory(String category_name) {
-		Category category = this.categoryRepo.getCategory(category_name);
+	public String deleteCategory(String categoryName) {
+		Category category = this.categoryRepo.getCategory(categoryName);
 		this.categoryRepo.deleteById(category.getCategory_Id());
-		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(category_name);
+		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
 		for(SubAdminCategory subAdminCategory:list)
 			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
-		return category_name;
+		return categoryName;
 	}
 
 	public List<Category> getCategories() {
