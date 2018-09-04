@@ -96,6 +96,5 @@ public class GreenCardHistory {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-	
 
 }
