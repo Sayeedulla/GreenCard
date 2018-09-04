@@ -8,21 +8,19 @@ public class SubAdminCategory {
 
 	@Id
 	private String mid;
-	private String Category_Name;
-
+	private String categoryName;
 	public String getMid() {
 		return mid;
 	}
-
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-
-	public String getCategory_Name() {
-		return Category_Name;
+	public String getCategoryName() {
+		return categoryName;
 	}
-
-	public void setCategory_Name(String category_Name) {
-		Category_Name = category_Name;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
+	
+
 }
