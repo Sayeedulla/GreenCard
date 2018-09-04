@@ -9,6 +9,8 @@ import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRe
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
+import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.service.SubAdminService;
 @Service
 public class SubAdminServiceImpl implements SubAdminService{
