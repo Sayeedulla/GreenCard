@@ -25,71 +25,49 @@ public class GreenCardLifeCycle {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "greenCardId")
 	NewGreenCard newgreencard;
-
 	public int getLifeCycleId() {
 		return lifeCycleId;
 	}
-
 	public void setLifeCycleId(int lifeCycleId) {
 		this.lifeCycleId = lifeCycleId;
 	}
-
+	public LocalDateTime getSubmittedTime() {
+		return submittedTime;
+	}
+	public void setSubmittedTime(LocalDateTime submittedTime) {
+		this.submittedTime = submittedTime;
+	}
 	public LocalDateTime getAssignedTime() {
 		return assignedTime;
 	}
-
 	public void setAssignedTime(LocalDateTime assignedTime) {
 		this.assignedTime = assignedTime;
 	}
-
 	public LocalDateTime getResolvedTime() {
 		return resolvedTime;
 	}
-
 	public void setResolvedTime(LocalDateTime resolvedTime) {
 		this.resolvedTime = resolvedTime;
 	}
-
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getTimePeriod() {
+		return timePeriod;
+	}
+	public void setTimePeriod(String timePeriod) {
+		this.timePeriod = timePeriod;
+	}
 	public NewGreenCard getNewgreencard() {
 		return newgreencard;
 	}
-
 	public void setNewgreencard(NewGreenCard newgreencard) {
 		this.newgreencard = newgreencard;
 	}
 
 	
-
-	public LocalDateTime getSubmittedTime() {
-		return submittedTime;
-	}
-
-	public void setSubmittedTime(LocalDateTime submittedTime) {
-		this.submittedTime = submittedTime;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getTimePeriod() {
-		return timePeriod;
-	}
-
-	public void setTimePeriod(String timePeriod) {
-		this.timePeriod = timePeriod;
-	}
-
-	public NewGreenCard getNewGreenCard() {
-		return newgreencard;
-	}
-
-	public void setNewGreenCard(NewGreenCard newGreenCard) {
-		this.newgreencard = newGreenCard;
-	}
 
 }
