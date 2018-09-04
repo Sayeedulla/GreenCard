@@ -3,13 +3,14 @@ package com.mindtree.greencard.service.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.service.SubAdminService;
-
+@Service
 public class SubAdminServiceImpl implements SubAdminService{
 
 	@Autowired
