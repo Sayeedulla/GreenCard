@@ -19,7 +19,7 @@ public interface SuperAdminService {
 
 	public String addCategory(Category category);
 
-	public String deleteCategory(String Category_name);
+	public String deleteCategory(String categoryName);
 
 	public List<Category> getCategories();
 
