@@ -32,7 +32,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	public Optional<User> getUser(String mid) {
-		User user = this.userRepo.findUser(mid);
+		User user=new User();
+		try{
+		 user = this.userRepo.findUser(mid);
+		}
+		catch(NullPointerException nullPointerException)
+		{
+			return null;
+		}
 		return this.userRepo.findById(user.getUserId());
 	}
 
@@ -74,9 +81,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	@Override
 	public String getMappedCategory(String mid) {
-		Optional<SubAdminCategory> subAdminCategory= this.subAdminCategoryRepo.findById(mid);
-		SubAdminCategory sub=subAdminCategory.get();
-		return sub.getCategory_Name();
+		SubAdminCategory subAdminCategory= this.subAdminCategoryRepo.getOne(mid);
+		return subAdminCategory.getCategory_Name();
 	}
 
 }
