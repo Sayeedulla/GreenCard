@@ -10,27 +10,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Category")
 public class Category {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int Category_Id;
+	private int categoryId;
 	@Column(unique=true)
-	private String Category_Name;
-
-	public int getCategory_Id() {
-		return Category_Id;
+	private String categoryName;
+	public int getCategoryId() {
+		return categoryId;
 	}
-
-	public void setCategory_Id(int category_Id) {
-		Category_Id = category_Id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-
-	public String getCategory_Name() {
-		return Category_Name;
+	public String getCategoryName() {
+		return categoryName;
 	}
-
-	public void setCategory_Name(String category_Name) {
-		Category_Name = category_Name;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }
