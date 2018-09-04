@@ -38,33 +38,33 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
-		// TODO Auto-generated method stub
+	
 
 		return this.newgreencard.findAll();
 	}
 
 	@Override
 	public Optional<NewGreenCard> getCard(int gid) {
-		// TODO Auto-generated method stub
+
 		return this.newgreencard.findById(gid);
 	}
 
 	@Override
 	public String assigncard(InProgressGreenCard card) {
-		// TODO Auto-generated method stub
+		
 		this.inprogresscard.save(card);
 		return "Assigned";
 	}
 
 	@Override
 	public List<InProgressGreenCard> viewprogress() {
-		// TODO Auto-generated method stub
+	
 		return this.inprogresscard.findAll();
 	}
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
-		// TODO Auto-generated method stub
+		
 		return this.history.findAll();
 
 	}
@@ -141,11 +141,12 @@ public class AdminServiceImpl implements AdminService {
 					new File("D://greencardhistoryexcelsheet.xlsx"));
 			workbook.write(out);
 			out.close();
-			System.out.println("File Successfully created");
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
+		}
+		finally{
+		    workbook.close();
 		}
 
 	}
