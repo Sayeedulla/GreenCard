@@ -119,13 +119,13 @@ public class AdminServiceImpl implements AdminService {
 				cell.setCellValue("-");
 			}
 			cell = row.createCell(4);
-			cell.setCellValue(e.getAssigned_person_id());
+			cell.setCellValue(e.getAssignedPersonId());
 			cell = row.createCell(5);
 			cell.setCellValue(e.getStatus());
 			cell = row.createCell(6);
-			cell.setCellValue(e.getCorrective_action());
+			cell.setCellValue(e.getCorrectiveAction());
 			cell = row.createCell(7);
-			cell.setCellValue(e.getRoot_cause());
+			cell.setCellValue(e.getRootCause());
 			cell = row.createCell(8);
 			cell.setCellValue(e.getWhatHappened());
 			cell = row.createCell(9);

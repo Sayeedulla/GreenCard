@@ -27,7 +27,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 @Transactional
 
 	@Override
-	public String SaveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
+	public String saveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
 	
 	NewGreenCard newgreencard=new NewGreenCard();
 	newgreencard.setImage(fileupload.getBytes());
@@ -48,7 +48,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		return "Your GreenCard Id is "+newgreencard.getGreenCardId()+" Note it down for future Reference";
 	}
 @Override
-public String SaveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
+public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
 		BigInteger phone) {
 	
 	User user=new User();

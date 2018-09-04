@@ -5,6 +5,6 @@ import java.math.BigInteger;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public interface GreenCardService {
-public String SaveNewGreenCard(CommonsMultipartFile fileupload,String what,String location,String mid);
-public String SaveNewGreenCardByGuest(CommonsMultipartFile fileupload,String what,String location,String name,BigInteger phone);
+public String saveNewGreenCard(CommonsMultipartFile fileupload,String what,String location,String mid);
+public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload,String what,String location,String name,BigInteger phone);
 }
