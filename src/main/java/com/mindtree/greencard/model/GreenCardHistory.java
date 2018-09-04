@@ -15,9 +15,9 @@ public class GreenCardHistory {
 	private String userId;
 	private LocalDateTime submittedDateTime;
 	private LocalDateTime closedDateTime;
-	private int assigned_person_id;
-	private String corrective_action;
-	private String root_cause;
+	private int assignedPersonId;
+	private String correctiveAction;
+	private String rootCause;
 	private String status;
 	private String whatHappened;
 	private String landmark;
@@ -65,27 +65,27 @@ public class GreenCardHistory {
 	}
 
 	public int getAssigned_person_id() {
-		return assigned_person_id;
+		return assignedPersonId;
 	}
 
 	public void setAssigned_person_id(int assigned_person_id) {
-		this.assigned_person_id = assigned_person_id;
+		this.assignedPersonId = assigned_person_id;
 	}
 
 	public String getCorrective_action() {
-		return corrective_action;
+		return correctiveAction;
 	}
 
 	public void setCorrective_action(String corrective_action) {
-		this.corrective_action = corrective_action;
+		this.correctiveAction = corrective_action;
 	}
 
 	public String getRoot_cause() {
-		return root_cause;
+		return rootCause;
 	}
 
 	public void setRoot_cause(String root_cause) {
-		this.root_cause = root_cause;
+		this.rootCause = root_cause;
 	}
 
 	public String getStatus() {
