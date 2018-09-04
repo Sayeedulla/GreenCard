@@ -16,7 +16,7 @@ UserRepository userrepository;
 @Transactional
 	@Override
 	public User getUserInfoByMidAndPassword(User user) {
-		// TODO Auto-generated method stub
+	
 		return userrepository.findUserbymidPassword(user.getMid(), user.getPassword());
 	}
 
