@@ -18,6 +18,9 @@ public class SubAdminServiceImpl implements SubAdminService{
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
+	
+	@Autowired
+	GreenCardLifeCycleRepository greencardLCRepo;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) {
@@ -38,6 +41,9 @@ public class SubAdminServiceImpl implements SubAdminService{
 	public String updateComplaint(InProgressGreenCard sub) {
 		if (inProgGCRepo.existsById(sub.getlId())) {
 			inProgGCRepo.save(sub);
+			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
+			greencardLC.setStatus("Solved");
+			greencardLCRepo.save(greencardLC);
 			return "Passed for Review";
 		}
 		else {
