@@ -116,4 +116,5 @@ public class DTOClass {
 		this.timePeriod = timePeriod;
 	}
 
+
 }

@@ -10,7 +10,7 @@ import com.mindtree.greencard.model.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-	@Query(value = "select c from Category c where c.Category_Name=:category_name")
-	Category getCategory(@Param("category_name") String category_name);
+	@Query(value = "select c from Category c where c.Category_Name=:categoryName")
+	Category getCategory(@Param("categoryName") String categoryName);
 
 }

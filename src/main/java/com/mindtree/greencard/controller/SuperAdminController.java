@@ -50,9 +50,9 @@ public class SuperAdminController {
 		return this.service.addCategory(category);
 	}
 
-	@RequestMapping(value = "/deleteCategory/{category_name}")
-	private String delete(@PathVariable String category_name) {
-		return this.service.deleteCategory(category_name); 
+	@RequestMapping(value = "/deleteCategory/{categoryName}")
+	private String delete(@PathVariable String categoryName) {
+		return this.service.deleteCategory(categoryName); 
 	}
 
 	@RequestMapping(value = "/getCategories")

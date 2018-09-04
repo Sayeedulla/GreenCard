@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Category")
 public class Category {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int categoryId;

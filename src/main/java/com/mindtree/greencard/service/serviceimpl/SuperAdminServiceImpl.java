@@ -47,16 +47,16 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	public String addCategory(Category category) {
 		this.categoryRepo.save(category);
-		return category.getCategory_Name();
+		return category.getCategoryName();
 	}
 
-	public String deleteCategory(String Category_name) {
-		Category category = this.categoryRepo.getCategory(Category_name);
-		this.categoryRepo.deleteById(category.getCategory_Id());
-		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(Category_name);
+	public String deleteCategory(String categoryName) {
+		Category category = this.categoryRepo.getCategory(categoryName);
+		this.categoryRepo.deleteById(category.getCategoryId());
+		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
 		for(SubAdminCategory subAdminCategory:list)
 			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
-		return Category_name;
+		return categoryName;
 	}
 
 	public List<Category> getCategories() {
@@ -74,9 +74,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	@Override
 	public String getMappedCategory(String mid) {
-		Optional<SubAdminCategory> subAdminCategory= this.subAdminCategoryRepo.findById(mid);
-		SubAdminCategory sub=subAdminCategory.get();
-		return sub.getCategory_Name();
+		SubAdminCategory subAdminCategory= this.subAdminCategoryRepo.getOne(mid);
+		return subAdminCategory.getCategoryName();
 	}
 
 }
