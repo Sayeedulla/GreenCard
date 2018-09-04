@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,9 +15,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mindtree.greencard.jprepository.AdminRepository.GreenCardHistoryRepository;
-import com.mindtree.greencard.jprepository.AdminRepository.InProgressGreenCardRepository;
-import com.mindtree.greencard.jprepository.GreenCardRepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
+import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;

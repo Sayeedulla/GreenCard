@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;

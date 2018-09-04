@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.mindtree.greencard.jprepository.GreenCardRepository.GreenCardLifeCycleRepository;
-import com.mindtree.greencard.jprepository.GreenCardRepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.NewGreenCard;
