@@ -28,7 +28,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 
 	@Override
 	public String SaveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
-		// TODO Auto-generated method stub
+	
 	NewGreenCard newgreencard=new NewGreenCard();
 	newgreencard.setImage(fileupload.getBytes());
 	newgreencard.setLandmark(location);
@@ -50,7 +50,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 @Override
 public String SaveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
 		BigInteger phone) {
-	// TODO Auto-generated method stub
+	
 	User user=new User();
 	user.setName(name);
 	user.setPhoneNo(phone);
