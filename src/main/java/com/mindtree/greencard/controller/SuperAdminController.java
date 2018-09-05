@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.SuperAdminService;
+
 
 @RestController
 @RequestMapping(value = "/GreenCard")
@@ -22,7 +23,7 @@ public class SuperAdminController {
 	@Autowired
 	private SuperAdminService service;
 
-	@RequestMapping(value = "/addUser")
+	@PostMapping(value = "/addUser")
 	private String addUser(@RequestBody User user) {
 		return this.service.addUser(user);
 	}
