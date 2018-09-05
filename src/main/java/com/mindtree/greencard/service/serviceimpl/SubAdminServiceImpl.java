@@ -9,6 +9,8 @@ import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRe
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
+import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.service.SubAdminService;
 @Service
 public class SubAdminServiceImpl implements SubAdminService{
@@ -18,6 +20,9 @@ public class SubAdminServiceImpl implements SubAdminService{
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
+	
+	@Autowired
+	GreenCardLifeCycleRepository greencardLCRepo;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) {
@@ -38,6 +43,9 @@ public class SubAdminServiceImpl implements SubAdminService{
 	public String updateComplaint(InProgressGreenCard sub) {
 		if (inProgGCRepo.existsById(sub.getlId())) {
 			inProgGCRepo.save(sub);
+			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
+			greencardLC.setStatus("Solved");
+			greencardLCRepo.save(greencardLC);
 			return "Passed for Review";
 		}
 		else {
