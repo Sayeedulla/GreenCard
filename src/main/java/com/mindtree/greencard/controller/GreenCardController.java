@@ -37,7 +37,7 @@ public class GreenCardController {
 	
 	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String mid) {
-		return this.greenCardService.SaveNewGreenCard(fileupload, what, location, mid);
+		return this.greenCardService.saveNewGreenCard(fileupload, what, location, mid);
 	}
 	@PostMapping(value="/getuserinfo")
 	public User returnUser(@RequestBody User user) {
@@ -45,7 +45,7 @@ public class GreenCardController {
 	}
 	@PostMapping(value = "/add/greenCardByGuest")
 	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String name,BigInteger phone) {
-		return this.greenCardService.SaveNewGreenCardByGuest(fileupload, what, location, name, phone);
+		return this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
 	}
 	
 }

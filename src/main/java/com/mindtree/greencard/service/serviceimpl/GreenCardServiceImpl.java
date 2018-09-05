@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.mindtree.greencard.jprepository.GreenCardRepository.GreenCardLifeCycleRepository;
-import com.mindtree.greencard.jprepository.GreenCardRepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -27,8 +27,8 @@ public class GreenCardServiceImpl implements GreenCardService {
 @Transactional
 
 	@Override
-	public String SaveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
-		// TODO Auto-generated method stub
+	public String saveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
+	
 	NewGreenCard newgreencard=new NewGreenCard();
 	newgreencard.setImage(fileupload.getBytes());
 	newgreencard.setLandmark(location);
@@ -48,9 +48,9 @@ public class GreenCardServiceImpl implements GreenCardService {
 		return "Your GreenCard Id is "+newgreencard.getGreenCardId()+" Note it down for future Reference";
 	}
 @Override
-public String SaveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
+public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
 		BigInteger phone) {
-	// TODO Auto-generated method stub
+	
 	User user=new User();
 	user.setName(name);
 	user.setPhoneNo(phone);

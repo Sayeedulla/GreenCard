@@ -12,6 +12,6 @@ import com.mindtree.greencard.model.SubAdminCategory;
 @Repository
 public interface SubAdminCategoryRepository extends JpaRepository<SubAdminCategory, String> {
 
-	@Query(value="select s from SubAdminCategory s where s.Category_Name=:Category_name")
-	List<SubAdminCategory> getSubAdminCategories(@Param("Category_name")String Category_name); 
+	@Query(value="select s from SubAdminCategory s where s.categoryName=:categoryName")
+	List<SubAdminCategory> getSubAdminCategories(@Param("categoryName")String categoryName); 
 }

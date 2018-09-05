@@ -1,17 +1,15 @@
 package com.mindtree.greencard.service;
 
 import java.util.List;
-import java.util.Optional;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
-
 
 public interface SuperAdminService {
 
 	public List<User> getUsers();
 
-	public Optional<User> getUser(String mid);
+	public User getUser(String mid);
 
 	public String deleteUser(String mid);
 
@@ -19,7 +17,7 @@ public interface SuperAdminService {
 
 	public String addCategory(Category category);
 
-	public String deleteCategory(String Category_name);
+	public String deleteCategory(String categoryName);
 
 	public List<Category> getCategories();
 
@@ -28,5 +26,7 @@ public interface SuperAdminService {
 	public void deleteMappedSubAdmin(String mid);
 
 	public String getMappedCategory(String mid);
+
+	public String addUser(User user);
 
 }

@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,16 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private CategoryRepository categoryRepo;
 	@Autowired
 	private SubAdminCategoryRepository subAdminCategoryRepo;
-    
+
+	public String addUser(User user) {
+		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
+		if (!tempuser.isPresent()) {
+			this.userRepo.save(user);
+			return user.getMid();
+		} else
+			return null;
+	}
+
 	public void updateUser(User user) {
 		this.userRepo.save(user);
 	}
@@ -31,39 +40,38 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return this.userRepo.findAll();
 	}
 
-	public Optional<User> getUser(String mid) {
-		User user=new User();
-		try{
-		 user = this.userRepo.findUser(mid);
-		}
-		catch(NullPointerException nullPointerException)
-		{
+	public User getUser(String mid) {
+		Optional<User> user = this.userRepo.findUser(mid);
+
+		if (user.isPresent()) {
+			User user1 = user.get();
+			return user1;
+		} else
 			return null;
-		}
-		return this.userRepo.findById(user.getUserId());
+
 	}
 
 	public String deleteUser(String mid) {
-		User user = this.userRepo.findUser(mid);
-		this.userRepo.deleteById(user.getUserId());
-		if(user.getType().equals("SubAdmin"))
-			this.subAdminCategoryRepo.deleteById(user.getMid());
-		return user.getMid();
-
+		Optional<User> user = this.userRepo.findUser(mid);
+		if (user.isPresent()) {
+			this.userRepo.deleteById(user.get().getUserId());
+			return user.get().getMid();
+		} else
+			return null;
 	}
 
 	public String addCategory(Category category) {
 		this.categoryRepo.save(category);
-		return category.getCategory_Name();
+		return category.getCategoryName();
 	}
 
-	public String deleteCategory(String Category_name) {
-		Category category = this.categoryRepo.getCategory(Category_name);
-		this.categoryRepo.deleteById(category.getCategory_Id());
-		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(Category_name);
-		for(SubAdminCategory subAdminCategory:list)
+	public String deleteCategory(String categoryName) {
+		Category category = this.categoryRepo.getCategory(categoryName);
+		this.categoryRepo.deleteById(category.getCategoryId());
+		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
+		for (SubAdminCategory subAdminCategory : list)
 			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
-		return Category_name;
+		return categoryName;
 	}
 
 	public List<Category> getCategories() {
@@ -81,8 +89,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	@Override
 	public String getMappedCategory(String mid) {
-		SubAdminCategory subAdminCategory= this.subAdminCategoryRepo.getOne(mid);
-		return subAdminCategory.getCategory_Name();
+		SubAdminCategory subAdminCategory = this.subAdminCategoryRepo.getOne(mid);
+		return subAdminCategory.getCategoryName();
 	}
 
 }

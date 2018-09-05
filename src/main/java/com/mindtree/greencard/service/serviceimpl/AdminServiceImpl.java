@@ -1,4 +1,4 @@
-package com.mindtree.greencard.service.serviceImpl;
+package com.mindtree.greencard.service.serviceimpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,9 +15,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mindtree.greencard.jprepository.AdminRepository.GreenCardHistoryRepository;
-import com.mindtree.greencard.jprepository.AdminRepository.InProgressGreenCardRepository;
-import com.mindtree.greencard.jprepository.GreenCardRepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
+import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -38,33 +38,33 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
-		// TODO Auto-generated method stub
+	
 
 		return this.newgreencard.findAll();
 	}
 
 	@Override
 	public Optional<NewGreenCard> getCard(int gid) {
-		// TODO Auto-generated method stub
+
 		return this.newgreencard.findById(gid);
 	}
 
 	@Override
 	public String assigncard(InProgressGreenCard card) {
-		// TODO Auto-generated method stub
+		
 		this.inprogresscard.save(card);
 		return "Assigned";
 	}
 
 	@Override
 	public List<InProgressGreenCard> viewprogress() {
-		// TODO Auto-generated method stub
+	
 		return this.inprogresscard.findAll();
 	}
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
-		// TODO Auto-generated method stub
+		
 		return this.history.findAll();
 
 	}
@@ -119,13 +119,13 @@ public class AdminServiceImpl implements AdminService {
 				cell.setCellValue("-");
 			}
 			cell = row.createCell(4);
-			cell.setCellValue(e.getAssigned_person_id());
+			cell.setCellValue(e.getAssignedPersonId());
 			cell = row.createCell(5);
 			cell.setCellValue(e.getStatus());
 			cell = row.createCell(6);
-			cell.setCellValue(e.getCorrective_action());
+			cell.setCellValue(e.getCorrectiveAction());
 			cell = row.createCell(7);
-			cell.setCellValue(e.getRoot_cause());
+			cell.setCellValue(e.getRootCause());
 			cell = row.createCell(8);
 			cell.setCellValue(e.getWhatHappened());
 			cell = row.createCell(9);
@@ -141,11 +141,10 @@ public class AdminServiceImpl implements AdminService {
 					new File("D://greencardhistoryexcelsheet.xlsx"));
 			workbook.write(out);
 			out.close();
-			System.out.println("File Successfully created");
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		finally{
 		}
 
 	}

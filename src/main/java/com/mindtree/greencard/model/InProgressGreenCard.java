@@ -13,12 +13,12 @@ public class InProgressGreenCard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int lId;
-	private int gc_id;
+	private int gcId;
 	private String priority;
 	private String category;
-	private int assigned_person_id;
-	private String corrective_action;
-	private String root_cause;
+	private int assignedPersonId;
+	private String correctiveAction;
+	private String rootCause;
 	private String status;
 	public int getlId() {
 		return lId;
@@ -26,17 +26,11 @@ public class InProgressGreenCard {
 	public void setlId(int lId) {
 		this.lId = lId;
 	}
-	public String getStatus() {
-		return status;
+	public int getGcId() {
+		return gcId;
 	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public int getGc_id() {
-		return gc_id;
-	}
-	public void setGc_id(int gc_id) {
-		this.gc_id = gc_id;
+	public void setGcId(int gcId) {
+		this.gcId = gcId;
 	}
 	public String getPriority() {
 		return priority;
@@ -50,23 +44,29 @@ public class InProgressGreenCard {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getAssigned_person_id() {
-		return assigned_person_id;
+	public int getAssignedPersonId() {
+		return assignedPersonId;
 	}
-	public void setAssigned_person_id(int assigned_person_id) {
-		this.assigned_person_id = assigned_person_id;
+	public void setAssignedPersonId(int assignedPersonId) {
+		this.assignedPersonId = assignedPersonId;
 	}
-	public String getCorrective_action() {
-		return corrective_action;
+	public String getCorrectiveAction() {
+		return correctiveAction;
 	}
-	public void setCorrective_action(String corrective_action) {
-		this.corrective_action = corrective_action;
+	public void setCorrectiveAction(String correctiveAction) {
+		this.correctiveAction = correctiveAction;
 	}
-	public String getRoot_cause() {
-		return root_cause;
+	public String getRootCause() {
+		return rootCause;
 	}
-	public void setRoot_cause(String root_cause) {
-		this.root_cause = root_cause;
+	public void setRootCause(String rootCause) {
+		this.rootCause = rootCause;
 	}
-
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }
