@@ -24,7 +24,7 @@ public class SuperAdminController {
 	@Autowired
 	private SuperAdminService service;
 
-	@PostMapping(value = "/addUser")
+	@PostMapping(value = "/adduser")
 	private String addUser(@RequestBody User user) {
 		return this.service.addUser(user);
 	}
