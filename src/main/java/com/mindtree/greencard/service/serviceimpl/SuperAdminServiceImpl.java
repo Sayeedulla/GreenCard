@@ -29,7 +29,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			this.userRepo.save(user);
 			return user.getMid();
 		} else
-			return null;
+			return "";
 	}
 
 	public void updateUser(User user) {
