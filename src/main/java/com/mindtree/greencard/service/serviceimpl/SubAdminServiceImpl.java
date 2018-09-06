@@ -59,7 +59,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) {
-		//int id;
 		if (inProgGCRepo.existsById(sub.getlId())) {
 			inProgGCRepo.save(sub);
 			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
@@ -78,8 +77,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcH.setLandmark(ngc.getLandmark());
 			gcH.setRootCause(sub.getRootCause());
 			gcH.setStatus(greencardLC.getStatus());
+			//gcH.setUserId();
 			gcH.setSubmittedDateTime(greencardLC.getAssignedTime());
-			//User u=this.us.findUserId(170);
+			
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
 			
