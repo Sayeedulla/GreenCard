@@ -153,10 +153,8 @@ public class AdminServiceImpl implements AdminService {
 			out.close();
 
 		} catch (Exception e) {
-			//logger.error(e);
 		}
 		finally{
-		   // workbook.close();
 		}
 
 	}

@@ -22,7 +22,16 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private CategoryRepository categoryRepo;
 	@Autowired
 	private SubAdminCategoryRepository subAdminCategoryRepo;
-    
+
+	public String addUser(User user) {
+		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
+		if (!tempuser.isPresent()) {
+			this.userRepo.save(user);
+			return user.getMid();
+		} else
+			return "";
+	}
+
 	public void updateUser(User user) {
 		this.userRepo.save(user);
 	}
@@ -31,18 +40,24 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return this.userRepo.findAll();
 	}
 
-	public Optional<User> getUser(String mid) {
-		User user = this.userRepo.findUser(mid);
-		return this.userRepo.findById(user.getUserId());
+	public User getUser(String mid) {
+		Optional<User> user = this.userRepo.findUser(mid);
+
+		if (user.isPresent()) {
+			User user1 = user.get();
+			return user1;
+		} else
+			return null;
+
 	}
 
 	public String deleteUser(String mid) {
-		User user = this.userRepo.findUser(mid);
-		this.userRepo.deleteById(user.getUserId());
-		if(user.getType().equals("SubAdmin"))
-			this.subAdminCategoryRepo.deleteById(user.getMid());
-		return user.getMid();
-
+		Optional<User> user = this.userRepo.findUser(mid);
+		if (user.isPresent()) {
+			this.userRepo.deleteById(user.get().getUserId());
+			return user.get().getMid();
+		} else
+			return null;
 	}
 
 	public String addCategory(Category category) {
@@ -53,8 +68,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public String deleteCategory(String categoryName) {
 		Category category = this.categoryRepo.getCategory(categoryName);
 		this.categoryRepo.deleteById(category.getCategoryId());
-		List<SubAdminCategory> list=this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
-		for(SubAdminCategory subAdminCategory:list)
+		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
+		for (SubAdminCategory subAdminCategory : list)
 			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
 		return categoryName;
 	}
@@ -74,7 +89,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	@Override
 	public String getMappedCategory(String mid) {
-		SubAdminCategory subAdminCategory= this.subAdminCategoryRepo.getOne(mid);
+		SubAdminCategory subAdminCategory = this.subAdminCategoryRepo.getOne(mid);
 		return subAdminCategory.getCategoryName();
 	}
 
