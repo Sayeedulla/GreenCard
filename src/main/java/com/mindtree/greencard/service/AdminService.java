@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.model.SubAdminCategory;
 
 
 public interface AdminService {
@@ -16,5 +17,6 @@ public interface AdminService {
 	public String assigncard(InProgressGreenCard card);
 	public List<GreenCardHistory> getAllFromHistory();
 	public void generateXl();
+	public List<SubAdminCategory> getSubAdmins();
 
 }
