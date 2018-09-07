@@ -11,6 +11,9 @@ import com.mindtree.greencard.model.NewGreenCard;
 public interface GreenCardLifeCycleRepository extends JpaRepository<GreenCardLifeCycle, Integer> {
 
 	@Query(value="select g from GreenCardLifeCycle g where g.newgreencard=:newGreenCard")
-	public GreenCardLifeCycle getGreenCardById(@Param("newGreenCard") NewGreenCard newGreenCard);
+	public GreenCardLifeCycle getGreenCardById(@Param("newGreenCard") NewGreenCard newgreen);
+	
+
+	
 	
 }
