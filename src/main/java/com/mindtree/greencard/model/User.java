@@ -23,6 +23,7 @@
 		String type;
 		String emailId;
 		BigInteger phoneNo;
+		
 		@OneToMany
 		private Set<NewGreenCard> newGreenCards=new HashSet<>();
 		public Integer getUserId() {
