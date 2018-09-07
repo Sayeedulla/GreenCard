@@ -22,3 +22,4 @@ public class GreenCardApplication extends SpringBootServletInitializer {
 		return builder.sources(GreenCardApplication.class);
 	}
 }
+

@@ -45,4 +45,5 @@ public class SubAdminController {
 	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
 		return subserv.updateComplaint(sub);
 	}
+	
 }

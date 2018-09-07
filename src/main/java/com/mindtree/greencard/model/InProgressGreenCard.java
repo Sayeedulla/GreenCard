@@ -1,8 +1,6 @@
 package com.mindtree.greencard.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,26 +9,25 @@ import javax.persistence.Table;
 public class InProgressGreenCard {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int lId;
 	private int gcId;
+	private int lId;
 	private String priority;
 	private String category;
-	private int assignedPersonId;
+	private String assignedPersonId;
 	private String correctiveAction;
 	private String rootCause;
 	private String status;
-	public int getlId() {
-		return lId;
-	}
-	public void setlId(int lId) {
-		this.lId = lId;
-	}
 	public int getGcId() {
 		return gcId;
 	}
 	public void setGcId(int gcId) {
 		this.gcId = gcId;
+	}
+	public int getlId() {
+		return lId;
+	}
+	public void setlId(int lId) {
+		this.lId = lId;
 	}
 	public String getPriority() {
 		return priority;
@@ -44,10 +41,10 @@ public class InProgressGreenCard {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getAssignedPersonId() {
+	public String getAssignedPersonId() {
 		return assignedPersonId;
 	}
-	public void setAssignedPersonId(int assignedPersonId) {
+	public void setAssignedPersonId(String assignedPersonId) {
 		this.assignedPersonId = assignedPersonId;
 	}
 	public String getCorrectiveAction() {
@@ -68,5 +65,6 @@ public class InProgressGreenCard {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 	
 }
