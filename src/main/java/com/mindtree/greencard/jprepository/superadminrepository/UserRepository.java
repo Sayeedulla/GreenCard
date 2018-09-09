@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "select u from User u where u.mid=:mid and u.password=:password")
 	public User findUserbymidPassword(@Param("mid") String mid, @Param("password") String password);
 	
+	@Query(value= "select name from User u where u.mid=?1")
+	public String getAssignedName(String mid);
 	
 	
 }

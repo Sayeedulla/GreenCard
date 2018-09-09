@@ -20,6 +20,7 @@ import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRe
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
@@ -46,12 +47,15 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	GreenCardLifeCycleRepository GLC;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
 	
 
-		return this.newgreencard.findAll();
+		return this.newgreencard.getNewCards();
 	}
 
 	@Override
@@ -83,13 +87,25 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
 		
-		return this.history.findAll();
+		//return this.history.findAll();
+		//return this.history.getAllExceptImg();
+			List<GreenCardHistory>  li= this.history.getAllExceptImg();
+			return li;
+			
 
 	}
+	
+	
 	
 	@Override
 	public List<SubAdminCategory> getSubAdmins(){
 		return this.subadmin.findAll();
+	}
+	
+	@Override
+	public Optional<GreenCardHistory> getByGid(int gId) {
+	
+		return this.history.findById(gId);
 	}
 
 	@Override
@@ -171,5 +187,9 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 	}
+
+
+
+
 
 }

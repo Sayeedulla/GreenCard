@@ -2,10 +2,8 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
@@ -62,11 +60,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 			inProgGCRepo.save(sub);
 			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
 			NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
-			
 			greencardLC.setStatus("Closed");
 			greencardLC.setResolvedTime(LocalDateTime.now());
 			greencardLCRepo.save(greencardLC);
-
 			gcH.setgId(sub.getGcId());
 			gcH.setAssignedPersonId(sub.getAssignedPersonId());
 			gcH.setCategory(sub.getCategory());
@@ -81,8 +77,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 			
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
-			
-			
 			
 			newGCRepo.delete(ngc);
 			inProgGCRepo.delete(sub);

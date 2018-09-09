@@ -58,6 +58,12 @@ public class AdminController {
 		return this.adminservice.getAllFromHistory();
 	}
 	
+	@GetMapping("/getCardhistory/{gId}")
+	public Optional<GreenCardHistory> getByGid(@PathVariable int gId) {
+		
+		return this.adminservice.getByGid(gId);
+	}
+	
 	@GetMapping("/downloadxl")
 	public void downloadXl()
 	{

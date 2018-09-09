@@ -17,6 +17,7 @@ public interface AdminService {
 	public String assigncard(InProgressGreenCard card);
 	public List<GreenCardHistory> getAllFromHistory();
 	public void generateXl();
+	public Optional<GreenCardHistory> getByGid(int gId);
 	public List<SubAdminCategory> getSubAdmins();
 
 }
