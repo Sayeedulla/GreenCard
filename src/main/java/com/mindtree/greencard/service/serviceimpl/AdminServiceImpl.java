@@ -161,7 +161,7 @@ public class AdminServiceImpl implements AdminService {
 		try {
 		
 			FileOutputStream out = new FileOutputStream(
-					new File("D://greencardhistoryexcelsheet.xlsx"));
+					new File("//greencardhistoryexcelsheet.xlsx"));
 			workbook.write(out);
 			out.close();
 
