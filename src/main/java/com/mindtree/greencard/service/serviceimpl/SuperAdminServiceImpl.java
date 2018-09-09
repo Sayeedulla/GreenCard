@@ -34,7 +34,12 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	}
 
 	public void updateUser(User user) {
+		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
+		if (tempuser.isPresent()) {
+			user.setUserId(tempuser.get().getUserId());
 		this.userRepo.save(user);
+		}
+	  
 	}
 
 	public List<User> getUsers() {
