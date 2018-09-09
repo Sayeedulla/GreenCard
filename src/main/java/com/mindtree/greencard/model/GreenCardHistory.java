@@ -15,7 +15,7 @@ public class GreenCardHistory {
 	private String userId;
 	private LocalDateTime submittedDateTime;
 	private LocalDateTime closedDateTime;
-	private int assignedPersonId;
+	private String assignedPersonId;
 	private String correctiveAction;
 	private String rootCause;
 	private String status;
@@ -48,10 +48,10 @@ public class GreenCardHistory {
 	public void setClosedDateTime(LocalDateTime closedDateTime) {
 		this.closedDateTime = closedDateTime;
 	}
-	public int getAssignedPersonId() {
+	public String getAssignedPersonId() {
 		return assignedPersonId;
 	}
-	public void setAssignedPersonId(int assignedPersonId) {
+	public void setAssignedPersonId(String assignedPersonId) {
 		this.assignedPersonId = assignedPersonId;
 	}
 	public String getCorrectiveAction() {
@@ -96,5 +96,5 @@ public class GreenCardHistory {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-
+	
 }

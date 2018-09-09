@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
+import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
+import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.SubAdminCategory;
@@ -40,6 +42,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	SubAdminCategoryRepository subadmin;
+	
+	@Autowired
+	GreenCardLifeCycleRepository GLC;
+	
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
@@ -57,7 +63,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String assigncard(InProgressGreenCard card) {
 		
+		NewGreenCard ngc1=this.newgreencard.getOne(card.getGcId());
+		GreenCardLifeCycle glc1= this.GLC.getGreenCardById(ngc1);
+		card.setlId(glc1.getLifeCycleId());
 		this.inprogresscard.save(card);
+		NewGreenCard newGreenCard=this.newgreencard.getOne(card.getGcId());
+		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
+		glc.setStatus("Assigned");
+		this.GLC.save(glc);
 		return "Assigned";
 	}
 

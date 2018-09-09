@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-
+import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.GreenCardService;
 
@@ -47,5 +48,9 @@ public class GreenCardController {
 	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String name,BigInteger phone) {
 		return this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
 	}
-	
+	@GetMapping(value = "viewGreenCard/{id}")
+	public GreenCardLifeCycle getGreenCardById(@PathVariable int id) {
+		System.out.println("Helo");
+		return this.greenCardService.getGreenCardById(id);
+	}
 }

@@ -17,6 +17,7 @@ import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.GreenCardService;
+
 @Service
 public class GreenCardServiceImpl implements GreenCardService {
 	@Autowired
@@ -25,57 +26,63 @@ public class GreenCardServiceImpl implements GreenCardService {
 	UserRepository userrepository;
 	@Autowired
 	GreenCardLifeCycleRepository greencardlifecyclerepository;
-@Transactional
+
+	@Transactional
 
 	@Override
 	public String saveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) {
-	
-	NewGreenCard newgreencard=new NewGreenCard();
-	newgreencard.setImage(fileupload.getBytes());
-	newgreencard.setLandmark(location);
-	newgreencard.setWhatHappened(what);
-	newgreencard.setSubmittedDate(LocalDateTime.now());
-	newgreencardrepository.save(newgreencard);
-	Optional<User> user1=userrepository.findUser(mid);
-	User user=new User();
-	if(user1.isPresent())
-		 user=user1.get();
-	user.getNewGreenCards().add(newgreencard);
-	userrepository.save(user);
-	GreenCardLifeCycle greencardlifecycle=new GreenCardLifeCycle();
-	greencardlifecycle.setStatus("Open");
-	greencardlifecycle.setNewgreencard(newgreencard);
-	greencardlifecycle.setSubmittedTime(LocalDateTime.now());
-	greencardlifecyclerepository.save(greencardlifecycle);
-	
-	
-		return "Your GreenCard Id is "+newgreencard.getGreenCardId()+" Note it down for future Reference";
+
+		NewGreenCard newgreencard = new NewGreenCard();
+		newgreencard.setImage(fileupload.getBytes());
+		newgreencard.setLandmark(location);
+		newgreencard.setWhatHappened(what);
+		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencardrepository.save(newgreencard);
+		Optional<User> user1 = userrepository.findUser(mid);
+		User user = new User();
+		if (user1.isPresent())
+			user = user1.get();
+		user.getNewGreenCards().add(newgreencard);
+		userrepository.save(user);
+		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
+		greencardlifecycle.setStatus("Open");
+		greencardlifecycle.setNewgreencard(newgreencard);
+		greencardlifecycle.setSubmittedTime(LocalDateTime.now());
+		greencardlifecyclerepository.save(greencardlifecycle);
+
+		return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
 	}
-@Override
-public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
-		BigInteger phone) {
-	
-	User user=new User();
-	user.setName(name);
-	user.setPhoneNo(phone);
-	user.setType("Guest");
-	userrepository.save(user);
-	NewGreenCard newgreencard=new NewGreenCard();
-	newgreencard.setImage(fileupload.getBytes());
-	newgreencard.setLandmark(location);
-	newgreencard.setWhatHappened(what);
-	newgreencard.setSubmittedDate(LocalDateTime.now());
-	newgreencardrepository.save(newgreencard);
-	user.getNewGreenCards().add(newgreencard);
-	userrepository.save(user);
-	GreenCardLifeCycle greencardlifecycle=new GreenCardLifeCycle();
-	greencardlifecycle.setStatus("Open");
-	greencardlifecycle.setNewgreencard(newgreencard);
-	greencardlifecycle.setSubmittedTime(LocalDateTime.now());
-	greencardlifecyclerepository.save(greencardlifecycle);
-	
-	
-		return "Your GreenCard Id is "+newgreencard.getGreenCardId()+" Note it down for future Reference";
-}
+
+	@Override
+	public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
+			BigInteger phone) {
+
+		User user = new User();
+		user.setName(name);
+		user.setPhoneNo(phone);
+		user.setType("Guest");
+		userrepository.save(user);
+		NewGreenCard newgreencard = new NewGreenCard();
+		newgreencard.setImage(fileupload.getBytes());
+		newgreencard.setLandmark(location);
+		newgreencard.setWhatHappened(what);
+		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencardrepository.save(newgreencard);
+		user.getNewGreenCards().add(newgreencard);
+		userrepository.save(user);
+		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
+		greencardlifecycle.setStatus("Open");
+		greencardlifecycle.setNewgreencard(newgreencard);
+		greencardlifecycle.setSubmittedTime(LocalDateTime.now());
+		greencardlifecyclerepository.save(greencardlifecycle);
+
+		return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
+	}
+
+	@Override
+	public GreenCardLifeCycle getGreenCardById(int green_card_id) {
+		NewGreenCard newGreenCard=this.newgreencardrepository.getOne(green_card_id);
+		return this.greencardlifecyclerepository.getGreenCardById(newGreenCard);
+	}
 
 }
