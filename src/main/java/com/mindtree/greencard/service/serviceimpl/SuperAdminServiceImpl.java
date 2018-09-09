@@ -1,6 +1,5 @@
 package com.mindtree.greencard.service.serviceimpl;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import java.util.List;
 import java.util.Optional;
