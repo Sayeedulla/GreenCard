@@ -24,7 +24,7 @@ public class SuperAdminController {
 	@Autowired
 	private SuperAdminService service;
 
-	@PostMapping(value = "/adduser")
+	@PostMapping(value = "/addUser")
 	private String addUser(@RequestBody User user) {
 		return this.service.addUser(user);
 	}
@@ -34,14 +34,11 @@ public class SuperAdminController {
 		return this.service.getUsers();
 	}
 
-	@RequestMapping(value = "/getUser/{mid}")
-	private User getUser(@PathVariable String mid) {
-		return this.service.getUser(mid);
-	}
-
+	
 	@DeleteMapping(value = "/deleteUser/{mid}")
-	private String deleteUser(@PathVariable String mid) {
-		return this.service.deleteUser(mid);
+	private List<User> deleteUser(@PathVariable String mid) {
+		String x= this.service.deleteUser(mid);
+		return this.get();
 	}
 
 	@RequestMapping(value = "/updateUser")
@@ -80,6 +77,11 @@ public class SuperAdminController {
 	@RequestMapping(value = "/getMappedCategory/{mid}")
 	private String getMappedCategory(@PathVariable String mid) {
 		return this.service.getMappedCategory(mid);
+	}
+	
+	@RequestMapping(value="/getMappedSubAdmins")
+	private List<SubAdminCategory> getMappedSubAdmins(){
+		return this.service.getMappedSubAdmins();
 	}
 
 }

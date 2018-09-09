@@ -9,8 +9,6 @@ public interface SuperAdminService {
 
 	public List<User> getUsers();
 
-	public User getUser(String mid);
-
 	public String deleteUser(String mid);
 
 	public void updateUser(User user);
@@ -28,5 +26,7 @@ public interface SuperAdminService {
 	public String getMappedCategory(String mid);
 
 	public String addUser(User user);
+
+	public List<SubAdminCategory> getMappedSubAdmins();
 
 }

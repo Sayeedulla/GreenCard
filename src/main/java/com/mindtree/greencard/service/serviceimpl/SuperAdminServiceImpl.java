@@ -1,5 +1,6 @@
 package com.mindtree.greencard.service.serviceimpl;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			this.userRepo.save(user);
 			return user.getMid();
 		} else
-			return "";
+			return null;
 	}
 
 	public void updateUser(User user) {
@@ -38,17 +39,6 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	public List<User> getUsers() {
 		return this.userRepo.findAll();
-	}
-
-	public User getUser(String mid) {
-		Optional<User> user = this.userRepo.findUser(mid);
-
-		if (user.isPresent()) {
-			User user1 = user.get();
-			return user1;
-		} else
-			return null;
-
 	}
 
 	public String deleteUser(String mid) {
@@ -91,6 +81,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public String getMappedCategory(String mid) {
 		SubAdminCategory subAdminCategory = this.subAdminCategoryRepo.getOne(mid);
 		return subAdminCategory.getCategoryName();
+	}
+
+	@Override
+	public List<SubAdminCategory> getMappedSubAdmins() {
+		return this.subAdminCategoryRepo.findAll();
 	}
 
 }
