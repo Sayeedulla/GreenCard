@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
 		this.inprogresscard.save(card);
 		NewGreenCard newGreenCard=this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
-		glc.setStatus("assigned");
+		glc.setStatus("Assigned");
 		this.GLC.save(glc);
 		return "Assigned";
 	}

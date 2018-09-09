@@ -26,6 +26,7 @@
 		
 		@OneToMany
 		private Set<NewGreenCard> newGreenCards=new HashSet<>();
+		
 		public Integer getUserId() {
 			return userId;
 		}

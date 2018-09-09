@@ -11,9 +11,9 @@ import com.mindtree.greencard.model.InProgressGreenCard;
 
 @Repository
 public interface InProgressGreenCardRepository extends JpaRepository<InProgressGreenCard, Integer>{
-	@Query("SELECT i FROM InProgressGreenCard i where assignedPersonId=?1")
+	@Query("SELECT i FROM InProgressGreenCard i where assigned_person_id=?1")
 	public List<InProgressGreenCard> getComplaints(String mid);
 	
-	@Query("SELECT i FROM InProgressGreenCard i where gcId=?1")
+	@Query("SELECT i FROM InProgressGreenCard i where gc_id=?1")
 	public InProgressGreenCard getSubadmin(int data);
 }

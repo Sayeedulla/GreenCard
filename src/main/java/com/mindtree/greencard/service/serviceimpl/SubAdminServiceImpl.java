@@ -59,7 +59,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) {
-		if (inProgGCRepo.existsById(sub.getlId())) {
 			inProgGCRepo.save(sub);
 			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
 			NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
@@ -83,13 +82,11 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
 			
-			greencardLCRepo.delete(greencardLC);
-			inProgGCRepo.delete(sub);
-			newGCRepo.delete(ngc);
 			
-			return "Comlaint Resolved";
-		} else {
-			return "Particular complaint not exist";
-		}
+			
+			newGCRepo.delete(ngc);
+			inProgGCRepo.delete(sub);
+			greencardLCRepo.delete(greencardLC);
+			return "Comlaint Resolved";		
 	}
 }
