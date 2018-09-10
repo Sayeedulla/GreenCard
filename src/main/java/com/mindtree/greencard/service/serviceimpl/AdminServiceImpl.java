@@ -3,6 +3,7 @@ package com.mindtree.greencard.service.serviceimpl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,16 @@ public class AdminServiceImpl implements AdminService {
 	public List<NewGreenCard> newComplaints() {
 	
 
-		return this.newgreencard.getNewCards();
+		List<NewGreenCard> gcl=new ArrayList<NewGreenCard>();
+		List<GreenCardLifeCycle> l=this.GLC.getOpenGreenCard();
+		l.forEach(e->{
+			NewGreenCard n=e.getNewgreencard();
+			NewGreenCard n1=new NewGreenCard();
+			n1=n;
+			n1.setImage(null);
+			gcl.add(n1);
+		});
+		return gcl;
 	}
 
 	@Override
