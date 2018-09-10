@@ -36,9 +36,8 @@ public class SuperAdminController {
 
 	
 	@DeleteMapping(value = "/deleteUser/{mid}")
-	private List<User> deleteUser(@PathVariable String mid) {
-		String x= this.service.deleteUser(mid);
-		return this.get();
+	private String deleteUser(@PathVariable String mid) {
+		return this.service.deleteUser(mid);
 	}
 
 	@RequestMapping(value = "/updateUser")

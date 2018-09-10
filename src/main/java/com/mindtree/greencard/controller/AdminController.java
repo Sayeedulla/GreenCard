@@ -44,6 +44,11 @@ public class AdminController {
 		return this.adminservice.viewprogress();
 
 	}
+	
+	@GetMapping("/getprogresscard/{gid}")
+	public Optional<InProgressGreenCard> getprogresscard(@PathVariable int gid) {
+		return this.adminservice.getprogressCard(gid);
+	}
 
 	@PostMapping("/assigncard")
 	public String assigncard(@RequestBody InProgressGreenCard card) {
