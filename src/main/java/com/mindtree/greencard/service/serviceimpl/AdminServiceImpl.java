@@ -62,7 +62,6 @@ public class AdminServiceImpl implements AdminService {
 			NewGreenCard n=e.getNewgreencard();
 			NewGreenCard n1=new NewGreenCard();
 			n1=n;
-			n1.setImage(null);
 			gcl.add(n1);
 		});
 		return gcl;
