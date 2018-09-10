@@ -60,7 +60,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			inProgGCRepo.save(sub);
 			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
 			NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
-			greencardLC.setStatus("Closed");
+			greencardLC.setStatus("Done");
 			greencardLC.setResolvedTime(LocalDateTime.now());
 			greencardLCRepo.save(greencardLC);
 			gcH.setgId(sub.getGcId());
@@ -78,9 +78,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
 			
-			newGCRepo.delete(ngc);
-			inProgGCRepo.delete(sub);
-			greencardLCRepo.delete(greencardLC);
-			return "Comlaint Resolved";		
+//			newGCRepo.delete(ngc);
+//			inProgGCRepo.delete(sub);
+//			greencardLCRepo.delete(greencardLC);
+			return "Complaint Resolved";		
 	}
 }
