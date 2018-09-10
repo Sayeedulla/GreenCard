@@ -14,6 +14,7 @@ public interface AdminService {
 	public List<NewGreenCard> newComplaints();
 	public Optional<NewGreenCard> getCard(int gid);
 	public List<InProgressGreenCard> viewprogress();
+	public Optional<InProgressGreenCard> getprogressCard(int gid);
 	public String assigncard(InProgressGreenCard card);
 	public List<GreenCardHistory> getAllFromHistory();
 	public void generateXl();

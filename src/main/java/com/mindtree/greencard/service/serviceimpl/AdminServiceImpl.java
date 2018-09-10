@@ -83,6 +83,8 @@ public class AdminServiceImpl implements AdminService {
 	
 		return this.inprogresscard.findAll();
 	}
+	
+	
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
@@ -186,6 +188,12 @@ public class AdminServiceImpl implements AdminService {
 		finally{
 		}
 
+	}
+
+	@Override
+	public Optional<InProgressGreenCard> getprogressCard(int gid) {
+		// TODO Auto-generated method stub
+		return this.inprogresscard.findById(gid);
 	}
 
 
