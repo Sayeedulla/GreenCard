@@ -79,7 +79,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcHR.save(gcH);
 			
 // 			newGCRepo.delete(ngc);
-// 			inProgGCRepo.delete(sub);
+ 			inProgGCRepo.delete(sub);
 // 			greencardLCRepo.delete(greencardLC);
 			return "Complaint Resolved";		
 	}
