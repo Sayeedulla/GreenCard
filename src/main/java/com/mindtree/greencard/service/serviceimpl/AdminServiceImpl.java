@@ -157,9 +157,9 @@ public class AdminServiceImpl implements AdminService {
 			cell = row.createCell(1);
 			cell.setCellValue(e.getUserId());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			String openedtime = e.getSubmittedDateTime().format(formatter);
+		/*	String openedtime = e.getSubmittedDateTime().format(formatter);
 			cell = row.createCell(2);
-			cell.setCellValue(openedtime);
+			cell.setCellValue(openedtime);*/
 			if (e.getClosedDateTime() != null) {
 				String closedtime = e.getClosedDateTime().format(formatter);
 				cell = row.createCell(3);
@@ -187,15 +187,15 @@ public class AdminServiceImpl implements AdminService {
 
 		try {
 		
-			FileOutputStream out = new FileOutputStream(
-					new File("//greencardhistoryexcelsheet.xlsx"));
+		String home = System.getProperty("user.home");
+		FileOutputStream out = new FileOutputStream(
+					new File(home+"/Downloads/"+ "greencardhistoryexcelsheet" + ".xlsx"));
 			workbook.write(out);
 			out.close();
 
 		} catch (Exception e) {
 		}
-		finally{
-		}
+	
 
 	}
 
