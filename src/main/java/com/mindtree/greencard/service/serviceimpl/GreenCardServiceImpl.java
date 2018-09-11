@@ -37,11 +37,13 @@ public class GreenCardServiceImpl implements GreenCardService {
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
 		newgreencard.setSubmittedDate(LocalDateTime.now());
-		newgreencardrepository.save(newgreencard);
+		
 		Optional<User> user1 = userrepository.findUser(mid);
 		User user = new User();
 		if (user1.isPresent())
 			user = user1.get();
+		newgreencard.setUser(user);
+		newgreencardrepository.save(newgreencard);
 		user.getNewGreenCards().add(newgreencard);
 		userrepository.save(user);
 		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();

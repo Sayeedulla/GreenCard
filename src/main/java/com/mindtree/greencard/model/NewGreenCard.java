@@ -1,11 +1,13 @@
 package com.mindtree.greencard.model;
 
 import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,6 +26,17 @@ public class NewGreenCard {
 	
 	@Lob
 	byte[] image;
+	
+	@ManyToOne
+	private User user;
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	public Integer getGreenCardId() {
 		return greenCardId;
