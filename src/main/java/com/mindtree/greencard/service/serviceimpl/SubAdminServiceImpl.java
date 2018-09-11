@@ -53,7 +53,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) {
 		inProgGCRepo.save(sub);
-		int id=sub.getGcId();
+		int id = sub.getGcId();
 		GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
 		NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
 		greencardLC.setStatus("Closed");
@@ -78,7 +78,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 		// newGCRepo.delete(ngc);
 		inProgGCRepo.delete(sub);
 		// greencardLCRepo.delete(greencardLC);
-		return "Complaint "+id+"is resolved";
+		return "Complaint " + id + "is resolved";
 	}
 
 	@Override
