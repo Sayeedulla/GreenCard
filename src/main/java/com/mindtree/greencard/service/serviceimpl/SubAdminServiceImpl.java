@@ -73,7 +73,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcH.setRootCause(sub.getRootCause());
 			gcH.setStatus(greencardLC.getStatus());
 			//gcH.setUserId();
-			gcH.setSubmittedDateTime(greencardLC.getSubmittedTime
+			gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
 			
