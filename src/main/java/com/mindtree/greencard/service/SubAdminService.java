@@ -11,9 +11,11 @@ public interface SubAdminService {
 
 	public NewGreenCard getData(int gcid);
 
-	public InProgressGreenCard getSubadmin(int gcid);
+	
 
 	public String updateComplaint(InProgressGreenCard sub);
+
+	public String reassignComplaint(InProgressGreenCard sub);
 
 }
 

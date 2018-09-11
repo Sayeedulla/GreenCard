@@ -14,6 +14,5 @@ public interface InProgressGreenCardRepository extends JpaRepository<InProgressG
 	@Query("SELECT i FROM InProgressGreenCard i where assigned_person_id=?1")
 	public List<InProgressGreenCard> getComplaints(String mid);
 	
-	@Query("SELECT i FROM InProgressGreenCard i where gc_id=?1")
-	public InProgressGreenCard getSubadmin(int data);
+	
 }

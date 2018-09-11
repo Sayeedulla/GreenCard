@@ -36,14 +36,13 @@ public class SubAdminController {
 		return subserv.getData(gcid);
 	}
 
-	@GetMapping("/getUpdateData/{gcid}")
-	public InProgressGreenCard getSubadmin(@PathVariable int gcid) {
-		return subserv.getSubadmin(gcid);
-	}
-
 	@PostMapping("/updateComplaint")
 	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
 		return subserv.updateComplaint(sub);
 	}
 	
+	@PostMapping("/reassignComplaint")
+	public String reassignComplaint(@RequestBody InProgressGreenCard sub) {
+		return subserv.reassignComplaint(sub);
+	}
 }
