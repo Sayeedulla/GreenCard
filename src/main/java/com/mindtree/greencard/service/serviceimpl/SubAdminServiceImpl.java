@@ -72,10 +72,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 			gcH.setLandmark(ngc.getLandmark());
 			gcH.setRootCause(sub.getRootCause());
 			gcH.setStatus(greencardLC.getStatus());
-			gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
 			//gcH.setUserId();
-			gcH.setSubmittedDateTime(greencardLC.getAssignedTime());
-			
+			gcH.setSubmittedDateTime(greencardLC.getSubmittedTime
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
 			
