@@ -13,7 +13,7 @@ public interface NewGreenCardRepository extends JpaRepository<NewGreenCard, Inte
 	@Query(value="select greenCardId,whatHappened,landmark,submittedDate from NewGreenCard")
 	public List<NewGreenCard> getNewCards();
 	
-	@Query(value="select greenCardId,whatHappened,landmark,submittedDate from NewGreenCard where greenCardId=:gid")
+	@Query(value="select g from NewGreenCard g where g.greenCardId=:gid")
 	public NewGreenCard getNewCard(@Param("gid") int g);
 	
 }

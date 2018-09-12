@@ -80,5 +80,10 @@ public class AdminController {
 	public List<SubAdminCategory> getSubAdmins(){
 		return this.adminservice.getSubAdmins();
 	}
+	
+	@GetMapping("/reject/{gid}")
+	public String rejectGreenCard(@PathVariable int gid) {
+		return this.adminservice.rejectGreenCard(gid);
+	}
 
 }
