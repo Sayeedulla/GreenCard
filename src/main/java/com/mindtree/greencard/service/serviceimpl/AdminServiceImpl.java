@@ -2,6 +2,8 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	GreenCardHistory gcH;
 	
 
 	@Override
@@ -117,6 +122,30 @@ public class AdminServiceImpl implements AdminService {
 	public Optional<GreenCardHistory> getByGid(int gId) {
 	
 		return this.history.findById(gId);
+	}
+	
+	public String rejectGreenCard(int gid) {
+		
+		NewGreenCard ngc=newgreencard.getNewCard(gid);
+		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setStatus("rejected");
+		
+		GLC.save(greencardLC);
+		gcH.setgId(ngc.getGreenCardId());
+		gcH.setAssignedPersonId("N/A");
+		gcH.setCategory("N/A");
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction("N/A");
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause("N/A");
+		gcH.setStatus(greencardLC.getStatus());
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		history.save(gcH);
+		return "Rejected";
+		
 	}
 
 	@Override
@@ -204,6 +233,8 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return this.inprogresscard.findById(gid);
 	}
+	
+	
 
 
 

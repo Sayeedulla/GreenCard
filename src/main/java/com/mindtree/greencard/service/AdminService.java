@@ -20,5 +20,6 @@ public interface AdminService {
 	public void generateXl();
 	public Optional<GreenCardHistory> getByGid(int gId);
 	public List<SubAdminCategory> getSubAdmins();
+	public String rejectGreenCard(int gid);
 
 }
