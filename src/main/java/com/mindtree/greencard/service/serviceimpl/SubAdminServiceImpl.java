@@ -78,16 +78,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 			
 			gcH.setWhatHappened(ngc.getWhatHappened());
 			gcHR.save(gcH);
-			
-<<<<<<< HEAD
-//			newGCRepo.delete(ngc);
-//			inProgGCRepo.delete(sub);
-//			greencardLCRepo.delete(greencardLC);
-=======
-// 			newGCRepo.delete(ngc);
+
  			inProgGCRepo.delete(sub);
 // 			greencardLCRepo.delete(greencardLC);
->>>>>>> 34c691919faf773e029b27088117dec27c345d10
 			return "Complaint Resolved";		
 	}
 }

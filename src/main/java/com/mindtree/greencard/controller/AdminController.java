@@ -63,6 +63,7 @@ public class AdminController {
 		return this.adminservice.getAllFromHistory();
 	}
 	
+	
 	@GetMapping("/getCardhistory/{gId}")
 	public Optional<GreenCardHistory> getByGid(@PathVariable int gId) {
 		
@@ -76,9 +77,18 @@ public class AdminController {
 		
 	}
 	
+	@GetMapping("/historysubadmin/{mid}")
+	public List<GreenCardHistory> getForSubAdmin(@PathVariable String mid)
+	{
+		return this.adminservice.getForSubadmin(mid);
+		
+	}
+	
 	@GetMapping("/getSubAdminCategory")
 	public List<SubAdminCategory> getSubAdmins(){
 		return this.adminservice.getSubAdmins();
 	}
+	
+	
 
 }
