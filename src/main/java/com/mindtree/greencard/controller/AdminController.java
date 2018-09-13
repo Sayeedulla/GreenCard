@@ -44,6 +44,11 @@ public class AdminController {
 		return this.adminservice.viewprogress();
 
 	}
+	
+	@GetMapping("/getprogresscard/{gid}")
+	public Optional<InProgressGreenCard> getprogresscard(@PathVariable int gid) {
+		return this.adminservice.getprogressCard(gid);
+	}
 
 	@PostMapping("/assigncard")
 	public String assigncard(@RequestBody InProgressGreenCard card) {
@@ -58,6 +63,12 @@ public class AdminController {
 		return this.adminservice.getAllFromHistory();
 	}
 	
+	@GetMapping("/getCardhistory/{gId}")
+	public Optional<GreenCardHistory> getByGid(@PathVariable int gId) {
+		
+		return this.adminservice.getByGid(gId);
+	}
+	
 	@GetMapping("/downloadxl")
 	public void downloadXl()
 	{
@@ -68,6 +79,11 @@ public class AdminController {
 	@GetMapping("/getSubAdminCategory")
 	public List<SubAdminCategory> getSubAdmins(){
 		return this.adminservice.getSubAdmins();
+	}
+	
+	@GetMapping("/reject/{gid}")
+	public String rejectGreenCard(@PathVariable int gid) {
+		return this.adminservice.rejectGreenCard(gid);
 	}
 
 }

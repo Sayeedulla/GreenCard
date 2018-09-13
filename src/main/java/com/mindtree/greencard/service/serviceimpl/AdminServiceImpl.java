@@ -2,7 +2,10 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRe
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
@@ -46,12 +50,26 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	GreenCardLifeCycleRepository GLC;
 	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	GreenCardHistory gcH;
+	
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
 	
 
-		return this.newgreencard.findAll();
+		List<NewGreenCard> gcl=new ArrayList<NewGreenCard>();
+		List<GreenCardLifeCycle> l=this.GLC.getOpenGreenCard();
+		l.forEach(e->{
+			NewGreenCard n=e.getNewgreencard();
+			NewGreenCard n1=new NewGreenCard();
+			n1=n;
+			gcl.add(n1);
+		});
+		return gcl;
 	}
 
 	@Override
@@ -79,17 +97,55 @@ public class AdminServiceImpl implements AdminService {
 	
 		return this.inprogresscard.findAll();
 	}
+	
+	
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
 		
-		return this.history.findAll();
+		//return this.history.findAll();
+		//return this.history.getAllExceptImg();
+			List<GreenCardHistory>  li= this.history.getAllExceptImg();
+			return li;
+			
 
 	}
+	
+	
 	
 	@Override
 	public List<SubAdminCategory> getSubAdmins(){
 		return this.subadmin.findAll();
+	}
+	
+	@Override
+	public Optional<GreenCardHistory> getByGid(int gId) {
+	
+		return this.history.findById(gId);
+	}
+	
+	public String rejectGreenCard(int gid) {
+		
+		NewGreenCard ngc=newgreencard.getNewCard(gid);
+		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setStatus("rejected");
+		
+		GLC.save(greencardLC);
+		gcH.setgId(ngc.getGreenCardId());
+		gcH.setAssignedPersonId("N/A");
+		gcH.setCategory("N/A");
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction("N/A");
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause("N/A");
+		gcH.setStatus(greencardLC.getStatus());
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		history.save(gcH);
+		return "Rejected";
+		
 	}
 
 	@Override
@@ -130,9 +186,9 @@ public class AdminServiceImpl implements AdminService {
 			cell = row.createCell(1);
 			cell.setCellValue(e.getUserId());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			String openedtime = e.getSubmittedDateTime().format(formatter);
+		/*	String openedtime = e.getSubmittedDateTime().format(formatter);
 			cell = row.createCell(2);
-			cell.setCellValue(openedtime);
+			cell.setCellValue(openedtime);*/
 			if (e.getClosedDateTime() != null) {
 				String closedtime = e.getClosedDateTime().format(formatter);
 				cell = row.createCell(3);
@@ -160,16 +216,28 @@ public class AdminServiceImpl implements AdminService {
 
 		try {
 		
-			FileOutputStream out = new FileOutputStream(
-					new File("D://greencardhistoryexcelsheet.xlsx"));
+		String home = System.getProperty("user.home");
+		FileOutputStream out = new FileOutputStream(
+					new File(home+"/Downloads/"+ "greencardhistoryexcelsheet" + ".xlsx"));
 			workbook.write(out);
 			out.close();
 
 		} catch (Exception e) {
 		}
-		finally{
-		}
+	
 
 	}
+
+	@Override
+	public Optional<InProgressGreenCard> getprogressCard(int gid) {
+		// TODO Auto-generated method stub
+		return this.inprogresscard.findById(gid);
+	}
+	
+	
+
+
+
+
 
 }

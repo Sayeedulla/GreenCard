@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.SubAdminService;
 
 @RestController
@@ -36,14 +38,23 @@ public class SubAdminController {
 		return subserv.getData(gcid);
 	}
 
-	@GetMapping("/getUpdateData/{gcid}")
-	public InProgressGreenCard getSubadmin(@PathVariable int gcid) {
-		return subserv.getSubadmin(gcid);
-	}
-
 	@PostMapping("/updateComplaint")
 	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
 		return subserv.updateComplaint(sub);
 	}
-	
+
+	@PostMapping("/reassignComplaint")
+	public String reassignComplaint(@RequestBody InProgressGreenCard sub) {
+		return subserv.reassignComplaint(sub);
+	}
+
+	@GetMapping("/getCategory")
+	public List<Category> getCategories() {
+		return subserv.getCategory();
+	}
+
+	@GetMapping("/getSubadmins/{category}")
+	public List<SubAdminCategory> getSubadmins(@PathVariable String category) {
+		return subserv.getSubadmins(category);
+	}
 }

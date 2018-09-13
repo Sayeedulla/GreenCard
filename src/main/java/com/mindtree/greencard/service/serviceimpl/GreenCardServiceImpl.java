@@ -57,19 +57,12 @@ public class GreenCardServiceImpl implements GreenCardService {
 	public String saveNewGreenCardByGuest(CommonsMultipartFile fileupload, String what, String location, String name,
 			BigInteger phone) {
 
-		User user = new User();
-		user.setName(name);
-		user.setPhoneNo(phone);
-		user.setType("Guest");
-		userrepository.save(user);
 		NewGreenCard newgreencard = new NewGreenCard();
 		newgreencard.setImage(fileupload.getBytes());
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
 		newgreencard.setSubmittedDate(LocalDateTime.now());
 		newgreencardrepository.save(newgreencard);
-		user.getNewGreenCards().add(newgreencard);
-		userrepository.save(user);
 		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 		greencardlifecycle.setStatus("Open");
 		greencardlifecycle.setNewgreencard(newgreencard);
