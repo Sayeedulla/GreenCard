@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.User;
 
@@ -29,6 +30,7 @@ public class WebConfig {
 	public User getuse() {
 		return new User();
 	}
+
 
 	@Bean
 	public GreenCardHistory getgcHistory() {

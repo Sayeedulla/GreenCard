@@ -11,11 +11,15 @@ import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepos
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
+import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.SubAdminService;
 
@@ -42,6 +46,12 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	UserRepository us;
+
+	@Autowired
+	CategoryRepository cat;
+
+	@Autowired
+	SubAdminCategoryRepository subRepo;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) {
@@ -87,6 +97,16 @@ public class SubAdminServiceImpl implements SubAdminService {
 	@Override
 	public String reassignComplaint(InProgressGreenCard sub) {
 		inProgGCRepo.save(sub);
-		return "Complaint is reassigned to " + sub.getAssignedPersonId();
+		return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
+				+ sub.getCategory();
+	}
+
+	public List<Category> getCategory() {
+		return cat.findAll();
+	}
+
+	@Override
+	public List<SubAdminCategory> getSubadmins(String category) {
+		return subRepo.getSubadmins(category);
 	}
 }

@@ -28,6 +28,7 @@ public class SuperAdminController {
 	private String addUser(@RequestBody User user) {
 		return this.service.addUser(user);
 	}
+	
 
 	@RequestMapping(value = "/getUsers")
 	private List<User> get() {

@@ -2,6 +2,7 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ UserRepository userrepository;
 @Transactional
 	@Override
 	public User getUserInfoByMidAndPassword(User user) {
-	
-		return userrepository.findUserbymidPassword(user.getMid(), user.getPassword());
+	String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+		return userrepository.findUserbymidPassword(user.getMid(), sha256hex);
 	}
 
 }
