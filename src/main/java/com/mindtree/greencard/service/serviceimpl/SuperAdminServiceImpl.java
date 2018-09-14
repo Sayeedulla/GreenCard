@@ -69,7 +69,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
 		for (SubAdminCategory subAdminCategory : list)
 		{
-		  subAdminCategory.setCategoryName("Not Assigned");
+		  subAdminCategory.setCategoryName("NOT ASSIGNED");
 		  this.subAdminCategoryRepo.save(subAdminCategory);
 		}
 		return categoryName;
