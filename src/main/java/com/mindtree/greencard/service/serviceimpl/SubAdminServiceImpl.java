@@ -97,7 +97,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 	@Override
 	public String reassignComplaint(InProgressGreenCard sub) {
 		inProgGCRepo.save(sub);
-		return "Complaint is reassigned to " + sub.getAssignedPersonId();
+		return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
+				+ sub.getCategory();
 	}
 
 	public List<Category> getCategory() {
