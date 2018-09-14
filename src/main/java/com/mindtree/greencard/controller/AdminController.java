@@ -85,5 +85,10 @@ public class AdminController {
 	public String rejectGreenCard(@PathVariable int gid) {
 		return this.adminservice.rejectGreenCard(gid);
 	}
+	
+	@GetMapping("/resolve/{gid}/{rootcause}/{correctiveaction}")
+	public String resolveCard(@PathVariable int gid,@PathVariable String rootcause,@PathVariable String correctiveaction) {
+		return this.adminservice.resolveCard(gid,rootcause,correctiveaction);
+	}
 
 }

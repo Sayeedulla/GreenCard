@@ -125,6 +125,7 @@ public class AdminServiceImpl implements AdminService {
 		return this.history.findById(gId);
 	}
 	
+	@Override
 	public String rejectGreenCard(int gid) {
 		
 		NewGreenCard ngc=newgreencard.getNewCard(gid);
@@ -147,6 +148,29 @@ public class AdminServiceImpl implements AdminService {
 		history.save(gcH);
 		return "Rejected";
 		
+	}
+	
+	@Override
+	public String resolveCard(int gid,String rootcause,String correctiveaction) {
+		
+		NewGreenCard ngc=newgreencard.getNewCard(gid);
+		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setStatus("closed");
+		GLC.save(greencardLC);
+		gcH.setgId(ngc.getGreenCardId());
+		gcH.setAssignedPersonId(userRepository.getAdmin()+" - Admin");
+		gcH.setCategory("N/A");
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction(correctiveaction);
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause(rootcause);
+		gcH.setStatus(greencardLC.getStatus());
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		history.save(gcH);
+		return "Resolved";
 	}
 
 	@Override
