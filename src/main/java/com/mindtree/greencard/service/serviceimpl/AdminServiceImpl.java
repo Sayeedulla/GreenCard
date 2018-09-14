@@ -88,6 +88,7 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard newGreenCard=this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
 		glc.setStatus("Assigned");
+		glc.setAssignedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		this.GLC.save(glc);
 		return "Assigned";
 	}
