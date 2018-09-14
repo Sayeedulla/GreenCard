@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.mindtree.greencard.model.GreenCardHistory;
+import com.mindtree.greencard.model.SuperAdminHistory;
 import com.mindtree.greencard.model.User;
 
 import springfox.documentation.builders.PathSelectors;
@@ -38,7 +39,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	public User getuse() {
 		return new User();
 	}
-
+	
 
 	@Bean
 	public GreenCardHistory getgcHistory() {
