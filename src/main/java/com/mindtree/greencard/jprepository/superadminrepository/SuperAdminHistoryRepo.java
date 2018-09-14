@@ -9,7 +9,6 @@ import com.mindtree.greencard.model.SuperAdminHistory;
 @Repository
 public interface SuperAdminHistoryRepo extends JpaRepository<SuperAdminHistory,Integer>{
 	
-	@Query(value="select type from SuperAdminHistory sh where mid=?1")
-	public String getMid(String mid);
+
 
 }

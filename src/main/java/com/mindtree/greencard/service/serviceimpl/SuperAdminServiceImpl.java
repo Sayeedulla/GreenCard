@@ -39,7 +39,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			SuperAdminHistory sh = new SuperAdminHistory();
 			sh.setMid(user.getMid());
 			sh.setType(user.getType());
-			sh.setWhatischanged("save");
+			sh.setWhatischanged("added");
 			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 			this.SHR.save(sh);
 			this.userRepo.save(user);
@@ -53,19 +53,19 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		if (tempuser.isPresent()) {
 			
 			user.setUserId(tempuser.get().getUserId());
-			this.userRepo.save(user);
 			SuperAdminHistory sh = new SuperAdminHistory();
 			sh.setMid(user.getMid());
-			String from= this.SHR.getMid(user.getMid());
+			String from= this.userRepo.getType(user.getMid());
 			String type = from + "to" + user.getType();
 			sh.setType(type);
-			if(user.getType().matches("SubAdmin"))
+			if(user.getType().equals("SubAdmin"))
 			{
-				String str=from + "to"+ user.getType()+ " - "+ getMappedCategory(user.getMid());
+				String str= from + "to"+ user.getType()+ " - "+ getMappedCategory(user.getMid());
 				sh.setType(str);
 			}
 			sh.setWhatischanged("edit");
 			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			this.userRepo.save(user);
 			this.SHR.save(sh);
 			
 		}
