@@ -68,7 +68,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.categoryRepo.deleteById(category.getCategoryId());
 		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
 		for (SubAdminCategory subAdminCategory : list)
-			this.subAdminCategoryRepo.deleteById(subAdminCategory.getMid());
+		{
+		  subAdminCategory.setCategoryName("Not Assigned");
+		  this.subAdminCategoryRepo.save(subAdminCategory);
+		}
 		return categoryName;
 	}
 
