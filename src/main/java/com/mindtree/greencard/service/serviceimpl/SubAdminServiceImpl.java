@@ -1,18 +1,25 @@
 package com.mindtree.greencard.service.serviceimpl;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
+import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.SubAdminService;
 
@@ -33,12 +40,18 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	User u;
-	
+
 	@Autowired
 	GreenCardHistory gcH;
-	
+
 	@Autowired
 	UserRepository us;
+
+	@Autowired
+	CategoryRepository cat;
+
+	@Autowired
+	SubAdminCategoryRepository subRepo;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) {
@@ -51,36 +64,50 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	@Override
-	public InProgressGreenCard getSubadmin(int gcid) {
-		return inProgGCRepo.getSubadmin(gcid);
+	public String updateComplaint(InProgressGreenCard sub) {
+		inProgGCRepo.save(sub);
+		int id = sub.getGcId();
+		GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
+		NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
+		greencardLC.setStatus("Closed");
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLCRepo.save(greencardLC);
+		gcH.setgId(sub.getGcId());
+		gcH.setAssignedPersonId(sub.getAssignedPersonId());
+		gcH.setCategory(sub.getCategory());
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction(sub.getCorrectiveAction());
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause(sub.getRootCause());
+		gcH.setStatus(greencardLC.getStatus());
+
+		// gcH.setUserId(ngc.getUser().getUserId());
+
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		gcHR.save(gcH);
+
+		// newGCRepo.delete(ngc);
+		inProgGCRepo.delete(sub);
+		// greencardLCRepo.delete(greencardLC);
+		return "Complaint " + id + " is resolved";
 	}
 
 	@Override
-	public String updateComplaint(InProgressGreenCard sub) {
-			inProgGCRepo.save(sub);
-			GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
-			NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
-			greencardLC.setStatus("Done");
-			greencardLC.setResolvedTime(LocalDateTime.now());
-			greencardLCRepo.save(greencardLC);
-			gcH.setgId(sub.getGcId());
-			gcH.setAssignedPersonId(sub.getAssignedPersonId());
-			gcH.setCategory(sub.getCategory());
-			gcH.setClosedDateTime(greencardLC.getResolvedTime());
-			gcH.setCorrectiveAction(sub.getCorrectiveAction());
-			gcH.setImage(ngc.getImage());
-			gcH.setLandmark(ngc.getLandmark());
-			gcH.setRootCause(sub.getRootCause());
-			gcH.setStatus(greencardLC.getStatus());
-			gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
-			//gcH.setUserId();
-			gcH.setSubmittedDateTime(greencardLC.getAssignedTime());
-			
-			gcH.setWhatHappened(ngc.getWhatHappened());
-			gcHR.save(gcH);
+	public String reassignComplaint(InProgressGreenCard sub) {
+		inProgGCRepo.save(sub);
+		return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
+				+ sub.getCategory();
+	}
 
- 			inProgGCRepo.delete(sub);
-// 			greencardLCRepo.delete(greencardLC);
-			return "Complaint Resolved";		
+	public List<Category> getCategory() {
+		return cat.findAll();
+	}
+
+
+	public List<SubAdminCategory> getSubadmins(String category) {
+		return subRepo.getSubadmins(category);
+
 	}
 }

@@ -21,5 +21,7 @@ public interface AdminService {
 	public Optional<GreenCardHistory> getByGid(int gId);
 	public List<SubAdminCategory> getSubAdmins();
 	public List<GreenCardHistory> getForSubadmin(String mid);
+	public String rejectGreenCard(int gid);
+
 
 }

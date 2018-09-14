@@ -2,6 +2,8 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	GreenCardHistory gcH;
 	
 
 	@Override
@@ -117,6 +122,30 @@ public class AdminServiceImpl implements AdminService {
 	
 		return this.history.findById(gId);
 	}
+	
+	public String rejectGreenCard(int gid) {
+		
+		NewGreenCard ngc=newgreencard.getNewCard(gid);
+		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setStatus("rejected");
+		
+		GLC.save(greencardLC);
+		gcH.setgId(ngc.getGreenCardId());
+		gcH.setAssignedPersonId("N/A");
+		gcH.setCategory("N/A");
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction("N/A");
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause("N/A");
+		gcH.setStatus(greencardLC.getStatus());
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		history.save(gcH);
+		return "Rejected";
+		
+	}
 
 	@Override
 	public void generateXl() {
@@ -156,9 +185,9 @@ public class AdminServiceImpl implements AdminService {
 			cell = row.createCell(1);
 			cell.setCellValue(e.getUserId());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			String openedtime = e.getSubmittedDateTime().format(formatter);
+		/*	String openedtime = e.getSubmittedDateTime().format(formatter);
 			cell = row.createCell(2);
-			cell.setCellValue(openedtime);
+			cell.setCellValue(openedtime);*/
 			if (e.getClosedDateTime() != null) {
 				String closedtime = e.getClosedDateTime().format(formatter);
 				cell = row.createCell(3);
@@ -186,6 +215,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		try {
+
 			System.out.println("entered try");
 			String home = System.getProperty("user.home");
 		FileOutputStream out = new FileOutputStream(
@@ -204,6 +234,8 @@ public class AdminServiceImpl implements AdminService {
 	public Optional<InProgressGreenCard> getprogressCard(int gid) {
 		return this.inprogresscard.findById(gid);
 	}
+	
+	
 
 	@Override
 	public List<GreenCardHistory> getForSubadmin(String mid) {

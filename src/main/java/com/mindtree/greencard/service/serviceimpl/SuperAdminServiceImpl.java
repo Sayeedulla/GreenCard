@@ -4,6 +4,7 @@ package com.mindtree.greencard.service.serviceimpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public String addUser(User user) {
 		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
 		if (!tempuser.isPresent()) {
+			String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+			user.setPassword(sha256hex);
 			this.userRepo.save(user);
 			return user.getMid();
 		} else
