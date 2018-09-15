@@ -105,8 +105,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 		return cat.findAll();
 	}
 
-	@Override
+
 	public List<SubAdminCategory> getSubadmins(String category) {
 		return subRepo.getSubadmins(category);
+
 	}
 }

@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.mindtree.greencard.model.GreenCardHistory;
+import com.mindtree.greencard.model.SuperAdminHistory;
 import com.mindtree.greencard.model.User;
 
 import springfox.documentation.builders.PathSelectors;
@@ -19,9 +22,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableWebMvc
-@EnableSwagger2
 @ComponentScan(basePackages = "com.mindtree.greencard")
-public class WebConfig {
+@EnableSwagger2
+public class WebConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -36,7 +39,7 @@ public class WebConfig {
 	public User getuse() {
 		return new User();
 	}
-
+	
 
 	@Bean
 	public GreenCardHistory getgcHistory() {
@@ -59,4 +62,15 @@ public class WebConfig {
           .paths(PathSelectors.any())                          
           .build();                                           
     }
+
+	
+	 @Override
+	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	        registry.addResourceHandler("swagger-ui.html")
+	                .addResourceLocations("classpath:/META-INF/resources/");
+
+	        registry.addResourceHandler("/webjars/**")
+	                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+	    }
+
 }
