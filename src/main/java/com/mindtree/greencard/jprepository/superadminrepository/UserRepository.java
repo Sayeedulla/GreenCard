@@ -21,5 +21,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value= "select name from User u where u.mid=?1")
 	public String getAssignedName(String mid);
 	
+	@Query(value= "select mid from User u where u.type='Admin'")
+	public String getAdmin();
+	
+	@Query(value="select type from User u where u.mid=?1")
+	public String getType(String string);
+	
 	
 }

@@ -88,6 +88,7 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard newGreenCard=this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
 		glc.setStatus("Assigned");
+		glc.setAssignedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		this.GLC.save(glc);
 		return "Assigned";
 	}
@@ -102,9 +103,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
-		
-		//return this.history.findAll();
-		//return this.history.getAllExceptImg();
+	
 			List<GreenCardHistory>  li= this.history.getAllExceptImg();
 			return li;
 			
@@ -112,6 +111,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	
+
 	
 	@Override
 	public List<SubAdminCategory> getSubAdmins(){
@@ -124,6 +124,7 @@ public class AdminServiceImpl implements AdminService {
 		return this.history.findById(gId);
 	}
 	
+	@Override
 	public String rejectGreenCard(int gid) {
 		
 		NewGreenCard ngc=newgreencard.getNewCard(gid);
@@ -147,12 +148,35 @@ public class AdminServiceImpl implements AdminService {
 		return "Rejected";
 		
 	}
+	
+	@Override
+	public String resolveCard(int gid,String rootcause,String correctiveaction) {
+		
+		NewGreenCard ngc=newgreencard.getNewCard(gid);
+		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setStatus("closed");
+		GLC.save(greencardLC);
+		gcH.setgId(ngc.getGreenCardId());
+		gcH.setAssignedPersonId(userRepository.getAdmin()+" - Admin");
+		gcH.setCategory("N/A");
+		gcH.setClosedDateTime(greencardLC.getResolvedTime());
+		gcH.setCorrectiveAction(correctiveaction);
+		gcH.setImage(ngc.getImage());
+		gcH.setLandmark(ngc.getLandmark());
+		gcH.setRootCause(rootcause);
+		gcH.setStatus(greencardLC.getStatus());
+		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+		gcH.setWhatHappened(ngc.getWhatHappened());
+		history.save(gcH);
+		return "Resolved";
+	}
 
 	@Override
 	public void generateXl() {
 		List<GreenCardHistory> list = this.history.findAll();
 		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFSheet spreadsheet = workbook.createSheet("GreenCradObservations");
+		XSSFSheet spreadsheet = workbook.createSheet("GreenCardObservations");
 		XSSFRow row = spreadsheet.createRow(1);
 		XSSFCell cell;
 		cell = row.createCell(0);
@@ -212,32 +236,37 @@ public class AdminServiceImpl implements AdminService {
 			cell = row.createCell(10);
 			cell.setCellValue(e.getCategory());
 			i++;
+			System.out.println("not entered");
 		}
 
 		try {
-		
-		String home = System.getProperty("user.home");
+
+			System.out.println("entered try");
+			String home = System.getProperty("user.home");
 		FileOutputStream out = new FileOutputStream(
 					new File(home+"/Downloads/"+ "greencardhistoryexcelsheet" + ".xlsx"));
+			/*FileOutputStream out = new FileOutputStream(
+					new File("C:/Users/M1046884/"+ "greencardhistoryexcelsheet" + ".xlsx"));*/
 			workbook.write(out);
 			out.close();
 
 		} catch (Exception e) {
 		}
 	
-
 	}
 
 	@Override
 	public Optional<InProgressGreenCard> getprogressCard(int gid) {
-		// TODO Auto-generated method stub
 		return this.inprogresscard.findById(gid);
 	}
 	
 	
 
-
-
+	@Override
+	public List<GreenCardHistory> getForSubadmin(String mid) {
+		
+		return this.history.getExceptImgForSubadmin(mid);
+	}
 
 
 }

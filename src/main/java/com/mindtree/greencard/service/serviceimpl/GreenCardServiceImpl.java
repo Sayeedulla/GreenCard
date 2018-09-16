@@ -37,7 +37,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		newgreencard.setImage(fileupload.getBytes());
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
-		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		newgreencardrepository.save(newgreencard);
 		Optional<User> user1 = userrepository.findUser(mid);
 		User user = new User();
@@ -62,7 +62,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		newgreencard.setImage(fileupload.getBytes());
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
-		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		newgreencardrepository.save(newgreencard);
 		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 		greencardlifecycle.setStatus("Open");
