@@ -58,14 +58,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			String from= this.userRepo.getType(user.getMid());
 			String type = from + "to" + user.getType();
 			sh.setType(type);
+			if(from.equals("SubAdmin"))
+			{
+			     from = from + getMappedCategory(user.getMid());
+			}
+			sh.setWhatischanged("edit");
+			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			this.userRepo.save(user);
 			if(user.getType().equals("SubAdmin"))
 			{
 				String str= from + "to"+ user.getType()+ " - "+ getMappedCategory(user.getMid());
 				sh.setType(str);
 			}
-			sh.setWhatischanged("edit");
-			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-			this.userRepo.save(user);
 			this.SHR.save(sh);
 			
 		}
