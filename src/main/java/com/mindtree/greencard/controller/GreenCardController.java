@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.mindtree.greencard.model.FeedBack;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.GreenCardService;
@@ -52,5 +53,9 @@ public class GreenCardController {
 	public GreenCardLifeCycle getGreenCardById(@PathVariable int id) {
 		System.out.println("Helo");
 		return this.greenCardService.getGreenCardById(id);
+	}
+	@PostMapping(value="/feedback")
+	public String sendFeedback(@RequestBody FeedBack feedback) {
+		return userservice.saveFeedBack(feedback);
 	}
 }

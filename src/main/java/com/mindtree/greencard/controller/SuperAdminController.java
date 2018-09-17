@@ -25,7 +25,9 @@ public class SuperAdminController {
 	@PostMapping(value = "/addUser")
 	private String addUser(@RequestBody User user) {
 		return this.service.addUser(user);
+		
 	}
+	
 	
 
 	@RequestMapping(value = "/getUsers")
