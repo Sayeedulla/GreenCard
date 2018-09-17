@@ -52,7 +52,6 @@ public class AdminController {
 
 	@PostMapping("/assigncard")
 	public String assigncard(@RequestBody InProgressGreenCard card) {
-		
 		return this.adminservice.assigncard(card);
 
 	}
