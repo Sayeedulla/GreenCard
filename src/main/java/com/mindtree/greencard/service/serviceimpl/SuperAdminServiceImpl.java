@@ -99,7 +99,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.categoryRepo.save(category);
 		SuperAdminHistory sh = new SuperAdminHistory();
 		sh.setMid("-");
-		sh.setType("category");
+		String name = "category"+ category.getCategoryName();
+		sh.setType(name);
 		sh.setWhatischanged("added");
 		sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		this.SHR.save(sh);
@@ -148,5 +149,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public List<SubAdminCategory> getMappedSubAdmins() {
 		return this.subAdminCategoryRepo.findAll();
 	}
+
+	@Override
+	public List<SuperAdminHistory> getSuperAdminHistory() {
+		
+		return this.SHR.findAll();
+		
+	}
+	
+	
 
 }
