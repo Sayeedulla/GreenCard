@@ -34,8 +34,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserInfoByMid(String mid) {
-		return this.userrepository.getUserByMid(mid);
+	public String getUserInfoByMid(User user) {
+		User checkUser= this.userrepository.getUserByMid(user.getMid());
+		if(checkUser==null) {
+			System.out.println("Hello");
+			this.userrepository.save(user);
+			return "User";
+		}
+		else if(checkUser.getType().equals("Admin")){
+			return "Admin";
+		}
+		else if(checkUser.getType().equals("SubAdmin")) {
+			return "SubAdmin";
+		}
+		else {
+			return "SuperAdmin";
+		}
+		
 	}
 
 }

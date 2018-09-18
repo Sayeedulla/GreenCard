@@ -12,6 +12,6 @@ public interface UserService {
 
 	public String saveFeedBack(FeedBack feedback);
 
-	public User getUserInfoByMid(String mid);
+	public String getUserInfoByMid(User user);
 
 }

@@ -57,8 +57,8 @@ public class GreenCardController {
 		return userservice.saveFeedBack(feedback);
 	}
 	
-	@GetMapping(value="userInfoByMid/{mid}")
-	public User getUserInfoByMid(@PathVariable String mid) {
-		return userservice.getUserInfoByMid(mid);
+	@PostMapping(value="/userInfoByMid")
+	public String getUserInfoByMid(@RequestBody User user) {
+		return userservice.getUserInfoByMid(user);
 	}
 }
