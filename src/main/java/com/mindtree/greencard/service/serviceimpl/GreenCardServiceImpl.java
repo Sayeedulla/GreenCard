@@ -2,6 +2,7 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -36,7 +37,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		newgreencard.setImage(fileupload.getBytes());
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
-		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		newgreencardrepository.save(newgreencard);
 		Optional<User> user1 = userrepository.findUser(mid);
 		User user = new User();
@@ -47,7 +48,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 		greencardlifecycle.setStatus("Open");
 		greencardlifecycle.setNewgreencard(newgreencard);
-		greencardlifecycle.setSubmittedTime(LocalDateTime.now());
+		greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		greencardlifecyclerepository.save(greencardlifecycle);
 
 		return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
@@ -61,12 +62,12 @@ public class GreenCardServiceImpl implements GreenCardService {
 		newgreencard.setImage(fileupload.getBytes());
 		newgreencard.setLandmark(location);
 		newgreencard.setWhatHappened(what);
-		newgreencard.setSubmittedDate(LocalDateTime.now());
+		newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		newgreencardrepository.save(newgreencard);
 		GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 		greencardlifecycle.setStatus("Open");
 		greencardlifecycle.setNewgreencard(newgreencard);
-		greencardlifecycle.setSubmittedTime(LocalDateTime.now());
+		greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		greencardlifecyclerepository.save(greencardlifecycle);
 
 		return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
@@ -77,5 +78,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		NewGreenCard newGreenCard=this.newgreencardrepository.getOne(green_card_id);
 		return this.greencardlifecyclerepository.getGreenCardById(newGreenCard);
 	}
+
+	
 
 }

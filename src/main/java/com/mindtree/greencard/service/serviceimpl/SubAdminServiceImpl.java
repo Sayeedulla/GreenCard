@@ -3,6 +3,15 @@ package com.mindtree.greencard.service.serviceimpl;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +20,15 @@ import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepos
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
+import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
+import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.SubAdminService;
 
@@ -24,6 +37,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
+//	@Autowired
+//	private JavaMailSender sender;
+
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -42,6 +58,12 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	UserRepository us;
+
+	@Autowired
+	CategoryRepository cat;
+
+	@Autowired
+	SubAdminCategoryRepository subRepo;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) {
@@ -87,6 +109,57 @@ public class SubAdminServiceImpl implements SubAdminService {
 	@Override
 	public String reassignComplaint(InProgressGreenCard sub) {
 		inProgGCRepo.save(sub);
-		return "Complaint is reassigned to " + sub.getAssignedPersonId();
+		return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
+				+ sub.getCategory();
+	}
+
+	public List<Category> getCategory() {
+		return cat.findAll();
+	}
+
+
+	public List<SubAdminCategory> getSubadmins(String category) {
+		return subRepo.getSubadmins(category);
+
+	}
+
+	@Override
+	public String sendHelpEmail(String mid, int gc_id, String desc) {
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getDefaultInstance(props,
+			new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("stng361@gmail.com","STng18N-r");
+				}
+			});
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("stng361@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
+			message.setSubject(mid+" Required Help for GreenCard Id "+gc_id);
+			message.setText(desc);
+
+			Transport.send(message);
+
+			System.out.println(" Mail sucessfully sent"
+					+ "");
+			return "Mail Successfully Sent to Admin";
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+			
+		}
+		        
 	}
 }
