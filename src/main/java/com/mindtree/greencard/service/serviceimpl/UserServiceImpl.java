@@ -41,13 +41,16 @@ public class UserServiceImpl implements UserService {
 			this.userrepository.save(user);
 			return "User";
 		}
+		else if(checkUser.getType().equals("User")) {
+			return "User";
+		}
 		else if(checkUser.getType().equals("Admin")){
 			return "Admin";
 		}
 		else if(checkUser.getType().equals("SubAdmin")) {
 			return "SubAdmin";
 		}
-		else {
+		else  {
 			return "SuperAdmin";
 		}
 		
