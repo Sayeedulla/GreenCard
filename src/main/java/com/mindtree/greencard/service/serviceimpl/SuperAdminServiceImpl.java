@@ -58,14 +58,18 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			String from= this.userRepo.getType(user.getMid());
 			String type = from + "to" + user.getType();
 			sh.setType(type);
+			if(from.equals("SubAdmin"))
+			{
+			     from = from + getMappedCategory(user.getMid());
+			}
+			sh.setWhatischanged("edit");
+			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			this.userRepo.save(user);
 			if(user.getType().equals("SubAdmin"))
 			{
 				String str= from + "to"+ user.getType()+ " - "+ getMappedCategory(user.getMid());
 				sh.setType(str);
 			}
-			sh.setWhatischanged("edit");
-			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-			this.userRepo.save(user);
 			this.SHR.save(sh);
 			
 		}
@@ -95,7 +99,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		this.categoryRepo.save(category);
 		SuperAdminHistory sh = new SuperAdminHistory();
 		sh.setMid("-");
-		sh.setType("category");
+		String name = "category"+ category.getCategoryName();
+		sh.setType(name);
 		sh.setWhatischanged("added");
 		sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 		this.SHR.save(sh);
@@ -144,5 +149,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public List<SubAdminCategory> getMappedSubAdmins() {
 		return this.subAdminCategoryRepo.findAll();
 	}
+
+	@Override
+	public List<SuperAdminHistory> getSuperAdminHistory() {
+		
+		return this.SHR.findAll();
+		
+	}
+	
+	
 
 }

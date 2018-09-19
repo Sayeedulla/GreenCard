@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.mindtree.greencard.model.FeedBack;
 import com.mindtree.greencard.model.GreenCardLifeCycle;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.GreenCardService;
@@ -34,8 +35,6 @@ public class GreenCardController {
 	public String get() {
 		return "hello world";
 	}
-
-	
 	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String mid) {
 		return this.greenCardService.saveNewGreenCard(fileupload, what, location, mid);
@@ -52,5 +51,14 @@ public class GreenCardController {
 	public GreenCardLifeCycle getGreenCardById(@PathVariable int id) {
 		System.out.println("Helo");
 		return this.greenCardService.getGreenCardById(id);
+	}
+	@PostMapping(value="/feedback")
+	public String sendFeedback(@RequestBody FeedBack feedback) {
+		return userservice.saveFeedBack(feedback);
+	}
+	
+	@PostMapping(value="/userInfoByMid")
+	public String getUserInfoByMid(@RequestBody User user) {
+		return userservice.getUserInfoByMid(user);
 	}
 }

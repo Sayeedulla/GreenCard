@@ -22,6 +22,6 @@ public interface SubAdminService {
 	public List<Category> getCategory();
 
 	public List<SubAdminCategory> getSubadmins(String category);
-
+public String sendHelpEmail(String mid,int gc_id,String desc);
 }
 
