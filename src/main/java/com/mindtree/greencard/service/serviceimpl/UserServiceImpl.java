@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	public String saveFeedBack(FeedBack feedback) throws GreenCardException {
 		// TODO Auto-generated method stub
 		try {
-			if (feedback.getComment() == null || feedback.getRating()==null) {
+			if (feedback.getComment() == null || feedback.getRating() == null) {
 				System.out.println("Hello");
 				throw new FeedbackException("can't save feedback");
 			}
@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getUserInfoByMid(User user) throws GreenCardException {
+		String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+		user.setPassword(sha256hex);
 		try {
 			User checkUser = this.userrepository.getUserByMid(user.getMid());
 			if (checkUser == null) {
@@ -78,5 +80,4 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
-
 }
