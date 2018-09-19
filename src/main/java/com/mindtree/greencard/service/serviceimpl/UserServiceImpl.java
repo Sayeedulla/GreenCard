@@ -6,6 +6,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.exception.GreenCardException;
+import com.mindtree.greencard.exception.userserviceexception.FeedbackException;
+import com.mindtree.greencard.exception.userserviceexception.GetInfoByMidException;
+import com.mindtree.greencard.exception.userserviceexception.UserByMidPassNotExistsException;
 import com.mindtree.greencard.jprepository.greencardrepository.Feedbackrepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.FeedBack;
@@ -21,41 +25,59 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public User getUserInfoByMidAndPassword(User user) {
+	public User getUserInfoByMidAndPassword(User user) throws GreenCardException {
 		String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+		try {
+			User userByMidPassword = userrepository.findUserbymidPassword(user.getMid(), sha256hex);
+			if (userByMidPassword == null) {
+				throw new UserByMidPassNotExistsException("User by mid and password does not exist");
+			}
+		} catch (UserByMidPassNotExistsException e) {
+			throw new GreenCardException(e);
+		}
 		return userrepository.findUserbymidPassword(user.getMid(), sha256hex);
 	}
 
 	@Override
-	public String saveFeedBack(FeedBack feedback) {
+	public String saveFeedBack(FeedBack feedback) throws GreenCardException {
 		// TODO Auto-generated method stub
-		feedbackrepository.save(feedback);
-		return "Thank you for providing Feedback";
+		try {
+			if (feedback.getComment() == null || feedback.getRating() == null) {
+				System.out.println("Hello");
+				throw new FeedbackException("can't save feedback");
+			}
+			feedbackrepository.save(feedback);
+			return "Thank you for providing Feedback";
+		} catch (FeedbackException e) {
+			throw new GreenCardException(e);
+		}
+
 	}
 
 	@Override
-	public String getUserInfoByMid(User user) {
-		User checkUser= this.userrepository.getUserByMid(user.getMid());
-		if(checkUser==null) {
-			System.out.println("Hello");
-			String sha256hex = DigestUtils.sha256Hex(user.getPassword());
-			user.setPassword(sha256hex);
-			this.userrepository.save(user);
-			return "User";
+	public String getUserInfoByMid(User user) throws GreenCardException {
+		String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+		user.setPassword(sha256hex);
+		try {
+			User checkUser = this.userrepository.getUserByMid(user.getMid());
+			if (checkUser == null) {
+				System.out.println("Hello");
+				this.userrepository.save(user);
+				return "User";
+			} else if (checkUser.getType().equals("User")) {
+				return "User";
+			} else if (checkUser.getType().equals("Admin")) {
+				return "Admin";
+			} else if (checkUser.getType().equals("SubAdmin")) {
+				return "SubAdmin";
+			} else if (checkUser.getType().equals("SuperAdmin")) {
+				return "SuperAdmin";
+			} else {
+				throw new GetInfoByMidException("sorry can't return the status");
+			}
+		} catch (GetInfoByMidException e) {
+			throw new GreenCardException(e);
 		}
-		else if(checkUser.getType().equals("User")) {
-			return "User";
-		}
-		else if(checkUser.getType().equals("Admin")){
-			return "Admin";
-		}
-		else if(checkUser.getType().equals("SubAdmin")) {
-			return "SubAdmin";
-		}
-		else  {
-			return "SuperAdmin";
-		}
-		
-	}
 
+	}
 }
