@@ -18,3 +18,4 @@ public interface SubAdminCategoryRepository extends JpaRepository<SubAdminCatego
 	@Query("SELECT s FROM SubAdminCategory s where category_name=?1")
 	public List<SubAdminCategory> getSubadmins(String category);
 }
+
