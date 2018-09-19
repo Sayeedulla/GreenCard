@@ -34,6 +34,7 @@ public class SubAdminController {
 		return subserv.getComplaints(mid);
 	}
 
+	
 	@GetMapping("/getComplaintData/{gcid}")
 	public NewGreenCard getData(@PathVariable int gcid) {
 		return subserv.getData(gcid);
