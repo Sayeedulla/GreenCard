@@ -18,6 +18,6 @@ import org.junit.runners.Suite;
 	MapSubAdminToCategoryServiceImplTest.class
 })
 
-public class SuperAdminJunitTestSuite {
+public class SuperAdminJunitServiceImplTestSuite {
 
 }

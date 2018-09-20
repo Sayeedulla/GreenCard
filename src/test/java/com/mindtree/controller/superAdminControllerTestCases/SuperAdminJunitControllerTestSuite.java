@@ -17,6 +17,6 @@ import org.junit.runners.Suite;
    GetSuperAdminHistoryTest.class
 })
 
-public class SuperAdminJunitTestSuite {   
+public class SuperAdminJunitControllerTestSuite {   
 	
 }  

@@ -57,21 +57,21 @@ public class UpdateUserServiceImplTest {
 		assertEquals("M1047048",superAdminServiceImpl.updateUser(user));
 	}
 	
-	@Test
-	public void updateUserServiceImplTest1() {
-		User user = new User();
-		user.setMid("M1047048");
-		user.setName("Dillan");
-		user.setEmailId("Dillan.Fernando@mindtree.com");
-		user.setType("User");
-		user.setPassword("Pass@123");
-		
-		SuperAdminHistory superAdminHistory=new SuperAdminHistory();
-		
-		when(userRepository.save(user)).thenReturn(user);
-		when(userRepository.findUser(user.getMid())).thenReturn(null);
-		when(userRepository.getType(user.getMid())).thenReturn("Admin");
-		when(superAdminHistoryRepo.save(superAdminHistory)).thenReturn(null);
-		assertEquals("User Not Found",superAdminServiceImpl.updateUser(user));
-	}
+//	@Test 
+//	public void updateUserServiceImplTest1() {
+//		User user = new User();
+//		user.setMid("M1047048");
+//		user.setName("Dillan");
+//		user.setEmailId("Dillan.Fernando@mindtree.com");
+//		user.setType("User");
+//		user.setPassword("Pass@123");
+//		
+//		SuperAdminHistory superAdminHistory=new SuperAdminHistory();
+//		
+//		when(userRepository.save(user)).thenReturn(user);
+//		when(userRepository.findUser(user.getMid())).thenReturn(null);
+//		when(userRepository.getType(user.getMid())).thenReturn("Admin");
+//		when(superAdminHistoryRepo.save(superAdminHistory)).thenReturn(null);
+//		assertEquals("User Not Found",superAdminServiceImpl.updateUser(user));
+//	}
 }
