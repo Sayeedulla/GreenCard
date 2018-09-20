@@ -2,9 +2,7 @@ package com.mindtree.greencard.service;
 
 import java.util.List;
 
-import com.mindtree.greencard.exception.subadminserviceexception.ComplaintNotFoundException;
-import com.mindtree.greencard.exception.subadminserviceexception.ElementNotFoundException;
-import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -12,17 +10,17 @@ import com.mindtree.greencard.model.SubAdminCategory;
 
 public interface SubAdminService {
 
-	public List<InProgressGreenCard> getComplaints(String mid) throws EmptyListException;
+	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException;
 
-	public NewGreenCard getData(int gcid) throws ElementNotFoundException;
+	public NewGreenCard getData(int gcid) throws ServiceException ;
 
-	public String updateComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException;
+	public String updateComplaint(InProgressGreenCard sub) throws ServiceException ;
 
-	public String reassignComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException;
+	public String reassignComplaint(InProgressGreenCard sub) throws ServiceException ;
 
-	public List<Category> getCategory() throws EmptyListException;
+	public List<Category> getCategory() throws ServiceException ;
 
-	public List<SubAdminCategory> getSubadmins(String category) throws EmptyListException;
+	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException ;
 
 	public String sendHelpEmail(String mid, int gc_id, String desc);
 }

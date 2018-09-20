@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.mindtree.greencard.exception.subadminserviceexception.ComplaintNotFoundException;
 import com.mindtree.greencard.exception.subadminserviceexception.ElementNotFoundException;
 import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
@@ -69,35 +70,36 @@ public class SubAdminServiceImpl implements SubAdminService {
 	SubAdminCategoryRepository subRepo;
 
 	@Override
-	public List<InProgressGreenCard> getComplaints(String mid) throws EmptyListException {
+	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException {
 		List<InProgressGreenCard> complList = new ArrayList<InProgressGreenCard>();
 		try {
 			complList = inProgGCRepo.getComplaints(mid);
 			if (complList.isEmpty())
-				throw new Exception();
-		} catch (Exception e) {
-			throw new EmptyListException();
+				throw new EmptyListException();
+		} catch (EmptyListException e) {
+			throw new ServiceException("List is empty");
 		}
 		return complList;
 	}
 
 	@Override
-	public NewGreenCard getData(int gcid) throws ElementNotFoundException {
+	public NewGreenCard getData(int gcid) throws ServiceException {
 		try {
 			if (newGCRepo.existsById(gcid)) {
 				return newGCRepo.getOne(gcid);
 			} else {
-				throw new Exception();
+				throw new ElementNotFoundException();
 			}
-		} catch (Exception e) {
-			throw new ElementNotFoundException();
+		} catch (ElementNotFoundException e) {
+			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
 
 	@Override
-	public String updateComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException {
+	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
 			if (inProgGCRepo.existsById(sub.getGcId())) {
+
 				inProgGCRepo.save(sub);
 				int id = sub.getGcId();
 				GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
@@ -115,7 +117,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 				gcH.setRootCause(sub.getRootCause());
 				gcH.setStatus(greencardLC.getStatus());
 
-				// gcH.setUserId(ngc.getUser().getUserId());
+				gcH.setPriority(sub.getPriority());
 
 				gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
 				gcH.setWhatHappened(ngc.getWhatHappened());
@@ -126,49 +128,49 @@ public class SubAdminServiceImpl implements SubAdminService {
 				// greencardLCRepo.delete(greencardLC);
 				return "Complaint " + id + " is resolved";
 			} else {
-				throw new Exception();
+				throw new ComplaintNotFoundException();
 			}
-		} catch (Exception e) {
-			throw new ComplaintNotFoundException();
+		} catch (ComplaintNotFoundException e) {
+			throw new ServiceException("Requested Complaint not exist");
 		}
 	}
 
 	@Override
-	public String reassignComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException {
+	public String reassignComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
 			if (inProgGCRepo.existsById(sub.getGcId())) {
 				inProgGCRepo.save(sub);
 				return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
 						+ sub.getCategory();
 			} else {
-				throw new Exception();
+				throw new ComplaintNotFoundException();
 			}
-		} catch (Exception e) {
-			throw new ComplaintNotFoundException();
+		} catch (ComplaintNotFoundException e) {
+			throw new ServiceException("Requested Complaint not exist");
 		}
 	}
 
-	public List<Category> getCategory() throws EmptyListException {
+	public List<Category> getCategory() throws ServiceException {
 		List<Category> cate = new ArrayList<Category>();
 
 		try {
 			cate = cat.findAll();
 			if (cate.isEmpty())
-				throw new Exception();
-		} catch (Exception e) {
-			throw new EmptyListException();
+				throw new EmptyListException();
+		} catch (EmptyListException e) {
+			throw new ServiceException("List is empty");
 		}
 		return cate;
 	}
 
-	public List<SubAdminCategory> getSubadmins(String category) throws EmptyListException {
+	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException {
 		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
 		try {
 			subad = subRepo.getSubadmins(category);
 			if (subad.isEmpty())
-				throw new Exception();
-		} catch (Exception e) {
-			throw new EmptyListException();
+				throw new EmptyListException();
+		} catch (EmptyListException e) {
+			throw new ServiceException("List is empty");
 		}
 		return subad;
 	}

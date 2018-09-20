@@ -3,7 +3,12 @@ package com.mindtree.greencard.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mindtree.greencard.exception.subadminserviceexception.ComplaintNotFoundException;
-import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -24,21 +28,19 @@ import com.mindtree.greencard.service.SubAdminService;
 @CrossOrigin
 public class SubAdminController {
 
+	private static final Logger LOGGER=LoggerFactory.getLogger(SubAdminController.class);
 	@Autowired
 	SubAdminService subserv;
 
-	@GetMapping("/")
-	public String opening() {
-		return "Welcome to GreenCard";
-	}
+	
 
 	@GetMapping("/getAllComplaints/{mid}")
 	public List<InProgressGreenCard> getComplaints(@PathVariable String mid) {
 		List<InProgressGreenCard> compList = new ArrayList<InProgressGreenCard>();
 		try {
 			compList = subserv.getComplaints(mid);
-		} catch (EmptyListException e) {
-			System.out.println("List is empty");
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
 		}
 		return compList;
 	}
@@ -47,18 +49,20 @@ public class SubAdminController {
 	public NewGreenCard getData(@PathVariable int gcid) {
 		try {
 			return subserv.getData(gcid);
-		} catch (Exception e) {
-			System.out.println("Particular Complaint not exist");
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
 		}
 		return null;
 	}
 
 	@PostMapping("/updateComplaint")
-	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
+	public String updateComplaint(@Valid @RequestBody InProgressGreenCard sub,BindingResult bb) {
 		try {
+			if(bb.hasErrors())
+				throw new ServiceException("RootCause and CorrectiveAction must be in format [A-Za-z ,.:;]");
 			return subserv.updateComplaint(sub);
-		} catch (ComplaintNotFoundException e) {
-			return "Requested Complaint not exist";
+		} catch (ServiceException e) {
+			return e.getMessage();
 		}
 	}
 
@@ -66,8 +70,8 @@ public class SubAdminController {
 	public String reassignComplaint(@RequestBody InProgressGreenCard sub) {
 		try {
 			return subserv.reassignComplaint(sub);
-		} catch (ComplaintNotFoundException e) {
-			return "Requested Complaint not exist";
+		} catch (ServiceException e) {
+			return e.getMessage();
 		}
 	}
 
@@ -76,8 +80,8 @@ public class SubAdminController {
 		List<Category> cate = new ArrayList<Category>();
 		try {
 			cate = subserv.getCategory();
-		} catch (EmptyListException e) {
-			System.out.println("List is empty");
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
 		}
 		return cate;
 	}
@@ -87,8 +91,8 @@ public class SubAdminController {
 		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
 		try {
 			subad = subserv.getSubadmins(category);
-		} catch (EmptyListException e) {
-			System.out.println("List is empty");
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
 		}
 		return subad;
 	}

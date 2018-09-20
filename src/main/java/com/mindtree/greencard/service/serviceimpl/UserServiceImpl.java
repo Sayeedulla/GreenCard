@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String saveFeedBack(FeedBack feedback) throws GreenCardException {
-		// TODO Auto-generated method stub
 		try {
 			if (feedback.getComment() == null || feedback.getRating() == null) {
 				System.out.println("Hello");

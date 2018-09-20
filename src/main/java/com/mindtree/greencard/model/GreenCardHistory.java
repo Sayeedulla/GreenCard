@@ -12,7 +12,6 @@ public class GreenCardHistory {
 
 	@Id
 	private int gId;
-	private int userId;
 	private LocalDateTime submittedDateTime;
 	private LocalDateTime closedDateTime;
 	private String assignedPersonId;
@@ -22,6 +21,7 @@ public class GreenCardHistory {
 	private String whatHappened;
 	private String landmark;
 	private String category;
+	private String priority;
 	
 	@Lob
 	byte[] image;
@@ -34,12 +34,14 @@ public class GreenCardHistory {
 		this.gId = gId;
 	}
 
-	public int getUserId() {
-		return userId;
+	
+
+	public String getPriority() {
+		return priority;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}
 
 	public LocalDateTime getSubmittedDateTime() {
