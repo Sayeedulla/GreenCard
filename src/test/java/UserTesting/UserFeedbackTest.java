@@ -15,7 +15,7 @@ import com.mindtree.greencard.jprepository.greencardrepository.Feedbackrepositor
 import com.mindtree.greencard.model.FeedBack;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class UserFeedbackTest {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;

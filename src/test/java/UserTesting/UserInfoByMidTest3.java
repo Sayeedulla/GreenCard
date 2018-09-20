@@ -16,7 +16,7 @@ import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class UserInfoByMidTest3 {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;

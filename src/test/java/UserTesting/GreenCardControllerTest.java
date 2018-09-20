@@ -24,7 +24,7 @@ import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class GreenCardControllerTest {
 	@Autowired
 	@InjectMocks
