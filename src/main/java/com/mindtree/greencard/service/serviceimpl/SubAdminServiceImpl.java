@@ -2,6 +2,7 @@ package com.mindtree.greencard.service.serviceimpl;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,6 +17,9 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.exception.subadminserviceexception.ComplaintNotFoundException;
+import com.mindtree.greencard.exception.subadminserviceexception.ElementNotFoundException;
+import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
@@ -39,7 +43,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 	InProgressGreenCardRepository inProgGCRepo;
 //	@Autowired
 //	private JavaMailSender sender;
-
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -66,61 +69,108 @@ public class SubAdminServiceImpl implements SubAdminService {
 	SubAdminCategoryRepository subRepo;
 
 	@Override
-	public List<InProgressGreenCard> getComplaints(String mid) {
-		return inProgGCRepo.getComplaints(mid);
+	public List<InProgressGreenCard> getComplaints(String mid) throws EmptyListException {
+		List<InProgressGreenCard> complList = new ArrayList<InProgressGreenCard>();
+		try {
+			complList = inProgGCRepo.getComplaints(mid);
+			if (complList.isEmpty())
+				throw new Exception();
+		} catch (Exception e) {
+			throw new EmptyListException();
+		}
+		return complList;
 	}
 
 	@Override
-	public NewGreenCard getData(int gcid) {
-		return newGCRepo.getOne(gcid);
+	public NewGreenCard getData(int gcid) throws ElementNotFoundException {
+		try {
+			if (newGCRepo.existsById(gcid)) {
+				return newGCRepo.getOne(gcid);
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			throw new ElementNotFoundException();
+		}
 	}
 
 	@Override
-	public String updateComplaint(InProgressGreenCard sub) {
-		inProgGCRepo.save(sub);
-		int id = sub.getGcId();
-		GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
-		NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
-		greencardLC.setStatus("Closed");
-		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-		greencardLCRepo.save(greencardLC);
-		gcH.setgId(sub.getGcId());
-		gcH.setAssignedPersonId(sub.getAssignedPersonId());
-		gcH.setCategory(sub.getCategory());
-		gcH.setClosedDateTime(greencardLC.getResolvedTime());
-		gcH.setCorrectiveAction(sub.getCorrectiveAction());
-		gcH.setImage(ngc.getImage());
-		gcH.setLandmark(ngc.getLandmark());
-		gcH.setRootCause(sub.getRootCause());
-		gcH.setStatus(greencardLC.getStatus());
+	public String updateComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException {
+		try {
+			if (inProgGCRepo.existsById(sub.getGcId())) {
+				inProgGCRepo.save(sub);
+				int id = sub.getGcId();
+				GreenCardLifeCycle greencardLC = greencardLCRepo.getOne(sub.getlId());
+				NewGreenCard ngc = newGCRepo.getOne(sub.getGcId());
+				greencardLC.setStatus("Closed");
+				greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+				greencardLCRepo.save(greencardLC);
+				gcH.setgId(sub.getGcId());
+				gcH.setAssignedPersonId(sub.getAssignedPersonId());
+				gcH.setCategory(sub.getCategory());
+				gcH.setClosedDateTime(greencardLC.getResolvedTime());
+				gcH.setCorrectiveAction(sub.getCorrectiveAction());
+				gcH.setImage(ngc.getImage());
+				gcH.setLandmark(ngc.getLandmark());
+				gcH.setRootCause(sub.getRootCause());
+				gcH.setStatus(greencardLC.getStatus());
 
-		// gcH.setUserId(ngc.getUser().getUserId());
+				// gcH.setUserId(ngc.getUser().getUserId());
 
-		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
-		gcH.setWhatHappened(ngc.getWhatHappened());
-		gcHR.save(gcH);
+				gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
+				gcH.setWhatHappened(ngc.getWhatHappened());
+				gcHR.save(gcH);
 
-		// newGCRepo.delete(ngc);
-		inProgGCRepo.delete(sub);
-		// greencardLCRepo.delete(greencardLC);
-		return "Complaint " + id + " is resolved";
+				// newGCRepo.delete(ngc);
+				inProgGCRepo.delete(sub);
+				// greencardLCRepo.delete(greencardLC);
+				return "Complaint " + id + " is resolved";
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			throw new ComplaintNotFoundException();
+		}
 	}
 
 	@Override
-	public String reassignComplaint(InProgressGreenCard sub) {
-		inProgGCRepo.save(sub);
-		return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
-				+ sub.getCategory();
+	public String reassignComplaint(InProgressGreenCard sub) throws ComplaintNotFoundException {
+		try {
+			if (inProgGCRepo.existsById(sub.getGcId())) {
+				inProgGCRepo.save(sub);
+				return "Complaint " + sub.getGcId() + " is reassigned to " + sub.getAssignedPersonId() + " of "
+						+ sub.getCategory();
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			throw new ComplaintNotFoundException();
+		}
 	}
 
-	public List<Category> getCategory() {
-		return cat.findAll();
+	public List<Category> getCategory() throws EmptyListException {
+		List<Category> cate = new ArrayList<Category>();
+
+		try {
+			cate = cat.findAll();
+			if (cate.isEmpty())
+				throw new Exception();
+		} catch (Exception e) {
+			throw new EmptyListException();
+		}
+		return cate;
 	}
 
-
-	public List<SubAdminCategory> getSubadmins(String category) {
-		return subRepo.getSubadmins(category);
-
+	public List<SubAdminCategory> getSubadmins(String category) throws EmptyListException {
+		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
+		try {
+			subad = subRepo.getSubadmins(category);
+			if (subad.isEmpty())
+				throw new Exception();
+		} catch (Exception e) {
+			throw new EmptyListException();
+		}
+		return subad;
 	}
 
 	@Override
@@ -129,37 +179,33 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
 
-		Session session = Session.getDefaultInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("stng361@gmail.com","STng18N-r");
-				}
-			});
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("stng361@gmail.com", "STng18N-r");
+			}
+		});
 
 		try {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("stng361@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
-			message.setSubject(mid+" Required Help for GreenCard Id "+gc_id);
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
+			message.setSubject(mid + " Required Help for GreenCard Id " + gc_id);
 			message.setText(desc);
 
 			Transport.send(message);
 
-			System.out.println(" Mail sucessfully sent"
-					+ "");
+			System.out.println(" Mail sucessfully sent" + "");
 			return "Mail Successfully Sent to Admin";
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
-			
+
 		}
-		        
+
 	}
 }

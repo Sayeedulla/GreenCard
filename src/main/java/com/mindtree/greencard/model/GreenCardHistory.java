@@ -22,6 +22,7 @@ public class GreenCardHistory {
 	private String whatHappened;
 	private String landmark;
 	private String category;
+	
 	@Lob
 	byte[] image;
 
