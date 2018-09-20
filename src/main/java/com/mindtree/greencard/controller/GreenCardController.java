@@ -95,6 +95,7 @@ public class GreenCardController {
 	public String getUserInfoByMid(@RequestBody User user) {
 		try {
 			String str=userservice.getUserInfoByMid(user);
+			System.out.println("Hello");
 			return str;
 		}catch(GreenCardException e) {
 			LOGGER.error(e.getMessage());
