@@ -2,6 +2,7 @@ package com.mindtree.greencard.service;
 
 import java.util.List;
 
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.SuperAdminHistory;
@@ -11,23 +12,17 @@ public interface SuperAdminService {
 
 	public List<User> getUsers();
 
-	public String deleteUser(String mid);
+	public String updateUser(User user) throws SuperAdminServiceException;
 
-	public void updateUser(User user);
+	public String addCategory(Category category) throws SuperAdminServiceException;
 
-	public String addCategory(Category category);
-
-	public String deleteCategory(String categoryName);
+	public String deleteCategory(String categoryName) throws SuperAdminServiceException;
 
 	public List<Category> getCategories();
 
-	public void mapSubAdminToCategory(SubAdminCategory subAdminCategory);
+	public String mapSubAdminToCategory(SubAdminCategory subAdminCategory) throws SuperAdminServiceException;
 
-	public void deleteMappedSubAdmin(String mid);
-
-	public String getMappedCategory(String mid);
-
-	public String addUser(User user);
+	public String deleteMappedSubAdmin(String mid) throws SuperAdminServiceException;
 
 	public List<SubAdminCategory> getMappedSubAdmins();
 	
