@@ -55,14 +55,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getUserInfoByMid(User user) throws GreenCardException {
-		String sha256hex = DigestUtils.sha256Hex(user.getPassword());
-		user.setPassword(sha256hex);
-		System.out.println("Inside user seevice");
+		
+		
 		try {
 			User checkUser = this.userrepository.getUserByMid(user.getMid());
 			if (checkUser == null) {
 				System.out.println("Hello");
+				String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+				user.setPassword(sha256hex);
 				this.userrepository.save(user);
+				
 				return "User";
 			} else if (checkUser.getType().equals("User")) {
 				return "User";
