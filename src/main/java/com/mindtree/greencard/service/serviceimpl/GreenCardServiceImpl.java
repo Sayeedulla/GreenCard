@@ -102,6 +102,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 		} catch (SaveGreenCardByGuestException e) {
 			throw new GreenCardException(e);
 		}
+		
 	}
 
 	@Override

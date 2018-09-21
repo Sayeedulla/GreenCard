@@ -139,16 +139,16 @@ public class SubadminServiceTest {
 
 	public static GreenCardHistory getGCH() {
 		GreenCardHistory gch = new GreenCardHistory();
-		gch.setAssignedPersonId("M10046874");
+		gch.setAssignedPersonId1("M10046874");
 		gch.setCategory("HEALTH");
 		gch.setClosedDateTime(LocalDateTime.now());
-		gch.setCorrectiveAction("Changed");
+		gch.setCorrectiveAction1("Changed");
 		gch.setgId(1);
 		gch.setImage(null);
 		gch.setLandmark("Amla");
 		gch.setPriority("High");
-		gch.setRootCause("Changed");
-		gch.setStatus("Closed");
+		gch.setRootCause1("Changed");
+		gch.setStatus1("Closed");
 		gch.setSubmittedDateTime(LocalDateTime.now());
 		gch.setWhatHappened("LiveWire");
 		return gch;

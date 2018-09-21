@@ -2,6 +2,7 @@ package com.mindtree.greencard.entity;
 
 import java.time.LocalDateTime;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -13,12 +14,13 @@ public class GreenCardHistory {
 
 	@Id
 	private int gId;
+	
 	private LocalDateTime submittedDateTime;
 	private LocalDateTime closedDateTime;
-	private String assignedPersonId;
-	private String correctiveAction;
-	private String rootCause;
-	private String status;
+	private String assignedPersonId1;
+	private String correctiveAction1;
+	private String rootCause1;
+	private String status1;
 	private String whatHappened;
 	private String landmark;
 	private String category;
@@ -33,14 +35,6 @@ public class GreenCardHistory {
 
 	public void setgId(int gId) {
 		this.gId = gId;
-	}
-
-	public String getPriority() {
-		return priority;
-	}
-
-	public void setPriority(String priority) {
-		this.priority = priority;
 	}
 
 	public LocalDateTime getSubmittedDateTime() {
@@ -59,36 +53,36 @@ public class GreenCardHistory {
 		this.closedDateTime = closedDateTime;
 	}
 
-	public String getAssignedPersonId() {
-		return assignedPersonId;
+	public String getAssignedPersonId1() {
+		return assignedPersonId1;
 	}
 
-	public void setAssignedPersonId(String assignedPersonId) {
-		this.assignedPersonId = assignedPersonId;
+	public void setAssignedPersonId1(String assignedPersonId1) {
+		this.assignedPersonId1 = assignedPersonId1;
 	}
 
-	public String getCorrectiveAction() {
-		return correctiveAction;
+	public String getCorrectiveAction1() {
+		return correctiveAction1;
 	}
 
-	public void setCorrectiveAction(String correctiveAction) {
-		this.correctiveAction = correctiveAction;
+	public void setCorrectiveAction1(String correctiveAction1) {
+		this.correctiveAction1 = correctiveAction1;
 	}
 
-	public String getRootCause() {
-		return rootCause;
+	public String getRootCause1() {
+		return rootCause1;
 	}
 
-	public void setRootCause(String rootCause) {
-		this.rootCause = rootCause;
+	public void setRootCause1(String rootCause1) {
+		this.rootCause1 = rootCause1;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getStatus1() {
+		return status1;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus1(String status1) {
+		this.status1 = status1;
 	}
 
 	public String getWhatHappened() {
@@ -115,6 +109,14 @@ public class GreenCardHistory {
 		this.category = category;
 	}
 
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
 	public byte[] getImage() {
 		return image;
 	}
@@ -123,4 +125,5 @@ public class GreenCardHistory {
 		this.image = image;
 	}
 
+	
 }

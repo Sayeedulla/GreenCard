@@ -17,6 +17,13 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.GreenCardHistory;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.exception.subadminserviceexception.ComplaintNotFoundException;
 import com.mindtree.greencard.exception.subadminserviceexception.ElementNotFoundException;
 import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
@@ -28,21 +35,15 @@ import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepos
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
-import com.mindtree.greencard.entity.Category;
-import com.mindtree.greencard.entity.GreenCardHistory;
-import com.mindtree.greencard.entity.GreenCardLifeCycle;
-import com.mindtree.greencard.entity.InProgressGreenCard;
-import com.mindtree.greencard.entity.NewGreenCard;
-import com.mindtree.greencard.entity.SubAdminCategory;
-import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.SubAdminService;
 
 @Service
 public class SubAdminServiceImpl implements SubAdminService {
 
-	private String listIsEmpty = "List is empty";
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
+//	@Autowired
+//	private JavaMailSender sender;
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -70,13 +71,13 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException {
-		List<InProgressGreenCard> complList = new ArrayList<>();
+		List<InProgressGreenCard> complList = new ArrayList<InProgressGreenCard>();
 		try {
 			complList = inProgGCRepo.getComplaints(mid);
 			if (complList.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException(listIsEmpty);
+			throw new ServiceException("List is empty");
 		}
 		return complList;
 	}
@@ -93,7 +94,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
-
+	
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
@@ -107,14 +108,14 @@ public class SubAdminServiceImpl implements SubAdminService {
 				greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 				greencardLCRepo.save(greencardLC);
 				gcH.setgId(sub.getGcId());
-				gcH.setAssignedPersonId(sub.getAssignedPersonId());
+				gcH.setAssignedPersonId1(sub.getAssignedPersonId());
 				gcH.setCategory(sub.getCategory());
 				gcH.setClosedDateTime(greencardLC.getResolvedTime());
-				gcH.setCorrectiveAction(sub.getCorrectiveAction());
+				gcH.setCorrectiveAction1(sub.getCorrectiveAction());
 				gcH.setImage(ngc.getImage());
 				gcH.setLandmark(ngc.getLandmark());
-				gcH.setRootCause(sub.getRootCause());
-				gcH.setStatus(greencardLC.getStatus());
+				gcH.setRootCause1(sub.getRootCause());
+				gcH.setStatus1(greencardLC.getStatus());
 
 				gcH.setPriority(sub.getPriority());
 
@@ -122,8 +123,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 				gcH.setWhatHappened(ngc.getWhatHappened());
 				gcHR.save(gcH);
 
+				
 				inProgGCRepo.delete(sub);
-
+				
 				return "Complaint " + id + " is resolved";
 			} else {
 				throw new ComplaintNotFoundException();
@@ -149,32 +151,32 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	public List<Category> getCategory() throws ServiceException {
-		List<Category> cate = new ArrayList<>();
+		List<Category> cate = new ArrayList<Category>();
 
 		try {
 			cate = cat.findAll();
 			if (cate.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException(listIsEmpty);
+			throw new ServiceException("List is empty");
 		}
 		return cate;
 	}
 
 	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException {
-		List<SubAdminCategory> subad = new ArrayList<>();
+		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
 		try {
 			subad = subRepo.getSubadmins(category);
 			if (subad.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException(listIsEmpty);
+			throw new ServiceException("List is empty");
 		}
 		return subad;
 	}
 
 	@Override
-	public String sendHelpEmail(String mid, int gcId, String desc) {
+	public String sendHelpEmail(String mid, int gc_id, String desc) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -183,6 +185,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.socketFactory.fallback", "true");
+		
+
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("stng361@gmail.com", "STng18N-r");
@@ -194,11 +198,12 @@ public class SubAdminServiceImpl implements SubAdminService {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("stng361@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
-			message.setSubject(mid + " Required Help for GreenCard Id " + gcId);
+			message.setSubject(mid + " Required Help for GreenCard Id " + gc_id);
 			message.setText(desc);
 
 			Transport.send(message);
 
+			System.out.println(" Mail sucessfully sent" + "");
 			return "Mail Successfully Sent to Admin";
 
 		} catch (MessagingException e) {

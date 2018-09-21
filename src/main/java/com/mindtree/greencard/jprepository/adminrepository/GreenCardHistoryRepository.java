@@ -9,10 +9,10 @@ import com.mindtree.greencard.entity.GreenCardHistory;
 
 public interface GreenCardHistoryRepository extends JpaRepository<GreenCardHistory,Integer>{
 	
-	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId,status,priority,correctiveAction,rootCause,whatHappened,category from GreenCardHistory")
+	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId1,status1,priority,correctiveAction1,rootCause1,whatHappened,category from GreenCardHistory")
 	public List<GreenCardHistory> getAllExceptImg();
 	
-	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId,status,priority,correctiveAction,rootCause,whatHappened,category from GreenCardHistory where  assignedPersonId=?1")
+	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId1,status1,priority,correctiveAction1,rootCause1,whatHappened,category from GreenCardHistory where  assignedPersonId=?1")
 	public List<GreenCardHistory> getExceptImgForSubadmin(String mid);
 	
 }

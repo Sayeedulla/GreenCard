@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.entity.GreenCardHistory;
 import com.mindtree.greencard.entity.InProgressGreenCard;
 import com.mindtree.greencard.entity.NewGreenCard;
 import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.service.AdminService;
 
 @RestController
@@ -34,11 +34,6 @@ public class AdminController {
 
 		return this.adminservice.newComplaints();
 	}
-	
-	@GetMapping("/newcount")
-	public int newcount() {
-		return this.adminservice.newcount();
-	}
 
 	@GetMapping("/getCard/{gid}")
 	public Optional<NewGreenCard> getCard(@PathVariable int gid) {
@@ -49,7 +44,7 @@ public class AdminController {
 			newgreencard= this.adminservice.getCard(gid);
 		} catch (AdminException e) {
 			
-			
+			e.getMessage();
 			
 		}
 		
@@ -112,24 +107,6 @@ public class AdminController {
 		return this.adminservice.resolveCard(gid,rootcause,correctiveaction);
 	}
 
-	@GetMapping("/assignedcount")
-	public int assignedcount() {
-		return this.adminservice.assignedcount();
-		
-	}
-	@GetMapping("/closedcount")
-	public int closedcount() {
-		return this.adminservice.closedcount();
-	}
-	@GetMapping("/rejectcount")
-	public int rejectcount() {
-		return this.adminservice.rejectcount();
-	}
-	
-	@GetMapping("/fullcount")
-	public int fullcount() {
-		return this.adminservice.fullcount();
-	}
 
 
 }
