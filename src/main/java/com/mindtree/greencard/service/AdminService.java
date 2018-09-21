@@ -23,6 +23,10 @@ public interface AdminService{
 	public List<GreenCardHistory> getForSubadmin(String mid);
 	public String rejectGreenCard(int gid);
 	public String resolveCard(int gid, String rootcause, String correctiveaction);
+	public int newcount();
+	public int assignedcount();
+	public int closedcount();
+	public int rejectcount();
 
 
 }

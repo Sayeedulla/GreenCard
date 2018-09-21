@@ -16,4 +16,6 @@ public interface NewGreenCardRepository extends JpaRepository<NewGreenCard, Inte
 	@Query(value="select g from NewGreenCard g where g.greenCardId=:gid")
 	public NewGreenCard getNewCard(@Param("gid") int g);
 	
+//	@Query(value="select count of g from NewGreencard g where g.")
+	
 }

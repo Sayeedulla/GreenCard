@@ -64,7 +64,9 @@ public class AdminServiceImpl implements AdminService {
 		});
 		return gcl;
 	}
-
+	
+	
+	
 	@Override
 	public Optional<NewGreenCard> getCard(int gid) throws AdminException {
 
@@ -177,6 +179,42 @@ public class AdminServiceImpl implements AdminService {
 
 		return this.history.getExceptImgForSubadmin(mid);
 
+	}
+
+
+
+	@Override
+	public int newcount() {
+
+		List<GreenCardLifeCycle> l = this.GLC.getOpenGreenCard();
+		return l.size();
+		
+	}
+
+
+
+	@Override
+	public int assignedcount() {
+		List<GreenCardLifeCycle> l = this.GLC.getAssignedGreenCard();
+		return l.size();
+	}
+
+
+
+	@Override
+	public int closedcount() {
+		
+		List<GreenCardLifeCycle> l = this.GLC.getClosedGreenCard();
+		return l.size();
+	}
+
+
+
+	@Override
+	public int rejectcount() {
+		
+		List<GreenCardLifeCycle> l = this.GLC.getRejectedGreenCard();
+		return l.size();
 	}
 
 }
