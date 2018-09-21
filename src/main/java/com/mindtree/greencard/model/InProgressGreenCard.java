@@ -7,7 +7,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Inprogress_Greencard")
 public class InProgressGreenCard {
-	
+
 	@Id
 	private int gcId;
 	private int lId;

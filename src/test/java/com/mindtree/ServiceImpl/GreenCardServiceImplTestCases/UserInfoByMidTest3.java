@@ -1,3 +1,4 @@
+package com.mindtree.ServiceImpl.GreenCardServiceImplTestCases;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -8,36 +9,38 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
-	
+@RunWith(org.mockito.junit.MockitoJUnitRunner.Silent.class)
+public class UserInfoByMidTest3 {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;
 	@Mock
 	UserRepository userrepository;
-
-
 	@Before
 	public void testSetUp() {
 		MockitoAnnotations.initMocks(this);
 		User user=new User();
-		user.setMid("M1046890");
 		String sha256hex = DigestUtils.sha256Hex("Pass@123");
 		user.setPassword(sha256hex);
-		when(userrepository.findUserbymidPassword(user.getMid(), sha256hex)).thenReturn(user);
+		user.setMid("M1046908");
+		user.setType("User");
+		when(userrepository.save(user)).thenReturn(user);
+		when(userrepository.getUserByMid(user.getMid())).thenReturn(user);
 	}
 	@Test
-	public void getUserByMidPass() throws GreenCardException {
+	public void getUserInfoByMid3() throws GreenCardException {
 		User user=new User();
-		user.setMid("M1046890");
+		user.setMid("M1046908");
 		user.setPassword("Pass@123");
-		assertEquals(userServiceImpl.getUserInfoByMidAndPassword(user).getMid(), user.getMid());
+		
+		assertEquals(userServiceImpl.getUserInfoByMid(user),"User");
+		
 	}
 }
+

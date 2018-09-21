@@ -1,7 +1,10 @@
 package com.mindtree.greencard.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,56 +14,86 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.SubAdminService;
 
+
 @RestController
 @CrossOrigin
 public class SubAdminController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SubAdminController.class);
+
 	@Autowired
 	SubAdminService subserv;
 
-	@GetMapping("/")
-	public String opening() {
-		return "Welcome to GreenCard";
-	}
-
 	@GetMapping("/getAllComplaints/{mid}")
 	public List<InProgressGreenCard> getComplaints(@PathVariable String mid) {
-		return subserv.getComplaints(mid);
+		List<InProgressGreenCard> compList = new ArrayList<InProgressGreenCard>();
+		try {
+			compList = subserv.getComplaints(mid);
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
+		}
+		return compList;
 	}
 
-	
 	@GetMapping("/getComplaintData/{gcid}")
 	public NewGreenCard getData(@PathVariable int gcid) {
-		return subserv.getData(gcid);
+		try {
+			return subserv.getData(gcid);
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 	@PostMapping("/updateComplaint")
 	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
-		return subserv.updateComplaint(sub);
+		try {
+			return subserv.updateComplaint(sub);
+		} catch (ServiceException e) {
+			return e.getMessage();
+		}
 	}
 
 	@PostMapping("/reassignComplaint")
 	public String reassignComplaint(@RequestBody InProgressGreenCard sub) {
-		return subserv.reassignComplaint(sub);
+		try {
+			return subserv.reassignComplaint(sub);
+		} catch (ServiceException e) {
+			return e.getMessage();
+		}
 	}
 
 	@GetMapping("/getCategory")
 	public List<Category> getCategories() {
-		return subserv.getCategory();
+		List<Category> cate = new ArrayList<Category>();
+		try {
+			cate = subserv.getCategory();
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
+		}
+		return cate;
 	}
 
 	@GetMapping("/getSubadmins/{category}")
 	public List<SubAdminCategory> getSubadmins(@PathVariable String category) {
-		return subserv.getSubadmins(category);
+		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
+		try {
+			subad = subserv.getSubadmins(category);
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
+		}
+		return subad;
 	}
+
 	@PostMapping("/mailadmin")
-	public String SendEmail(@RequestParam("mid") String mid,int gc_id,String desc) {
+	public String SendEmail(@RequestParam("mid") String mid, int gc_id, String desc) {
 		return subserv.sendHelpEmail(mid, gc_id, desc);
 	}
 }

@@ -208,7 +208,7 @@ public class AdminServiceImpl implements AdminService {
 			cell = row.createCell(0);
 			cell.setCellValue(e.getgId());
 			cell = row.createCell(1);
-			cell.setCellValue(e.getUserId());
+			//cell.setCellValue(e.getUserId());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		/*	String openedtime = e.getSubmittedDateTime().format(formatter);
 			cell = row.createCell(2);
