@@ -18,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.exception.AdminExceptions.AdminException;
+import com.mindtree.greencard.exception.AdminExceptions.CardNotFoundException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
@@ -33,7 +35,7 @@ import com.mindtree.greencard.service.AdminService;
 
 @Service
 @Transactional
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	NewGreenCardRepository newgreencard;
@@ -73,9 +75,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Optional<NewGreenCard> getCard(int gid) {
+	public Optional<NewGreenCard> getCard(int gid)throws AdminException{
 
-		return this.newgreencard.findById(gid);
+		Optional<NewGreenCard> ngc= this.newgreencard.findById(gid);
+		try {
+		if(!ngc.isPresent())
+		{
+			throw new CardNotFoundException("id "+gid+"not found");
+		}
+		}
+		catch(CardNotFoundException e)
+		{
+			throw new AdminException(e.getMessage());
+		}
+		return ngc;
 	}
 
 	@Override
@@ -119,9 +132,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public Optional<GreenCardHistory> getByGid(int gId) {
+	public Optional<GreenCardHistory> getByGid(int gId)throws AdminException{
 	
-		return this.history.findById(gId);
+		Optional<GreenCardHistory> greencardhistoryone= this.history.findById(gId);
+		try {
+		if(!greencardhistoryone.isPresent())
+		{
+			throw new CardNotFoundException("id "+gId+"not found");
+		}
+		}
+		catch(CardNotFoundException e)
+		{
+			throw new AdminException(e.getMessage());
+		}
+		return greencardhistoryone;
 	}
 	
 	@Override
@@ -266,6 +290,7 @@ public class AdminServiceImpl implements AdminService {
 	public List<GreenCardHistory> getForSubadmin(String mid) {
 		
 		return this.history.getExceptImgForSubadmin(mid);
+		
 	}
 
 
