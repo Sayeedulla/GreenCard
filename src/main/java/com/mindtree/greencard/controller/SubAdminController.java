@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.entity.Category;
 import com.mindtree.greencard.entity.InProgressGreenCard;
 import com.mindtree.greencard.entity.NewGreenCard;
 import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.service.SubAdminService;
-
 
 @RestController
 @CrossOrigin
@@ -33,7 +32,7 @@ public class SubAdminController {
 
 	@GetMapping("/getAllComplaints/{mid}")
 	public List<InProgressGreenCard> getComplaints(@PathVariable String mid) {
-		List<InProgressGreenCard> compList = new ArrayList<InProgressGreenCard>();
+		List<InProgressGreenCard> compList = new ArrayList<>();
 		try {
 			compList = subserv.getComplaints(mid);
 		} catch (ServiceException e) {
@@ -72,7 +71,7 @@ public class SubAdminController {
 
 	@GetMapping("/getCategory")
 	public List<Category> getCategories() {
-		List<Category> cate = new ArrayList<Category>();
+		List<Category> cate = new ArrayList<>();
 		try {
 			cate = subserv.getCategory();
 		} catch (ServiceException e) {
@@ -83,7 +82,7 @@ public class SubAdminController {
 
 	@GetMapping("/getSubadmins/{category}")
 	public List<SubAdminCategory> getSubadmins(@PathVariable String category) {
-		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
+		List<SubAdminCategory> subad = new ArrayList<>();
 		try {
 			subad = subserv.getSubadmins(category);
 		} catch (ServiceException e) {
@@ -93,7 +92,7 @@ public class SubAdminController {
 	}
 
 	@PostMapping("/mailadmin")
-	public String SendEmail(@RequestParam("mid") String mid, int gc_id, String desc) {
-		return subserv.sendHelpEmail(mid, gc_id, desc);
+	public String sendEmail(@RequestParam("mid") String mid, int gcId, String desc) {
+		return subserv.sendHelpEmail(mid, gcId, desc);
 	}
 }

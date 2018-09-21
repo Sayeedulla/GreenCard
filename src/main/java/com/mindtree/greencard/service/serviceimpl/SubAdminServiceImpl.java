@@ -70,7 +70,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException {
-		List<InProgressGreenCard> complList = new ArrayList<InProgressGreenCard>();
+		List<InProgressGreenCard> complList = new ArrayList<>();
 		try {
 			complList = inProgGCRepo.getComplaints(mid);
 			if (complList.isEmpty())
@@ -149,7 +149,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	public List<Category> getCategory() throws ServiceException {
-		List<Category> cate = new ArrayList<Category>();
+		List<Category> cate = new ArrayList<>();
 
 		try {
 			cate = cat.findAll();
@@ -162,7 +162,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException {
-		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
+		List<SubAdminCategory> subad = new ArrayList<>();
 		try {
 			subad = subRepo.getSubadmins(category);
 			if (subad.isEmpty())

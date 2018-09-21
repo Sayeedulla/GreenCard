@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
-		List<NewGreenCard> gcl = new ArrayList<NewGreenCard>();
+		List<NewGreenCard> gcl = new ArrayList<>();
 		List<GreenCardLifeCycle> l = this.glc.getOpenGreenCard();
 		l.forEach(e -> {
 			NewGreenCard n = e.getNewgreencard();
