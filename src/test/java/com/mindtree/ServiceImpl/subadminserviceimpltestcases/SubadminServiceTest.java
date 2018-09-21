@@ -1,7 +1,6 @@
-package SubadminTest;
+package com.mindtree.ServiceImpl.subadminserviceimpltestcases;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -14,9 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import com.mindtree.greencard.exception.subadminserviceexception.EmptyListException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
@@ -85,15 +83,7 @@ public class SubadminServiceTest {
 		assertEquals(3, subServ.getComplaints("M1046874").size());
 	}
 
-	@Test
-	public void getAllComplaintsException() throws Exception {
-
-		complaints = getComplaints();
-		doThrow(new EmptyListException()).when(inpgcrepo).getComplaints("M1046874");
-		// when(inpgcrepo.getComplaints("M1046874")).thenThrow(new
-		// EmptyListException());
-		subServ.getComplaints("M1046874");
-	}
+	
 
 	@Test
 	public void getComplaint() throws Exception {

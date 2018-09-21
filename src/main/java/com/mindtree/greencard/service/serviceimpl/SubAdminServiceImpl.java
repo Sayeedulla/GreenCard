@@ -94,7 +94,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
-	
+ 
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
@@ -123,9 +123,9 @@ public class SubAdminServiceImpl implements SubAdminService {
 				gcH.setWhatHappened(ngc.getWhatHappened());
 				gcHR.save(gcH);
 
-				// newGCRepo.delete(ngc);
+				
 				inProgGCRepo.delete(sub);
-				// greencardLCRepo.delete(greencardLC);
+				
 				return "Complaint " + id + " is resolved";
 			} else {
 				throw new ComplaintNotFoundException();

@@ -56,7 +56,7 @@ public class GreenCardController {
 		return userByMidPass;
 	}
 	@PostMapping(value = "/add/greenCardByGuest")
-	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String name,BigInteger phone) {
+	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload,String what, String location,String name,BigInteger phone) {
 		try {
 		String str=this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
 		return str;

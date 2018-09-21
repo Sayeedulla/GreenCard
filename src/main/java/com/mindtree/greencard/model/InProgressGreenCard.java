@@ -17,6 +17,7 @@ public class InProgressGreenCard {
 	private String correctiveAction;
 	private String rootCause;
 	private String status;
+	
 	public int getGcId() {
 		return gcId;
 	}

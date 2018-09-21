@@ -95,7 +95,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			this.userRepo.save(user);
 			if(user.getType().equals("SubAdmin"))
 			{
-				String str= from + "to"+ user.getType()+ " - "+ this.subAdminCategoryRepo.getOne(user.getMid());
+				String str= from + "to"+ user.getType()+ " - "+ this.subAdminCategoryRepo.getOne(user.getMid()).getCategoryName();
 				sh.setType(str);
 			}
 			this.superAdminHistoryRepo.save(sh);
