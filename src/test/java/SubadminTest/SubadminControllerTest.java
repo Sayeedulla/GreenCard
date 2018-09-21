@@ -1,4 +1,5 @@
 package SubadminTest;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -22,10 +23,10 @@ import org.mockito.Spy;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.validation.BindingResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindtree.greencard.controller.SubAdminController;
+import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -40,9 +41,6 @@ public class SubadminControllerTest {
 
 	@Mock
 	SubAdminServiceImpl subServ;
-	
-	@Mock
-	BindingResult bb;
 
 	@Spy
 	private static List<InProgressGreenCard> complaints = new ArrayList<InProgressGreenCard>();
@@ -78,16 +76,15 @@ public class SubadminControllerTest {
 		assertEquals(3, subCon.getComplaints("M1046874").size());
 	}
 
-//	@Test(expected=ServiceException.class)
-//	public void getAllComplaintsE() throws Exception {
-//
-//		complaints = getComplaints();
-//
-//		when(subServ.getComplaints("M1046874")).thenThrow(new ServiceException("List is Empty"));
-//
-//		mockMvc.perform(get("/getAllComplaints/{mid}", 1));
-//		subServ.getComplaints("M1046874");
-//	}
+	@Test
+	public void getAllComplaintsExcept() throws Exception {
+
+		complaints = getComplaints();
+
+		when(subServ.getComplaints("M1046874")).thenThrow(new ServiceException("List is Empty"));
+
+		mockMvc.perform(get("/getAllComplaints/{mid}", "M1046874")).andExpect(status().isOk());
+	}
 
 	@Test
 	public void getComplaint() throws Exception {
@@ -103,6 +100,14 @@ public class SubadminControllerTest {
 	}
 
 	@Test
+	public void getComplaintExcept() throws Exception {
+
+		ngcc = getComplaintData();
+		when(subServ.getData(1)).thenThrow(new ServiceException("Particular Complaint not exist"));
+		mockMvc.perform(get("/getComplaintData/{a}", 1)).andExpect(status().isOk());
+	}
+
+	@Test
 	public void getCategory() throws Exception {
 
 		cate = getCategoryData();
@@ -111,6 +116,16 @@ public class SubadminControllerTest {
 		mockMvc.perform(get("/getCategory")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		assertEquals(2, subCon.getCategories().size());
+	}
+
+	@Test
+	public void getCategoryExcept() throws Exception {
+
+		cate = getCategoryData();
+		when(subServ.getCategory()).thenThrow(new ServiceException("List is empty"));
+
+		mockMvc.perform(get("/getCategory")).andExpect(status().isOk());
+
 	}
 
 	@Test
@@ -125,15 +140,33 @@ public class SubadminControllerTest {
 	}
 
 	@Test
+	public void getSubadminExcept() throws Exception {
+
+		subad = getSubadminData();
+		when(subServ.getSubadmins("HEALTH")).thenThrow(new ServiceException("List is empty"));
+
+		mockMvc.perform(get("/getSubadmins/{category}", "HEALTH")).andExpect(status().isOk());
+	}
+
+	@Test
 	public void resolveComplaint() throws Exception {
 		inpGC = getInprogData();
-		when(bb.hasErrors()).thenReturn(false);
 		when(subServ.updateComplaint(inpGC)).thenReturn("Complaint " + inpGC.getGcId() + " is resolved");
 
 		mockMvc.perform(post("/updateComplaint").contentType(MediaType.APPLICATION_JSON).content(asJsonString(inpGC)))
 				.andExpect(status().isOk());
 
-		assertEquals("Complaint 1 is resolved", subCon.updateComplaint(inpGC,bb));
+		assertEquals("Complaint 1 is resolved", subCon.updateComplaint(inpGC));
+	}
+
+	@Test
+	public void resolveComplaintExcept() throws Exception {
+		inpGC = getInprogData();
+		when(subServ.updateComplaint(inpGC)).thenThrow(new ServiceException("Requested Complaint not exist"));
+
+		mockMvc.perform(post("/updateComplaint").contentType(MediaType.APPLICATION_JSON).content(asJsonString(inpGC)))
+				.andExpect(status().isOk());
+		subCon.updateComplaint(inpGC);
 	}
 
 	@Test
@@ -146,6 +179,16 @@ public class SubadminControllerTest {
 				.andExpect(status().isOk());
 
 		assertEquals("Complaint 1 is reassigned to M1046871 of SAFETY", subCon.reassignComplaint(inpGC));
+	}
+
+	@Test
+	public void reassignComplaintExcept() throws Exception {
+		inpGC = getInprogData();
+		when(subServ.reassignComplaint(inpGC)).thenThrow(new ServiceException("Requested Complaint not exist"));
+
+		mockMvc.perform(post("/reassignComplaint").contentType(MediaType.APPLICATION_JSON).content(asJsonString(inpGC)))
+				.andExpect(status().isOk());
+		subCon.reassignComplaint(inpGC);
 	}
 
 	public static InProgressGreenCard getInprogData() {

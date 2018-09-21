@@ -3,12 +3,11 @@ package com.mindtree.greencard.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="Inprogress_Greencard")
 public class InProgressGreenCard {
-	
+
 	@Id
 	private int gcId;
 	private int lId;
@@ -16,9 +15,7 @@ public class InProgressGreenCard {
 	private String category;
 	private String assignedPersonId;
 	private String correctiveAction;
-	@Pattern(regexp="[a-zA-Z ,.:;]")
 	private String rootCause;
-	@Pattern(regexp="[a-zA-Z ,.:;]")
 	private String status;
 	public int getGcId() {
 		return gcId;
