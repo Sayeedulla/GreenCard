@@ -13,7 +13,7 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int categoryId;
-	@Column(unique=true)
+	@Column
 	private String categoryName;
 	public int getCategoryId() {
 		return categoryId;

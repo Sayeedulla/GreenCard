@@ -4,10 +4,19 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.exception.superAdminExceptions.CategoryNameAlreadyExists;
+import com.mindtree.greencard.exception.superAdminExceptions.CategoryNotFoundException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidCategoryNameException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidEmailFormatException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidMidException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidOperationException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidTypeException;
+import com.mindtree.greencard.exception.superAdminExceptions.InvalidUserNameException;
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
+import com.mindtree.greencard.exception.superAdminExceptions.UserNotFoundException;
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SuperAdminHistoryRepo;
@@ -28,29 +37,48 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private SubAdminCategoryRepository subAdminCategoryRepo;
 	
 	@Autowired
-	private SuperAdminHistoryRepo SHR;
+	private SuperAdminHistoryRepo superAdminHistoryRepo;
 	
-
-	public String addUser(User user) {
-		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
-		if (!tempuser.isPresent()) {
-			String sha256hex = DigestUtils.sha256Hex(user.getPassword());
-			user.setPassword(sha256hex);
-			SuperAdminHistory sh = new SuperAdminHistory();
-			sh.setMid(user.getMid());
-			sh.setType(user.getType());
-			sh.setWhatischanged("added");
-			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-			this.SHR.save(sh);
-			this.userRepo.save(user);
-			return user.getMid();
-		} else
-			return null;
-	}
-
-	public void updateUser(User user) {
-		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
-		if (tempuser.isPresent()) {
+	
+	
+	public String updateUser(User user) throws SuperAdminServiceException{
+		
+			Optional<User> tempuser = this.userRepo.findUser(user.getMid());
+		try{
+		  if (!tempuser.isPresent()) 
+		     throw new UserNotFoundException(); 
+		}catch(UserNotFoundException exception){
+			throw new SuperAdminServiceException("User not Found");
+		}try {
+			if(!user.getMid().matches("[Mm][1][0][0-9]{5}")) {
+				throw new InvalidMidException();
+			}
+		}catch(InvalidMidException exception) {
+			throw new SuperAdminServiceException("Invalid Mid");
+		}
+		try {
+			if(!user.getName().matches("^[A-Z][a-z]+([ ][A-Z][a-z]+)*$"))
+				throw new InvalidUserNameException();
+		}catch(InvalidUserNameException exception) {
+			throw new SuperAdminServiceException("Format of Name is InValid");
+		}try {
+		   if(!user.getEmailId().matches("(([A-Za-z][a-z]*[.][A-Za-z][a-z]*[0-9]*)|([Mm][1-9][0-9]{6}))@mindtree.com"))
+			   throw new InvalidEmailFormatException();
+		}catch(InvalidEmailFormatException exception) {
+			throw new SuperAdminServiceException("Email Format is InValid");
+		}
+		try {
+			if(!(user.getType().equals("User")||user.getType().equals("Admin")||user.getType().equals("SubAdmin")))
+				throw new InvalidTypeException();
+		}catch(InvalidTypeException exception) {
+			throw new SuperAdminServiceException("Invalid Type");
+		}
+		try {
+			if(!(tempuser.get().getName().equals(user.getName())&&tempuser.get().getEmailId().equals(user.getEmailId())))
+				throw new InvalidOperationException();
+		}catch(InvalidOperationException exception) {
+			throw new SuperAdminServiceException("Name or EmailId does not match");
+		}
 			
 			user.setUserId(tempuser.get().getUserId());
 			SuperAdminHistory sh = new SuperAdminHistory();
@@ -60,42 +88,36 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			sh.setType(type);
 			if(from.equals("SubAdmin"))
 			{
-			     from = from + getMappedCategory(user.getMid());
-			}
+			     from = from + this.subAdminCategoryRepo.getOne(user.getMid());
+			} 
 			sh.setWhatischanged("edit");
 			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 			this.userRepo.save(user);
 			if(user.getType().equals("SubAdmin"))
 			{
-				String str= from + "to"+ user.getType()+ " - "+ getMappedCategory(user.getMid());
+				String str= from + "to"+ user.getType()+ " - "+ this.subAdminCategoryRepo.getOne(user.getMid());
 				sh.setType(str);
 			}
-			this.SHR.save(sh);
+			this.superAdminHistoryRepo.save(sh);
 			
-		}
-	  
+		return user.getMid();
+		
 	}
 
 	public List<User> getUsers() {
+	
 		return this.userRepo.findAll();
 	}
 
-	public String deleteUser(String mid) {
-		Optional<User> user = this.userRepo.findUser(mid);
-		if (user.isPresent()) {
-			this.userRepo.deleteById(user.get().getUserId());
-			SuperAdminHistory sh = new SuperAdminHistory();
-			sh.setMid(mid);
-			sh.setType(user.get().getType());
-			sh.setWhatischanged("deleted");
-			sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-			this.SHR.save(sh);
-			return user.get().getMid();
-		} else
-			return null;
-	}
-
-	public String addCategory(Category category) {
+	public String addCategory(Category category) throws SuperAdminServiceException {
+		try {
+		String categoryName = category.getCategoryName();
+		if(!categoryName.matches("^[A-Z][a-z]+([ ][A-Z][a-z]+)*$"))
+			throw new InvalidCategoryNameException();
+		Category checkCategory = this.categoryRepo.getCategory(categoryName);
+		if(checkCategory != null) {
+			throw new CategoryNameAlreadyExists();
+		}
 		this.categoryRepo.save(category);
 		SuperAdminHistory sh = new SuperAdminHistory();
 		sh.setMid("-");
@@ -103,18 +125,46 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		sh.setType(name);
 		sh.setWhatischanged("added");
 		sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-		this.SHR.save(sh);
+		this.superAdminHistoryRepo.save(sh);
 		return category.getCategoryName();
+		}catch (CategoryNameAlreadyExists exception) {
+			throw new SuperAdminServiceException("Category name already exists");
+		}catch(InvalidCategoryNameException exception) {
+			throw new SuperAdminServiceException("Invalid Category Name");
+		}
 	}
 
-	public String deleteCategory(String categoryName) {
-		Category category = this.categoryRepo.getCategory(categoryName);
+	public String deleteCategory(String categoryName) throws SuperAdminServiceException {
+		Category category;
+		try {
+			if(categoryName.equals("NOT ASSIGNED"))
+				throw new InvalidOperationException();
+		}catch(InvalidOperationException exception) {
+			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
+		}
+		try {
+			if(!categoryName.matches("^[A-Z][a-z]+([ ][A-Z][a-z]+)*$"))
+				throw new InvalidCategoryNameException();
+		}catch(InvalidCategoryNameException exception)
+		{
+			throw new SuperAdminServiceException("Invalid Category Name");
+		}
+		
+		try{
+			 category = this.categoryRepo.getCategory(categoryName);
+			if(category == null) {
+				throw new CategoryNotFoundException();
+			}
+		}catch(CategoryNotFoundException exception) {
+			throw new SuperAdminServiceException("Category not present");
+		}
+		
 		SuperAdminHistory sh = new SuperAdminHistory();
 		sh.setMid("-");
 		sh.setType("category");
 		sh.setWhatischanged("deleted");
 		sh.setTimelog(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
-		this.SHR.save(sh);
+		this.superAdminHistoryRepo.save(sh);
 		this.categoryRepo.deleteById(category.getCategoryId());
 		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
 		for (SubAdminCategory subAdminCategory : list)
@@ -129,20 +179,68 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		return this.categoryRepo.findAll();
 	}
 
-	public void mapSubAdminToCategory(SubAdminCategory subAdminCategory) {
+
+	public String mapSubAdminToCategory(SubAdminCategory subAdminCategory) throws SuperAdminServiceException {
+		try {
+			if(!subAdminCategory.getMid().matches("[Mm][1][0][0-9]{5}")) {
+				throw new InvalidMidException();
+			}
+		}catch(InvalidMidException exception) {
+			throw new SuperAdminServiceException("Invalid Mid");
+		}
+		try {
+			User user=this.userRepo.getUserByMid(subAdminCategory.getMid());
+			if(user==null)
+				throw new UserNotFoundException();
+		}catch(UserNotFoundException exception)
+		{
+			throw new SuperAdminServiceException("User not Found");
+		}
+		try {
+			if(subAdminCategory.getCategoryName().equals("Not Assigned"))
+				throw new InvalidOperationException();
+		}catch(InvalidOperationException exception) {
+			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
+		}
+		try {
+			if(!subAdminCategory.getCategoryName().matches("^[A-Z][a-z]+([ ][A-Z][a-z]+)*$"))
+				throw new InvalidCategoryNameException();
+		}catch(InvalidCategoryNameException exception)
+		{
+			throw new SuperAdminServiceException("Invalid Category Name");
+		}
 		
+		try{
+			 Category category = this.categoryRepo.getCategory(subAdminCategory.getCategoryName());
+			if(category == null) {
+				throw new CategoryNotFoundException();
+			}
+		}catch(CategoryNotFoundException exception) {
+			throw new SuperAdminServiceException("Category not present");
+		}
 		this.subAdminCategoryRepo.save(subAdminCategory);
+		return "SubAdmin Mapped";
 	}
 
 	@Override
-	public void deleteMappedSubAdmin(String mid) {
+	public String deleteMappedSubAdmin(String mid) throws SuperAdminServiceException {
+		try {
+			if(!mid.matches("[Mm][1][0][0-9]{5}")) {
+				throw new InvalidMidException();
+			}
+		}catch(InvalidMidException exception) {
+			throw new SuperAdminServiceException("Invalid Mid");
+		}
+		try {
+			Optional<SubAdminCategory> subAdminCategory=this.subAdminCategoryRepo.findById(mid);
+			if(!subAdminCategory.isPresent())
+				throw new UserNotFoundException();
+		}catch(UserNotFoundException exception)
+		{
+			throw new SuperAdminServiceException("SubAdmin not Found");
+		}
 		this.subAdminCategoryRepo.deleteById(mid);
-	}
-
-	@Override
-	public String getMappedCategory(String mid) {
-		SubAdminCategory subAdminCategory = this.subAdminCategoryRepo.getOne(mid);
-		return subAdminCategory.getCategoryName();
+		return mid;
 	}
 
 	@Override
@@ -153,7 +251,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public List<SuperAdminHistory> getSuperAdminHistory() {
 		
-		return this.SHR.findAll();
+		return this.superAdminHistoryRepo.findAll();
 		
 	}
 	

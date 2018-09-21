@@ -2,15 +2,17 @@ package com.mindtree.greencard.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.model.Category;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.model.SuperAdminHistory;
@@ -24,69 +26,88 @@ import com.mindtree.greencard.service.SuperAdminService;
 public class SuperAdminController {
 	@Autowired
 	private SuperAdminService service;
-
-	@PostMapping(value = "/addUser")
-	private String addUser(@RequestBody User user) {
-		return this.service.addUser(user);
-	}
 	
+	private static final Logger LOGGER=LoggerFactory.getLogger(SuperAdminController.class);
 
 	@RequestMapping(value = "/getUsers")
-	private List<User> get() {
+	public List<User> getUsers() {
 		return this.service.getUsers();
 	}
 
-	
-	@DeleteMapping(value = "/deleteUser/{mid}")
-	private String deleteUser(@PathVariable String mid) {
-		return this.service.deleteUser(mid);
-	}
-
 	@RequestMapping(value = "/updateUser")
-	private String add(@RequestBody User user) {
-		this.service.updateUser(user);
-		return user.getMid();
+	public String updateUser(@RequestBody User user) {
+		try {
+			String returnMessage=this.service.updateUser(user);
+			LOGGER.info("Successfully updated User");
+		return returnMessage;
+		}catch(SuperAdminServiceException e) {
+           LOGGER.error(e.getMessage());
+			return e.getMessage();
+		}
 	}
 
 	@RequestMapping(value = "/addCategory")
-	private String add(@RequestBody Category category) {
+	public String addCategory(@RequestBody Category category) {
 
-		return this.service.addCategory(category);
+		try {
+			String returnMessage=this.service.addCategory(category);
+			LOGGER.info("Successfully added Category ");
+			return returnMessage;
+		} catch (SuperAdminServiceException e) {
+			LOGGER.error(e.getMessage());
+			return e.getMessage();
+		}
 	}
 
 	@RequestMapping(value = "/deleteCategory/{categoryName}")
-	private String delete(@PathVariable String categoryName) {
-		return this.service.deleteCategory(categoryName);
+	public String deleteCategory(@PathVariable String categoryName) {
+		try {
+			String returnMessage=this.service.deleteCategory(categoryName);
+			LOGGER.info("Successfully deleted Category");
+			return returnMessage;
+		} catch (SuperAdminServiceException e) {
+			LOGGER.error(e.getMessage());
+			return e.getMessage();
+		}
 	}
 
 	@RequestMapping(value = "/getCategories")
-	private List<Category> getCategories() {
+	public List<Category> getCategories() {
 		return this.service.getCategories();
 	}
 
 	@RequestMapping(value = "/mapSubAdminToCategory")
-	private void mapSubAdminToCategory(@RequestBody SubAdminCategory subAdminCategory) {
-		this.service.mapSubAdminToCategory(subAdminCategory);
+	public String mapSubAdminToCategory(@RequestBody SubAdminCategory subAdminCategory) {
+		try {
+			String returnMessage=this.service.mapSubAdminToCategory(subAdminCategory);
+			LOGGER.info("Successfully mapped Subadmin to Category");
+		return returnMessage;
+		} catch (SuperAdminServiceException e) {
+			LOGGER.error(e.getMessage());
+			return e.getMessage();
+		}
 	}
 
 	@RequestMapping(value = "/deleteMappedSubAdmin/{mid}")
-	private String deleteMappedSubAdmin(@PathVariable String mid) {
-		this.service.deleteMappedSubAdmin(mid);
-		return "Success";
-	}
-
-	@RequestMapping(value = "/getMappedCategory/{mid}")
-	private String getMappedCategory(@PathVariable String mid) {
-		return this.service.getMappedCategory(mid);
+	public String deleteMappedSubAdmin(@PathVariable String mid) {
+	   try {
+		   String returnMessage=this.service.deleteMappedSubAdmin(mid);
+		   LOGGER.info("Successfully deleted Mapping between subAdmin and Category");
+		   return returnMessage;
+	   }catch(SuperAdminServiceException e) {
+		   LOGGER.error(e.getMessage());
+		   return e.getMessage();
+	   }
+		
 	}
 	
 	@RequestMapping(value="/getMappedSubAdmins")
-	private List<SubAdminCategory> getMappedSubAdmins(){
+	public List<SubAdminCategory> getMappedSubAdmins(){
 		return this.service.getMappedSubAdmins();
 	}
 	
 	@GetMapping(value="/getSuperAdminHistory")
-	private List<SuperAdminHistory> getSuperAdminHistory()
+	public List<SuperAdminHistory> getSuperAdminHistory()
 	{
 		return this.service.getSuperAdminHistory();
 	}

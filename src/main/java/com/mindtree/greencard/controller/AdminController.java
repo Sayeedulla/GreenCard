@@ -68,7 +68,6 @@ public class AdminController {
 
 	@PostMapping("/assigncard")
 	public String assigncard(@RequestBody InProgressGreenCard card) {
-		
 		return this.adminservice.assigncard(card);
 
 	}
@@ -115,6 +114,7 @@ public class AdminController {
 	public String resolveCard(@PathVariable int gid,@PathVariable String rootcause,@PathVariable String correctiveaction) {
 		return this.adminservice.resolveCard(gid,rootcause,correctiveaction);
 	}
+
 
 
 }
