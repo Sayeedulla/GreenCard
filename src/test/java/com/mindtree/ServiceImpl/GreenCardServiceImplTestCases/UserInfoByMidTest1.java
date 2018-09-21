@@ -1,4 +1,4 @@
-package UserTesting;
+package com.mindtree.ServiceImpl.GreenCardServiceImplTestCases;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -16,31 +16,33 @@ import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
-public class UserInfoByMidTest3 {
+@RunWith(org.mockito.junit.MockitoJUnitRunner.Silent.class)
+public class UserInfoByMidTest1 {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;
 	@Mock
 	UserRepository userrepository;
 	@Before
-	public void testSetUp() {
+	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		User user=new User();
+		User user1=null;
+		
 		String sha256hex = DigestUtils.sha256Hex("Pass@123");
-		user.setPassword(sha256hex);
 		user.setMid("M1046908");
-		user.setType("User");
+		user.setPassword(sha256hex);
 		when(userrepository.save(user)).thenReturn(user);
-		when(userrepository.getUserByMid(user.getMid())).thenReturn(user);
+		when(userrepository.getUserByMid(user.getMid())).thenReturn(user1);
 	}
 	@Test
-	public void getUserInfoByMid3() throws GreenCardException {
+	public void getUserInfoByMid1() throws GreenCardException {
 		User user=new User();
 		user.setMid("M1046908");
-		user.setPassword("Pass@123");
 		
+		String sha256hex = DigestUtils.sha256Hex("Pass@123");
+		user.setPassword(sha256hex);
 		assertEquals(userServiceImpl.getUserInfoByMid(user),"User");
 		
 	}
-}
 
+}

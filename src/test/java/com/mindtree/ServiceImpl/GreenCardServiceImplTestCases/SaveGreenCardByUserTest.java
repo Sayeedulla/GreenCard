@@ -1,4 +1,4 @@
-package UserTesting;
+package com.mindtree.ServiceImpl.GreenCardServiceImplTestCases;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.quality.Strictness;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mindtree.greencard.exception.GreenCardException;
@@ -24,7 +25,9 @@ import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+
+@RunWith(org.mockito.junit.MockitoJUnitRunner.Silent.class)
+
 public class SaveGreenCardByUserTest {
     @InjectMocks
     GreenCardServiceImpl greenCardServiceImpl;
@@ -63,8 +66,8 @@ public class SaveGreenCardByUserTest {
                     
                     when(userrepository.findUser("M1046908")).thenReturn(user1);
                     when(userrepository.save(user)).thenReturn(user);
-                    when(newgreencardrepository.save(newGreenCard)).thenReturn(newGreenCard);
-                    when(greenCardLifeCycleRepository.save(greenCardLifeCycle)).thenReturn(greenCardLifeCycle);
+//                    when(newgreencardrepository.save(newGreenCard)).thenReturn(newGreenCard);
+//                    when(greenCardLifeCycleRepository.save(greenCardLifeCycle)).thenReturn(greenCardLifeCycle);
     }
     @Test
     public void saveGreenCard() throws GreenCardException, IOException {
