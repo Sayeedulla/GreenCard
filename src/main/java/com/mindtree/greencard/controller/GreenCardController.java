@@ -33,10 +33,7 @@ public class GreenCardController {
 	@Autowired
 	GreenCardService greenCardService;
 	private static final Logger LOGGER=LoggerFactory.getLogger(GreenCardController.class);
-	@GetMapping("/")
-	public String get() {
-		return "hello world";
-	}
+	
 	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String mid) {
 		try {
@@ -59,8 +56,9 @@ public class GreenCardController {
 		return userByMidPass;
 	}
 	@PostMapping(value = "/add/greenCardByGuest")
-	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String name,BigInteger phone) {
+	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload) {
 		try {
+			 String what=null; String location=null;String name=null;BigInteger phone=null;
 		String str=this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
 		return str;
 		}catch(GreenCardException e) {

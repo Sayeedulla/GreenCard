@@ -82,8 +82,9 @@ public class GreenCardServiceImpl implements GreenCardService {
 			BigInteger phone) throws GreenCardException {
 		try {
 			NewGreenCard newgreencard = new NewGreenCard();
-			
-			newgreencard.setImage(fileupload.getBytes());
+			if (fileupload != null) {
+				newgreencard.setImage(fileupload.getBytes());
+			}
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
 			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
@@ -93,10 +94,11 @@ public class GreenCardServiceImpl implements GreenCardService {
 			greencardlifecycle.setNewgreencard(newgreencard);
 			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 			greencardlifecyclerepository.save(greencardlifecycle);
-			if (newgreencard.getGreenCardId() == null) {
+			if (newgreencard.getWhatHappened() == null) {
 				throw new SaveGreenCardByGuestException("sorry can't save the green card by guest");
 			}
-			return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
+			return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " with status "
+					+ greencardlifecycle.getStatus() + " Note it down for future Reference";
 		} catch (SaveGreenCardByGuestException e) {
 			throw new GreenCardException(e);
 		}
@@ -108,13 +110,15 @@ public class GreenCardServiceImpl implements GreenCardService {
 		try {
 			NewGreenCard newGreenCard = this.newgreencardrepository.getOne(green_card_id);
 			greenCardLifeCycle = this.greencardlifecyclerepository.getGreenCardById(newGreenCard);
-			if (greenCardLifeCycle == null) {
+			if (greenCardLifeCycle== null) {
 				throw new GreenCardLifeCycleException("sorry cant return greencardlifecycle");
+			}
+			else {
+				return greenCardLifeCycle;
 			}
 		} catch (GreenCardLifeCycleException e) {
 			throw new GreenCardException(e);
 		}
-		return greenCardLifeCycle;
 	}
 
 }

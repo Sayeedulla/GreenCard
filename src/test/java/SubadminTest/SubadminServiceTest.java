@@ -1,4 +1,5 @@
 package SubadminTest;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
@@ -82,6 +83,8 @@ public class SubadminServiceTest {
 		assertEquals(3, subServ.getComplaints("M1046874").size());
 	}
 
+	
+
 	@Test
 	public void getComplaint() throws Exception {
 
@@ -114,15 +117,15 @@ public class SubadminServiceTest {
 	@Test
 	public void resolveComplaint() throws Exception {
 		inpGC = getInprogData();
-		gclc=getGCLC();
-		gch=getGCH();
-		ngcc=getComplaintData();
+		gclc = getGCLC();
+		gch = getGCH();
+		ngcc = getComplaintData();
 		when(inpgcrepo.existsById(1)).thenReturn(true);
 		when(inpgcrepo.save(inpGC)).thenReturn(inpGC);
 		when(gclcrepo.getOne(1)).thenReturn(gclc);
 		when(ngcrepo.getOne(1)).thenReturn(ngcc);
 		when(gclcrepo.save(gclc)).thenReturn(gclc);
-		//when(gchrepo.save(null)).thenReturn(gch);
+		// when(gchrepo.save(null)).thenReturn(gch);
 		assertEquals("Complaint 1 is resolved", subServ.updateComplaint(inpGC));
 	}
 
@@ -241,5 +244,4 @@ public class SubadminServiceTest {
 		complaints.add(complaint);
 		return complaints;
 	}
-
 }

@@ -1,4 +1,4 @@
-package UserTesting;
+package com.mindtree.ServiceImpl.GreenCardServiceImplTestCases;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -16,8 +16,8 @@ import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
-public class UserInfoByMidTest {
+@RunWith(org.mockito.junit.MockitoJUnitRunner.Silent.class)
+public class UserInfoByMidTest4 {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;
 	@Mock
@@ -29,19 +29,17 @@ public class UserInfoByMidTest {
 		String sha256hex = DigestUtils.sha256Hex("Pass@123");
 		user.setPassword(sha256hex);
 		user.setMid("M1046908");
-		user.setType("SuperAdmin");
+		user.setType("SubAdmin");
 		when(userrepository.save(user)).thenReturn(user);
 		when(userrepository.getUserByMid(user.getMid())).thenReturn(user);
 	}
 	@Test
-	public void getUserInfoByMid() throws GreenCardException {
+	public void getUserInfoByMid4() throws GreenCardException {
 		User user=new User();
 		user.setMid("M1046908");
 		user.setPassword("Pass@123");
 		
-		assertEquals(userServiceImpl.getUserInfoByMid(user),"SuperAdmin");
+		assertEquals(userServiceImpl.getUserInfoByMid(user),"SubAdmin");
 		
 	}
-	
-	
 }

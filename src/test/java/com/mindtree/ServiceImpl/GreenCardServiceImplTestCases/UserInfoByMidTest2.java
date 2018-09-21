@@ -1,4 +1,4 @@
-package UserTesting;
+package com.mindtree.ServiceImpl.GreenCardServiceImplTestCases;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -16,7 +16,7 @@ import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@RunWith(org.mockito.junit.MockitoJUnitRunner.Silent.class)
 public class UserInfoByMidTest2 {
 	@InjectMocks
 	UserServiceImpl userServiceImpl;
