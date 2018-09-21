@@ -41,59 +41,52 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	private SuperAdminHistoryRepo superAdminHistoryRepo;
 
 	private static final String INVALID_CATEGORY_NAME = "Invalid Category Name";
-
 	private static final String ZONE = "Asia/Calcutta";
-
 	private static final String SUBADMIN = "SubAdmin";
-
+	private static final String ADMIN = "Admin";
+	private static final String USER = "User";
 	private static final String NAME_PATTERN = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
-
-	private static final String INVALID_MID = "Invalid Mid";
-
 	private static final String MID_PATTERN = "[Mm][1][0][0-9]{5}";
+	private static final String EMAIL_PATTERN = "(([A-Za-z][a-z]*[.][A-Za-z][a-z]*[0-9]*)|([Mm][1-9][0-9]{6}))@mindtree.com";
+	private static final String INVALID_MID = "Invalid Mid";
+	private static final String INVALID_USER = "User not Found";
+	private static final String INVALID_NAME = "Format of Name is Invalid";
+	private static final String INVALID_EMAIL = "Email Format is Invalid";
+	private static final String INVALID_TYPE = "Invalid Type";
+	private static final String INVALID_NAME_EMAIL = "Name or EmailId does not match";
 
 	public String updateUser(User user) throws SuperAdminServiceException {
 		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
 		try {
-			if (!tempuser.isPresent())
-				throw new UserNotFoundException();
-		} catch (UserNotFoundException exception) {
-			throw new SuperAdminServiceException("User not Found");
-		}
-		try {
-			if (!user.getMid().matches(MID_PATTERN)) {
-				throw new InvalidMidException();
+			if (!tempuser.isPresent()) {
+				throw new UserNotFoundException(INVALID_USER);
 			}
-		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(INVALID_MID);
-		}
-		try {
-			if (!user.getName().matches(NAME_PATTERN))
-				throw new InvalidUserNameException();
-		} catch (InvalidUserNameException exception) {
-			throw new SuperAdminServiceException("Format of Name is InValid");
-		}
-		try {
-			if (!user.getEmailId()
-					.matches("(([A-Za-z][a-z]*[.][A-Za-z][a-z]*[0-9]*)|([Mm][1-9][0-9]{6}))@mindtree.com"))
-				throw new InvalidEmailFormatException();
-		} catch (InvalidEmailFormatException exception) {
-			throw new SuperAdminServiceException("Email Format is InValid");
-		}
-		try {
-			if (!(user.getType().equals("User") || user.getType().equals("Admin") || user.getType().equals(SUBADMIN)))
-				throw new InvalidTypeException();
-		} catch (InvalidTypeException exception) {
-			throw new SuperAdminServiceException("Invalid Type");
-		}
-		try {
-			if (!(tempuser.get().getName().equals(user.getName())
-					&& tempuser.get().getEmailId().equals(user.getEmailId())))
-				throw new InvalidOperationException();
-		} catch (InvalidOperationException exception) {
-			throw new SuperAdminServiceException("Name or EmailId does not match");
-		}
 
+			else if (!user.getMid().matches(MID_PATTERN)) {
+				throw new InvalidMidException(INVALID_MID);
+			}
+
+			else if (!user.getName().matches(NAME_PATTERN)) {
+				throw new InvalidUserNameException(INVALID_NAME);
+			}
+
+			else if (!user.getEmailId().matches(EMAIL_PATTERN)) {
+				throw new InvalidEmailFormatException(INVALID_EMAIL);
+			}
+
+			else if (!(user.getType().equals(USER) || user.getType().equals(ADMIN)
+					|| user.getType().equals(SUBADMIN))) {
+				throw new InvalidTypeException(INVALID_TYPE);
+			}
+
+			else if (!(tempuser.get().getName().equals(user.getName())
+					&& tempuser.get().getEmailId().equals(user.getEmailId()))) {
+				throw new InvalidOperationException(INVALID_NAME_EMAIL);
+			}
+
+		} catch (UserNotFoundException | InvalidMidException | InvalidUserNameException | InvalidEmailFormatException | InvalidTypeException |InvalidOperationException exception) {
+			throw new SuperAdminServiceException(exception.getMessage());
+		} 	
 		user.setUserId(tempuser.get().getUserId());
 		SuperAdminHistory sh = new SuperAdminHistory();
 		sh.setMid(user.getMid());
@@ -152,21 +145,19 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		try {
 			if (categoryName.equals("NOT ASSIGNED"))
 				throw new InvalidOperationException();
-		} catch (InvalidOperationException exception) {
-			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
-		}
-		try {
-			if (!categoryName.matches(NAME_PATTERN))
-				throw new InvalidCategoryNameException();
-		} catch (InvalidCategoryNameException exception) {
-			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
-		}
 
-		try {
+			else if (!categoryName.matches(NAME_PATTERN))
+				throw new InvalidCategoryNameException();
+
 			category = this.categoryRepo.getCategory(categoryName);
 			if (category == null) {
 				throw new CategoryNotFoundException();
 			}
+
+		} catch (InvalidOperationException exception) {
+			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
+		} catch (InvalidCategoryNameException exception) {
+			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
 		} catch (CategoryNotFoundException exception) {
 			throw new SuperAdminServiceException("Category not present");
 		}
@@ -192,37 +183,31 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	public String mapSubAdminToCategory(SubAdminCategory subAdminCategory) throws SuperAdminServiceException {
 		try {
-			if (!subAdminCategory.getMid().matches(MID_PATTERN)) {
+			if (!subAdminCategory.getMid().matches(MID_PATTERN))
 				throw new InvalidMidException();
-			}
-		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(INVALID_MID);
-		}
-		try {
+
 			User user = this.userRepo.getUserByMid(subAdminCategory.getMid());
 			if (user == null)
 				throw new UserNotFoundException();
-		} catch (UserNotFoundException exception) {
-			throw new SuperAdminServiceException("User not Found");
-		}
-		try {
-			if (subAdminCategory.getCategoryName().equals("Not Assigned"))
+
+			else if (subAdminCategory.getCategoryName().equals("Not Assigned"))
 				throw new InvalidOperationException();
+
+			else if (!subAdminCategory.getCategoryName().matches(NAME_PATTERN))
+				throw new InvalidCategoryNameException();
+
+			Category category = this.categoryRepo.getCategory(subAdminCategory.getCategoryName());
+			if (category == null)
+				throw new CategoryNotFoundException();
+
+		} catch (InvalidMidException exception) {
+			throw new SuperAdminServiceException(INVALID_MID);
+		} catch (UserNotFoundException exception) {
+			throw new SuperAdminServiceException(INVALID_USER);
 		} catch (InvalidOperationException exception) {
 			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
-		}
-		try {
-			if (!subAdminCategory.getCategoryName().matches(NAME_PATTERN))
-				throw new InvalidCategoryNameException();
 		} catch (InvalidCategoryNameException exception) {
 			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
-		}
-
-		try {
-			Category category = this.categoryRepo.getCategory(subAdminCategory.getCategoryName());
-			if (category == null) {
-				throw new CategoryNotFoundException();
-			}
 		} catch (CategoryNotFoundException exception) {
 			throw new SuperAdminServiceException("Category not present");
 		}
@@ -233,16 +218,15 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public String deleteMappedSubAdmin(String mid) throws SuperAdminServiceException {
 		try {
-			if (!mid.matches(MID_PATTERN)) {
+			if (!mid.matches(MID_PATTERN))
 				throw new InvalidMidException();
-			}
-		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(INVALID_MID);
-		}
-		try {
+
 			Optional<SubAdminCategory> subAdminCategory = this.subAdminCategoryRepo.findById(mid);
 			if (!subAdminCategory.isPresent())
 				throw new UserNotFoundException();
+
+		} catch (InvalidMidException exception) {
+			throw new SuperAdminServiceException(INVALID_MID);
 		} catch (UserNotFoundException exception) {
 			throw new SuperAdminServiceException("SubAdmin not Found");
 		}
