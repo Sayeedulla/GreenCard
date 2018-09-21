@@ -3,7 +3,6 @@ package com.mindtree.greencard.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,6 @@ import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.AdminService;
-
-import ch.qos.logback.classic.Logger;
 
 @RestController
 @RequestMapping(value = "/GreenCard/admin")
@@ -85,12 +82,7 @@ public class AdminController {
 		return this.adminservice.getByGid(gId);
 	}
 	
-	@GetMapping("/downloadxl")
-	public void downloadXl()
-	{
-		this.adminservice.generateXl();
-		
-	}
+
 	
 	@GetMapping("/historysubadmin/{mid}")
 	public List<GreenCardHistory> getForSubAdmin(@PathVariable String mid)
