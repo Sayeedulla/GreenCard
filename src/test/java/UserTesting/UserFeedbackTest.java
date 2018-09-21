@@ -1,6 +1,5 @@
 package UserTesting;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -9,10 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mindtree.greencard.exception.GreenCardException;
-import com.mindtree.greencard.exception.userserviceexception.FeedbackException;
 import com.mindtree.greencard.jprepository.greencardrepository.Feedbackrepository;
 import com.mindtree.greencard.model.FeedBack;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
