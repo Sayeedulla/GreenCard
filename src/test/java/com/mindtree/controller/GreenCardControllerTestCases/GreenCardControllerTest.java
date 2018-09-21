@@ -69,7 +69,7 @@ assertEquals("User", greenCardController.getUserInfoByMid(user));
 	@Test
 	public void addGreenCardByUserTest() throws Exception {
 		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent","Bahada","M1046908")).thenReturn("Your GreenCard Id is 1 Note it down for future Reference");
-		//mockMvc.perform(post("/GreenCard/add/greenCard").contentType(MediaType.MULTIPART_FORM_DATA).accept(null,"ElectricCurrent","Bahada","M1046908")).andExpect(status().isOk());
+		
 		assertEquals("Your GreenCard Id is 1 Note it down for future Reference", greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada","M1046908"));
 	}
 	public static String asJsonString(final Object obj) {
