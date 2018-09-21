@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SuperAdminHistoryRepo;
@@ -44,7 +45,7 @@ public class DeleteCategoryServiceImplTest {
 	}
 	
 	@Test
-	public void deleteCategoryServiceImplTest() {
+	public void deleteCategoryServiceImplTest() throws SuperAdminServiceException {
 		Category category =new Category();
 		category.setCategoryId(1);
 		category.setCategoryName("Safety");

@@ -40,10 +40,9 @@ import com.mindtree.greencard.service.SubAdminService;
 @Service
 public class SubAdminServiceImpl implements SubAdminService {
 
+	private String listIsEmpty = "List is empty";
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
-//	@Autowired
-//	private JavaMailSender sender;
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -77,7 +76,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			if (complList.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(listIsEmpty);
 		}
 		return complList;
 	}
@@ -94,7 +93,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
- 
+
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
@@ -123,9 +122,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 				gcH.setWhatHappened(ngc.getWhatHappened());
 				gcHR.save(gcH);
 
-				
 				inProgGCRepo.delete(sub);
-				
+
 				return "Complaint " + id + " is resolved";
 			} else {
 				throw new ComplaintNotFoundException();
@@ -158,7 +156,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			if (cate.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(listIsEmpty);
 		}
 		return cate;
 	}
@@ -170,13 +168,13 @@ public class SubAdminServiceImpl implements SubAdminService {
 			if (subad.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(listIsEmpty);
 		}
 		return subad;
 	}
 
 	@Override
-	public String sendHelpEmail(String mid, int gc_id, String desc) {
+	public String sendHelpEmail(String mid, int gcId, String desc) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -185,8 +183,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.socketFactory.fallback", "true");
-		
-
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("stng361@gmail.com", "STng18N-r");
@@ -198,12 +194,11 @@ public class SubAdminServiceImpl implements SubAdminService {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("stng361@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
-			message.setSubject(mid + " Required Help for GreenCard Id " + gc_id);
+			message.setSubject(mid + " Required Help for GreenCard Id " + gcId);
 			message.setText(desc);
 
 			Transport.send(message);
 
-			System.out.println(" Mail sucessfully sent" + "");
 			return "Mail Successfully Sent to Admin";
 
 		} catch (MessagingException e) {

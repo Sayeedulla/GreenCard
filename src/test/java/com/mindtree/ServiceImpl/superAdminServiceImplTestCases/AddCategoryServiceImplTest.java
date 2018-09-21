@@ -12,6 +12,7 @@ import org.mockito.Spy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SuperAdminHistoryRepo;
 import com.mindtree.greencard.model.Category;
@@ -49,7 +50,7 @@ public class AddCategoryServiceImplTest {
 	}
 	
 	@Test
-	public void addCategoryServiceImpl() {
+	public void addCategoryServiceImpl() throws SuperAdminServiceException {
 		
 		SuperAdminHistory superAdminHistory=new SuperAdminHistory();
 		when(superAdminHistoryRepo.save(superAdminHistory)).thenReturn(null);

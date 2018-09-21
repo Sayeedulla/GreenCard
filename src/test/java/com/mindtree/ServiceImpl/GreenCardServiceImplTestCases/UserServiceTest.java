@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
@@ -23,7 +22,6 @@ public class UserServiceTest {
 	UserServiceImpl userServiceImpl;
 	@Mock
 	UserRepository userrepository;
-
 
 	@Before
 	public void testSetUp() {
