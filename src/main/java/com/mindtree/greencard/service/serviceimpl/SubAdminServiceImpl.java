@@ -42,8 +42,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
-//	@Autowired
-//	private JavaMailSender sender;
+
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
