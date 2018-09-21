@@ -11,8 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mindtree.greencard.exception.AdminExceptions.AdminException;
-import com.mindtree.greencard.exception.AdminExceptions.CardNotFoundException;
+import com.mindtree.greencard.exception.adminexceptions.AdminException;
+import com.mindtree.greencard.exception.adminexceptions.CardNotFoundException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
 import com.mindtree.greencard.jprepository.adminrepository.InProgressGreenCardRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;

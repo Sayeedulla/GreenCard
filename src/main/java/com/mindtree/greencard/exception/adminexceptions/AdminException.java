@@ -1,4 +1,4 @@
-package com.mindtree.greencard.exception.AdminExceptions;
+package com.mindtree.greencard.exception.adminexceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

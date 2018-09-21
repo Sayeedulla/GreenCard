@@ -3,7 +3,7 @@ package com.mindtree.greencard.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.mindtree.greencard.exception.AdminExceptions.AdminException;
+import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
