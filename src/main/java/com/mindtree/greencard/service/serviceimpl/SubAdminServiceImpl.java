@@ -40,11 +40,10 @@ import com.mindtree.greencard.service.SubAdminService;
 @Service
 public class SubAdminServiceImpl implements SubAdminService {
 
-	public static final String LISTISEMPTY="List is empty";
-	
+	public static final String LISTISEMPTY = "List is empty";
+
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
-
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -95,7 +94,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
-	
+
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
@@ -124,9 +123,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 				gcH.setWhatHappened(ngc.getWhatHappened());
 				gcHR.save(gcH);
 
-				
 				inProgGCRepo.delete(sub);
-				
+
 				return "Complaint " + id + " is resolved";
 			} else {
 				throw new ComplaintNotFoundException();
@@ -177,7 +175,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	@Override
-	public String sendHelpEmail(String mid, int gcId, String desc) {
+	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -186,7 +184,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.socketFactory.fallback", "true");
-		
 
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			@Override
@@ -208,7 +205,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			return "Mail Successfully Sent to Admin";
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			throw new ServiceException(e.getMessage());
 
 		}
 
