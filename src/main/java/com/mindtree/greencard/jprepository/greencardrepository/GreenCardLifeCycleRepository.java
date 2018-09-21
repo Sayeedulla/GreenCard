@@ -2,6 +2,7 @@ package com.mindtree.greencard.jprepository.greencardrepository;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,6 +28,12 @@ public interface GreenCardLifeCycleRepository extends JpaRepository<GreenCardLif
 	
 	@Query(value="select g from GreenCardLifeCycle g where g.status='rejected'")
 	public List<GreenCardLifeCycle> getRejectedGreenCard();
+	
+	@Query(value="select g from GreenCardLifeCycle g")
+	public List<GreenCardLifeCycle> getFullGreenCard();
+	
+	@Query(value="select g from GreenCardLifeCycle g where g.status='Open' order by g.green_card_id desc")
+	public List<GreenCardLifeCycle> get3OpenGreenCard();
 	
 	
 }

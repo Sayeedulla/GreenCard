@@ -27,6 +27,6 @@ public interface AdminService{
 	public int assignedcount();
 	public int closedcount();
 	public int rejectcount();
-
-
+	public int fullcount();
+	public List<NewGreenCard> getBeware();
 }
