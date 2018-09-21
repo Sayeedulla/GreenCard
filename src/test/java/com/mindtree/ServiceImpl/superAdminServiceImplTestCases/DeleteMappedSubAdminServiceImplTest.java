@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
+import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;

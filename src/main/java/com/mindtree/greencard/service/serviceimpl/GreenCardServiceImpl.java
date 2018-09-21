@@ -32,7 +32,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 	@Autowired
 	GreenCardLifeCycleRepository greencardlifecyclerepository;
 
-	private final String timeZone = "Asia/Calcutta";
+	private static final String timeZone = "Asia/Calcutta";
 
 	@Transactional
 

@@ -8,16 +8,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mindtree.greencard.exception.superAdminExceptions.CategoryNameAlreadyExists;
-import com.mindtree.greencard.exception.superAdminExceptions.CategoryNotFoundException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidCategoryNameException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidEmailFormatException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidMidException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidOperationException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidTypeException;
-import com.mindtree.greencard.exception.superAdminExceptions.InvalidUserNameException;
-import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
-import com.mindtree.greencard.exception.superAdminExceptions.UserNotFoundException;
+import com.mindtree.greencard.exception.superadminexceptions.CategoryNameAlreadyExists;
+import com.mindtree.greencard.exception.superadminexceptions.CategoryNotFoundException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidCategoryNameException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidEmailFormatException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidMidException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidOperationException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidTypeException;
+import com.mindtree.greencard.exception.superadminexceptions.InvalidUserNameException;
+import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
+import com.mindtree.greencard.exception.superadminexceptions.UserNotFoundException;
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SuperAdminHistoryRepo;
@@ -40,21 +40,19 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Autowired
 	private SuperAdminHistoryRepo superAdminHistoryRepo;
 
-	private final String invalidCategoryName = "Invalid Category Name";
+	private static final String invalidCategoryName = "Invalid Category Name";
 
-	private final String zone = "Asia/Calcutta";
+	private static final String zone = "Asia/Calcutta";
 
-	private final String subadmin = "SubAdmin";
+	private static final String subadmin = "SubAdmin";
 
-	private final String namePattern = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
+	private static final String namePattern = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
 
-	private final String invalidMid = "Invalid Mid";
-	
-	private final String midPattern="[Mm][1][0][0-9]{5}";
-	
+	private static final String invalidMid = "Invalid Mid";
+
+	private static final String midPattern = "[Mm][1][0][0-9]{5}";
 
 	public String updateUser(User user) throws SuperAdminServiceException {
-
 		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
 		try {
 			if (!tempuser.isPresent())
