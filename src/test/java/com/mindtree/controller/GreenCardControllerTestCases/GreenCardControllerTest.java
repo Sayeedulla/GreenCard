@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindtree.greencard.controller.GreenCardController;
-import com.mindtree.greencard.model.FeedBack;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.FeedBack;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 

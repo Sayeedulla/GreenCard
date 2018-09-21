@@ -27,10 +27,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindtree.greencard.controller.SubAdminController;
 import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
-import com.mindtree.greencard.model.Category;
-import com.mindtree.greencard.model.InProgressGreenCard;
-import com.mindtree.greencard.model.NewGreenCard;
-import com.mindtree.greencard.model.SubAdminCategory;
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
 import com.mindtree.greencard.service.serviceimpl.SubAdminServiceImpl;
 
 public class SubadminControllerTest {

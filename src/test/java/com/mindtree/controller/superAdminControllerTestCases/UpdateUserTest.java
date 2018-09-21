@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.google.gson.Gson;
 import com.mindtree.greencard.controller.SuperAdminController;
 import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;
 
 public class UpdateUserTest {

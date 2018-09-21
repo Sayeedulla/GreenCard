@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
 
 public interface NewGreenCardRepository extends JpaRepository<NewGreenCard, Integer> {
 	

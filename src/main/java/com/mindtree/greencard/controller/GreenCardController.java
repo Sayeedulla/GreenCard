@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.mindtree.greencard.exception.GreenCardException;
-import com.mindtree.greencard.model.FeedBack;
-import com.mindtree.greencard.model.GreenCardLifeCycle;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.FeedBack;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.GreenCardService;
 import com.mindtree.greencard.service.UserService;
 

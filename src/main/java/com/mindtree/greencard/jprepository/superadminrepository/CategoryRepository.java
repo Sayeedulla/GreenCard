@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mindtree.greencard.model.Category;
+import com.mindtree.greencard.entity.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {

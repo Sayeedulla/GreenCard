@@ -12,8 +12,8 @@ import com.mindtree.greencard.exception.userserviceexception.GetInfoByMidExcepti
 import com.mindtree.greencard.exception.userserviceexception.UserByMidPassNotExistsException;
 import com.mindtree.greencard.jprepository.greencardrepository.Feedbackrepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
-import com.mindtree.greencard.model.FeedBack;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.FeedBack;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.UserService;
 
 @Service

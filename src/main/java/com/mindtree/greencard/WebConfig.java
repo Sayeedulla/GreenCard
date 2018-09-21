@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.mindtree.greencard.model.GreenCardHistory;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.GreenCardHistory;
+import com.mindtree.greencard.entity.User;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

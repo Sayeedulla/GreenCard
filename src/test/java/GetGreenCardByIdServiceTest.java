@@ -13,8 +13,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
-import com.mindtree.greencard.model.GreenCardLifeCycle;
-import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.NewGreenCard;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)

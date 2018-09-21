@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
-import com.mindtree.greencard.model.Category;
-import com.mindtree.greencard.model.InProgressGreenCard;
-import com.mindtree.greencard.model.NewGreenCard;
-import com.mindtree.greencard.model.SubAdminCategory;
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
 import com.mindtree.greencard.service.SubAdminService;
 
 

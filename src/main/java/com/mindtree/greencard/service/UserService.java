@@ -3,8 +3,8 @@ package com.mindtree.greencard.service;
 import org.springframework.stereotype.Service;
 
 import com.mindtree.greencard.exception.GreenCardException;
-import com.mindtree.greencard.model.FeedBack;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.FeedBack;
+import com.mindtree.greencard.entity.User;
 
 @Service
 public interface UserService {

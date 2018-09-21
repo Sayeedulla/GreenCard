@@ -28,13 +28,13 @@ import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepos
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
-import com.mindtree.greencard.model.Category;
-import com.mindtree.greencard.model.GreenCardHistory;
-import com.mindtree.greencard.model.GreenCardLifeCycle;
-import com.mindtree.greencard.model.InProgressGreenCard;
-import com.mindtree.greencard.model.NewGreenCard;
-import com.mindtree.greencard.model.SubAdminCategory;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.GreenCardHistory;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.SubAdminService;
 
 @Service

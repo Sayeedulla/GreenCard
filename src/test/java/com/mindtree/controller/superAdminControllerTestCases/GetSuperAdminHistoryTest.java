@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.mindtree.greencard.controller.SuperAdminController;
-import com.mindtree.greencard.model.SuperAdminHistory;
+import com.mindtree.greencard.entity.SuperAdminHistory;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;
 
 public class GetSuperAdminHistoryTest {

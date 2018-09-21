@@ -3,10 +3,10 @@ package com.mindtree.greencard.service;
 import java.util.List;
 
 import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
-import com.mindtree.greencard.model.Category;
-import com.mindtree.greencard.model.InProgressGreenCard;
-import com.mindtree.greencard.model.NewGreenCard;
-import com.mindtree.greencard.model.SubAdminCategory;
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
 
 public interface SubAdminService {
 

@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mindtree.greencard.exception.adminexceptions.AdminException;
-import com.mindtree.greencard.model.GreenCardHistory;
-import com.mindtree.greencard.model.InProgressGreenCard;
-import com.mindtree.greencard.model.NewGreenCard;
-import com.mindtree.greencard.model.SubAdminCategory;
+import com.mindtree.greencard.entity.GreenCardHistory;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
 
 
 public interface AdminService{

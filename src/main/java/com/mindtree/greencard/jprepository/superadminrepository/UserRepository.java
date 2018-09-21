@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {

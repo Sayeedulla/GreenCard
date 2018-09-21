@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mindtree.greencard.model.SubAdminCategory;
+import com.mindtree.greencard.entity.SubAdminCategory;
 
 @Repository
 public interface SubAdminCategoryRepository extends JpaRepository<SubAdminCategory, String> {

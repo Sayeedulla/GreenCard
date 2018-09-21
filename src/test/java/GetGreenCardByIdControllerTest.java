@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindtree.greencard.controller.GreenCardController;
 import com.mindtree.greencard.exception.GreenCardException;
-import com.mindtree.greencard.model.GreenCardLifeCycle;
-import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.NewGreenCard;
 import com.mindtree.greencard.service.GreenCardService;
 
 @RunWith(MockitoJUnitRunner.class)

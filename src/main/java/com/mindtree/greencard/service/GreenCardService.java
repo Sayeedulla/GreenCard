@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.mindtree.greencard.exception.GreenCardException;
-import com.mindtree.greencard.model.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
 
 public interface GreenCardService {
 	public String saveNewGreenCard(CommonsMultipartFile fileupload, String what, String location, String mid) throws GreenCardException;

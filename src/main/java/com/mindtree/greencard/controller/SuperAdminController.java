@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
-import com.mindtree.greencard.model.Category;
-import com.mindtree.greencard.model.SubAdminCategory;
-import com.mindtree.greencard.model.SuperAdminHistory;
-import com.mindtree.greencard.model.User;
+import com.mindtree.greencard.entity.Category;
+import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.entity.SuperAdminHistory;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.SuperAdminService;
 
 

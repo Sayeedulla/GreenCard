@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mindtree.greencard.model.GreenCardLifeCycle;
-import com.mindtree.greencard.model.NewGreenCard;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.NewGreenCard;
 
 @Repository
 public interface GreenCardLifeCycleRepository extends JpaRepository<GreenCardLifeCycle, Integer> {
