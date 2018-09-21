@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindtree.greencard.exception.AdminExceptions.AdminException;
 import com.mindtree.greencard.model.GreenCardHistory;
 import com.mindtree.greencard.model.InProgressGreenCard;
 import com.mindtree.greencard.model.NewGreenCard;
@@ -22,9 +23,11 @@ import com.mindtree.greencard.service.AdminService;
 @RequestMapping(value = "/GreenCard/admin")
 @CrossOrigin
 public class AdminController {
+	
 
 	@Autowired
 	AdminService adminservice;
+
 
 	@GetMapping("/newgreencards")
 	public List<NewGreenCard> newComplaints() {
@@ -35,7 +38,17 @@ public class AdminController {
 	@GetMapping("/getCard/{gid}")
 	public Optional<NewGreenCard> getCard(@PathVariable int gid) {
 		
-		return this.adminservice.getCard(gid);
+		Optional<NewGreenCard> newgreencard = null;
+		
+		try {
+			newgreencard= this.adminservice.getCard(gid);
+		} catch (AdminException e) {
+			
+			e.getMessage();
+			System.out.println(e.getMessage());
+		}
+		
+		return newgreencard;
 	}
 
 	@GetMapping("/getprogress")
@@ -69,12 +82,7 @@ public class AdminController {
 		return this.adminservice.getByGid(gId);
 	}
 	
-	@GetMapping("/downloadxl")
-	public void downloadXl()
-	{
-		this.adminservice.generateXl();
-		
-	}
+
 	
 	@GetMapping("/historysubadmin/{mid}")
 	public List<GreenCardHistory> getForSubAdmin(@PathVariable String mid)
