@@ -39,38 +39,36 @@ public class GreenCardServiceImpl implements GreenCardService {
 			throws GreenCardException {
 		try {
 			NewGreenCard newgreencard = new NewGreenCard();
-			if(fileupload!=null)
-			{
-			newgreencard.setImage(fileupload.getBytes());
-			}
-			else
+			if (fileupload != null) {
+				newgreencard.setImage(fileupload.getBytes());
+			} else
 				newgreencard.setImage(null);
-			
+
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
 			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 			newgreencardrepository.save(newgreencard);
 			Optional<User> user1 = userrepository.findUser(mid);
-			
+
 			User user = new User();
 			if (user1.isPresent()) {
 				user = user1.get();
 			}
 			user.getNewGreenCards().add(newgreencard);
 			userrepository.save(user);
-			
+
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 			greencardlifecycle.setStatus("Open");
 			greencardlifecycle.setNewgreencard(newgreencard);
 			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
 			greencardlifecyclerepository.save(greencardlifecycle);
-			
+
 			if (newgreencard.getLandmark() == null) {
-				
+
 				throw new SaveNewGreenCardException("sorry cant save green card");
 			}
-			
-			return "Your GreenCard Id is " + newgreencard.getGreenCardId() +" Note it down for future Reference";
+
+			return "Your GreenCard Id is " + newgreencard.getGreenCardId() + " Note it down for future Reference";
 		} catch (SaveNewGreenCardException e) {
 			throw new GreenCardException(e);
 		}
@@ -110,10 +108,9 @@ public class GreenCardServiceImpl implements GreenCardService {
 		try {
 			NewGreenCard newGreenCard = this.newgreencardrepository.getOne(green_card_id);
 			greenCardLifeCycle = this.greencardlifecyclerepository.getGreenCardById(newGreenCard);
-			if (greenCardLifeCycle== null) {
+			if (greenCardLifeCycle == null) {
 				throw new GreenCardLifeCycleException("sorry cant return greencardlifecycle");
-			}
-			else {
+			} else {
 				return greenCardLifeCycle;
 			}
 		} catch (GreenCardLifeCycleException e) {
