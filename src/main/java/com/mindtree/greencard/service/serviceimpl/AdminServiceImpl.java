@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	GreenCardHistory gcH;
 
-	private final String timeZone = "Asia/Calcutta";
+	private static final String timeZone = "Asia/Calcutta";
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
@@ -195,16 +195,12 @@ public class AdminServiceImpl implements AdminService {
 		return l.size();
 	}
 
-
-
 	@Override
 	public int fullcount() {
-		
+
 		List<GreenCardLifeCycle> l = this.GLC.getFullGreenCard();
 		return l.size();
 	}
-
-
 
 	@Override
 	public List<NewGreenCard> getBeware() {

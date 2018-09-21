@@ -40,17 +40,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Autowired
 	private SuperAdminHistoryRepo superAdminHistoryRepo;
 
-	private final String invalidCategoryName = "Invalid Category Name";
+	private static final String invalidCategoryName = "Invalid Category Name";
 
-	private final String zone = "Asia/Calcutta";
+	private static final String zone = "Asia/Calcutta";
 
-	private final String subadmin = "SubAdmin";
-
-	private final String namePattern = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
-
-	private final String invalidMid = "Invalid Mid";
+	private static final String subadmin = "SubAdmin";
 	
-	private final String midPattern="[Mm][1][0][0-9]{5}";
+	private static final String namePattern = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
+
+	private static final String invalidMid = "Invalid Mid";
+	
+	private static final String midPattern="[Mm][1][0][0-9]{5}";
 	
 
 	public String updateUser(User user) throws SuperAdminServiceException {
