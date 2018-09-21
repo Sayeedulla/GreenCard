@@ -1,4 +1,4 @@
-package com.mindtree.greencard.exception.superAdminExceptions;
+package com.mindtree.greencard.exception.superadminexceptions;
 
 @SuppressWarnings("serial")
 public class InvalidUserNameException extends RuntimeException {
