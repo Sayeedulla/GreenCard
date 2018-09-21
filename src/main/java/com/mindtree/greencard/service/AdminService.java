@@ -3,7 +3,6 @@ package com.mindtree.greencard.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.entity.GreenCardHistory;
 import com.mindtree.greencard.entity.InProgressGreenCard;
 import com.mindtree.greencard.entity.NewGreenCard;
@@ -13,7 +12,7 @@ import com.mindtree.greencard.entity.SubAdminCategory;
 public interface AdminService{
 	
 	public List<NewGreenCard> newComplaints();
-	public Optional<NewGreenCard> getCard(int gid)throws AdminException;
+	public Optional<NewGreenCard> getCard(int gid);
 	public List<InProgressGreenCard> viewprogress();
 	public Optional<InProgressGreenCard> getprogressCard(int gid);
 	public String assigncard(InProgressGreenCard card);

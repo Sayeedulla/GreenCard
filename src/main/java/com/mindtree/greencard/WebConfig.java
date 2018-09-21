@@ -7,7 +7,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.mindtree.greencard.entity.GreenCardHistory;
 import com.mindtree.greencard.entity.User;
@@ -18,11 +17,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.mindtree.greencard")
 @EnableSwagger2
-public class WebConfig extends WebMvcConfigurerAdapter{
+public class WebConfig implements WebMvcConfigurer {
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -37,7 +38,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	public User getuse() {
 		return new User();
 	}
-	
 
 	@Bean
 	public GreenCardHistory getgcHistory() {
@@ -51,18 +51,11 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 		multipartResolver.setMaxInMemorySize(10485762); // 1MB
 		return multipartResolver;
 	}
-	
+
 	@Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.any())              
-          .paths(PathSelectors.any())                          
-          .build();                                           
-    }
-
-	
-
-
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build();
+	}
 
 }

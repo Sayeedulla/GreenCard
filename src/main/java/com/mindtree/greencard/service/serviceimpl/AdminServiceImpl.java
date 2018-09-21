@@ -11,6 +11,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mindtree.greencard.entity.GreenCardHistory;
+import com.mindtree.greencard.entity.GreenCardLifeCycle;
+import com.mindtree.greencard.entity.InProgressGreenCard;
+import com.mindtree.greencard.entity.NewGreenCard;
+import com.mindtree.greencard.entity.SubAdminCategory;
 import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.exception.adminexceptions.CardNotFoundException;
 import com.mindtree.greencard.jprepository.adminrepository.GreenCardHistoryRepository;
@@ -19,11 +24,6 @@ import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycl
 import com.mindtree.greencard.jprepository.greencardrepository.NewGreenCardRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
-import com.mindtree.greencard.entity.GreenCardHistory;
-import com.mindtree.greencard.entity.GreenCardLifeCycle;
-import com.mindtree.greencard.entity.InProgressGreenCard;
-import com.mindtree.greencard.entity.NewGreenCard;
-import com.mindtree.greencard.entity.SubAdminCategory;
 import com.mindtree.greencard.service.AdminService;
 
 @Service
@@ -67,7 +67,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Optional<NewGreenCard> getCard(int gid) throws AdminException {
+	public Optional<NewGreenCard> getCard(int gid) {
 		Optional<NewGreenCard> ngc = this.newgreencard.findById(gid);
 		try {
 			if (!ngc.isPresent()) {
@@ -201,7 +201,5 @@ public class AdminServiceImpl implements AdminService {
 		List<GreenCardLifeCycle> l = this.glc.getFullGreenCard();
 		return l.size();
 	}
-
-
 
 }
