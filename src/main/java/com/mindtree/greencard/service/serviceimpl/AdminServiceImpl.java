@@ -43,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
 	SubAdminCategoryRepository subadmin;
 
 	@Autowired
-	GreenCardLifeCycleRepository GLC;
+	GreenCardLifeCycleRepository glc;
 
 	@Autowired
 	UserRepository userRepository;
@@ -51,12 +51,12 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	GreenCardHistory gcH;
 
-	private static final String timeZone = "Asia/Calcutta";
+	private static final String TIME_ZONE = "Asia/Calcutta";
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
 		List<NewGreenCard> gcl = new ArrayList<NewGreenCard>();
-		List<GreenCardLifeCycle> l = this.GLC.getOpenGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getOpenGreenCard();
 		l.forEach(e -> {
 			NewGreenCard n = e.getNewgreencard();
 			NewGreenCard n1 = new NewGreenCard();
@@ -82,14 +82,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String assigncard(InProgressGreenCard card) {
 		NewGreenCard ngc1 = this.newgreencard.getOne(card.getGcId());
-		GreenCardLifeCycle glc1 = this.GLC.getGreenCardById(ngc1);
+		GreenCardLifeCycle glc1 = this.glc.getGreenCardById(ngc1);
 		card.setlId(glc1.getLifeCycleId());
 		this.inprogresscard.save(card);
 		NewGreenCard newGreenCard = this.newgreencard.getOne(card.getGcId());
-		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
+		GreenCardLifeCycle glc = this.glc.getGreenCardById(newGreenCard);
 		glc.setStatus("Assigned");
-		glc.setAssignedTime(LocalDateTime.now(ZoneId.of(timeZone)));
-		this.GLC.save(glc);
+		glc.setAssignedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
+		this.glc.save(glc);
 		return "Assigned";
 	}
 
@@ -116,10 +116,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String rejectGreenCard(int gid) {
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
-		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
-		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(timeZone)));
+		GreenCardLifeCycle greencardLC = glc.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 		greencardLC.setStatus("rejected");
-		GLC.save(greencardLC);
+		glc.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId("N/A");
 		gcH.setCategory("N/A");
@@ -138,10 +138,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String resolveCard(int gid, String rootcause, String correctiveaction) {
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
-		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
-		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(timeZone)));
+		GreenCardLifeCycle greencardLC = glc.getGreenCardById(ngc);
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 		greencardLC.setStatus("closed");
-		GLC.save(greencardLC);
+		glc.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId(userRepository.getAdmin() + " - Admin");
 		gcH.setCategory("N/A");
@@ -170,35 +170,35 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int newcount() {
 
-		List<GreenCardLifeCycle> l = this.GLC.getOpenGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getOpenGreenCard();
 		return l.size();
 
 	}
 
 	@Override
 	public int assignedcount() {
-		List<GreenCardLifeCycle> l = this.GLC.getAssignedGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getAssignedGreenCard();
 		return l.size();
 	}
 
 	@Override
 	public int closedcount() {
 
-		List<GreenCardLifeCycle> l = this.GLC.getClosedGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getClosedGreenCard();
 		return l.size();
 	}
 
 	@Override
 	public int rejectcount() {
 
-		List<GreenCardLifeCycle> l = this.GLC.getRejectedGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getRejectedGreenCard();
 		return l.size();
 	}
 
 	@Override
 	public int fullcount() {
 
-		List<GreenCardLifeCycle> l = this.GLC.getFullGreenCard();
+		List<GreenCardLifeCycle> l = this.glc.getFullGreenCard();
 		return l.size();
 	}
 
