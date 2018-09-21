@@ -3,16 +3,13 @@ package com.mindtree.greencard;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.mindtree.greencard.model.GreenCardHistory;
-import com.mindtree.greencard.model.SuperAdminHistory;
 import com.mindtree.greencard.model.User;
 
 import springfox.documentation.builders.PathSelectors;
@@ -66,13 +63,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 
 	
 
-//	 @Bean
-//	    public JavaMailSenderImpl mailSender() {
-//	        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-//
-//	       
-//
-//	        return javaMailSender;
-//	    }
+
 
 }

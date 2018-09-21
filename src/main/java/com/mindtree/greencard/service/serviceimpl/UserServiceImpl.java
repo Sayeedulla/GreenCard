@@ -26,23 +26,23 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public User getUserInfoByMidAndPassword(User user) throws GreenCardException {
-		String sha256hex = DigestUtils.sha256Hex(user.getPassword());
+		
 		try {
-			User userByMidPassword = userrepository.findUserbymidPassword(user.getMid(), sha256hex);
+			User userByMidPassword = userrepository.findUserbymidPassword(user.getMid());
 			if (userByMidPassword == null) {
 				throw new UserByMidPassNotExistsException("User by mid and password does not exist");
 			}
 		} catch (UserByMidPassNotExistsException e) {
 			throw new GreenCardException(e);
 		}
-		return userrepository.findUserbymidPassword(user.getMid(), sha256hex);
+		return userrepository.findUserbymidPassword(user.getMid());
 	}
 
 	@Override
 	public String saveFeedBack(FeedBack feedback) throws GreenCardException {
 		try {
 			if (feedback.getComment() == null || feedback.getRating() == null) {
-				System.out.println("Hello");
+				
 				throw new FeedbackException("can't save feedback");
 			}
 			feedbackrepository.save(feedback);
