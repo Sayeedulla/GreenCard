@@ -37,8 +37,8 @@ public class GreenCardController {
 	@PostMapping(value = "/add/greenCard")
 	public String saveNewGreenCardService(@RequestParam("file") CommonsMultipartFile fileupload, String what, String location,String mid) {
 		try {
-			 String str= this.greenCardService.saveNewGreenCard(fileupload, what, location, mid);
-			return str;
+			return this.greenCardService.saveNewGreenCard(fileupload, what, location, mid);
+			
 		}catch(GreenCardException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -58,8 +58,8 @@ public class GreenCardController {
 	@PostMapping(value = "/add/greenCardByGuest")
 	public String saveNewGreenCardServiceByGuest(@RequestParam("file") CommonsMultipartFile fileupload,String what, String location,String name,BigInteger phone) {
 		try {
-		String str=this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
-		return str;
+		  	return this.greenCardService.saveNewGreenCardByGuest(fileupload, what, location, name, phone);
+		 
 		}catch(GreenCardException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -79,8 +79,8 @@ public class GreenCardController {
 	@PostMapping(value="/feedback")
 	public String sendFeedback(@RequestBody FeedBack feedback) {
 		try {
-			String str=userservice.saveFeedBack(feedback);
-			return str;
+			return userservice.saveFeedBack(feedback);
+			
 		}catch(GreenCardException e) {
 			LOGGER.error(e.getMessage());
 			return "can't save feedback";
@@ -91,9 +91,9 @@ public class GreenCardController {
 	@PostMapping(value="/userInfoByMid")
 	public String getUserInfoByMid(@RequestBody User user) {
 		try {
-			String str=userservice.getUserInfoByMid(user);
+			return userservice.getUserInfoByMid(user);
 			
-			return str;
+			 
 		}catch(GreenCardException e) {
 			LOGGER.error(e.getMessage());
 			return "sorry can't return the status";

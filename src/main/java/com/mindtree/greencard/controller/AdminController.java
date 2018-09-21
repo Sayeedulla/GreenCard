@@ -44,8 +44,8 @@ public class AdminController {
 			newgreencard= this.adminservice.getCard(gid);
 		} catch (AdminException e) {
 			
-			e.getMessage();
-			System.out.println(e.getMessage());
+			
+			
 		}
 		
 		return newgreencard;
