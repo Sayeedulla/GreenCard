@@ -126,10 +126,9 @@ public class AdminController {
 		return this.adminservice.rejectcount();
 	}
 	
-	@GetMapping("/getbeware")
-	public List<NewGreenCard> getBeware()
-	{
-		return this.adminservice.getBeware();
+	@GetMapping("/fullcount")
+	public int fullcount() {
+		return this.adminservice.fullcount();
 	}
 
 
