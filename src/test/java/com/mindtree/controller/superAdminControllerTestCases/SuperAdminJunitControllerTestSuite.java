@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
-   UpdateUserTestClass.class,
+   UpdateUserTest.class,
    AddCategoryTest.class,
    DeleteCategoryTest.class,
    MapSubAdminToCategoryTest.class,

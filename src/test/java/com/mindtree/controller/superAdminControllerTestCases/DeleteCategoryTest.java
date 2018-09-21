@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.mindtree.greencard.controller.SuperAdminController;
-import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
+import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;
 
 public class DeleteCategoryTest {
@@ -25,8 +25,7 @@ public class DeleteCategoryTest {
 	
 	@InjectMocks
 	SuperAdminController superAdminController;
-	
-	
+		
 	MockMvc mockMvc;
 	
 	@Before

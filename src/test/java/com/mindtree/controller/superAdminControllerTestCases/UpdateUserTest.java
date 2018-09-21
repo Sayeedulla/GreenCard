@@ -17,11 +17,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
 import com.mindtree.greencard.controller.SuperAdminController;
-import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
+import com.mindtree.greencard.exception.superadminexceptions.SuperAdminServiceException;
 import com.mindtree.greencard.model.User;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;
 
-public class UpdateUserTestClass {
+public class UpdateUserTest {
 
 	@Mock
 	SuperAdminServiceImpl superAdminServiceImpl;
@@ -29,7 +29,6 @@ public class UpdateUserTestClass {
 	@InjectMocks
 	SuperAdminController superAdminController;
 	
-
 	MockMvc mockMvc;
 	
 	@Before
