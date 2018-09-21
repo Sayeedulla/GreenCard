@@ -3,4 +3,4 @@ serverUrl=http://localhost:8081
 serverVersion=7.1.0.11001
 dashboardUrl=http://localhost:8081/dashboard/index/GreenCard
 ceTaskId=AWX44m-ip5cVa3LqmNqD
-ceTaskUrl=http://localhost:8081/api/ce/task?id=AWX44m-ip5cVa3LqmNqD
+ceTaskUrl=http://localhost:8081/api/ce/task?id=AWX44m-ip5cVa3LqmNq
