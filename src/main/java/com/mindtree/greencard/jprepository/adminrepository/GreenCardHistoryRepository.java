@@ -12,7 +12,7 @@ public interface GreenCardHistoryRepository extends JpaRepository<GreenCardHisto
 	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId,status from GreenCardHistory")
 	public List<GreenCardHistory> getAllExceptImg();
 	
-	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId,status from GreenCardHistory where  assignedPersonId=?1")
+	@Query(value="select gId,landmark,submittedDateTime,closedDateTime,assignedPersonId,status,priority from GreenCardHistory where  assignedPersonId=?1")
 	public List<GreenCardHistory> getExceptImgForSubadmin(String mid);
 	
 }

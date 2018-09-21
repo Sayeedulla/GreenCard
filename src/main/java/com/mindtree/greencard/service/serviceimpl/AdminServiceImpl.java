@@ -166,4 +166,33 @@ public class AdminServiceImpl implements AdminService {
 	public List<GreenCardHistory> getForSubadmin(String mid) {
 		return this.history.getExceptImgForSubadmin(mid);
 	}
+
+	@Override
+	public int newcount() {
+
+		List<GreenCardLifeCycle> l = this.GLC.getOpenGreenCard();
+		return l.size();
+
+	}
+
+	@Override
+	public int assignedcount() {
+		List<GreenCardLifeCycle> l = this.GLC.getAssignedGreenCard();
+		return l.size();
+	}
+
+	@Override
+	public int closedcount() {
+
+		List<GreenCardLifeCycle> l = this.GLC.getClosedGreenCard();
+		return l.size();
+	}
+
+	@Override
+	public int rejectcount() {
+
+		List<GreenCardLifeCycle> l = this.GLC.getRejectedGreenCard();
+		return l.size();
+	}
+
 }

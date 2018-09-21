@@ -34,6 +34,11 @@ public class AdminController {
 
 		return this.adminservice.newComplaints();
 	}
+	
+	@GetMapping("/newcount")
+	public int newcount() {
+		return this.adminservice.newcount();
+	}
 
 	@GetMapping("/getCard/{gid}")
 	public Optional<NewGreenCard> getCard(@PathVariable int gid) {
@@ -44,8 +49,8 @@ public class AdminController {
 			newgreencard= this.adminservice.getCard(gid);
 		} catch (AdminException e) {
 			
-			e.getMessage();
-			System.out.println(e.getMessage());
+			
+			
 		}
 		
 		return newgreencard;
@@ -107,6 +112,19 @@ public class AdminController {
 		return this.adminservice.resolveCard(gid,rootcause,correctiveaction);
 	}
 
+	@GetMapping("/assignedcount")
+	public int assignedcount() {
+		return this.adminservice.assignedcount();
+		
+	}
+	@GetMapping("/closedcount")
+	public int closedcount() {
+		return this.adminservice.closedcount();
+	}
+	@GetMapping("/rejectcount")
+	public int rejectcount() {
+		return this.adminservice.rejectcount();
+	}
 
 
 }

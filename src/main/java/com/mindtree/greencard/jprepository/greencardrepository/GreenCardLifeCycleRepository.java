@@ -19,5 +19,14 @@ public interface GreenCardLifeCycleRepository extends JpaRepository<GreenCardLif
 	@Query(value="select g from GreenCardLifeCycle g where g.status='Open'")
 	public List<GreenCardLifeCycle> getOpenGreenCard();
 	
+	@Query(value="select g from GreenCardLifeCycle g where g.status='Closed'")
+	public List<GreenCardLifeCycle> getClosedGreenCard();
+	
+	@Query(value="select g from GreenCardLifeCycle g where g.status='Assigned'")
+	public List<GreenCardLifeCycle> getAssignedGreenCard();
+	
+	@Query(value="select g from GreenCardLifeCycle g where g.status='rejected'")
+	public List<GreenCardLifeCycle> getRejectedGreenCard();
+	
 	
 }
