@@ -40,10 +40,11 @@ import com.mindtree.greencard.service.SubAdminService;
 @Service
 public class SubAdminServiceImpl implements SubAdminService {
 
+	public static final String LISTISEMPTY="List is empty";
+	
 	@Autowired
 	InProgressGreenCardRepository inProgGCRepo;
-//	@Autowired
-//	private JavaMailSender sender;
+
 
 	@Autowired
 	NewGreenCardRepository newGCRepo;
@@ -71,13 +72,13 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException {
-		List<InProgressGreenCard> complList = new ArrayList<InProgressGreenCard>();
+		List<InProgressGreenCard> complList = new ArrayList<>();
 		try {
 			complList = inProgGCRepo.getComplaints(mid);
 			if (complList.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(LISTISEMPTY);
 		}
 		return complList;
 	}
@@ -151,32 +152,32 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	public List<Category> getCategory() throws ServiceException {
-		List<Category> cate = new ArrayList<Category>();
+		List<Category> cate = new ArrayList<>();
 
 		try {
 			cate = cat.findAll();
 			if (cate.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(LISTISEMPTY);
 		}
 		return cate;
 	}
 
 	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException {
-		List<SubAdminCategory> subad = new ArrayList<SubAdminCategory>();
+		List<SubAdminCategory> subad = new ArrayList<>();
 		try {
 			subad = subRepo.getSubadmins(category);
 			if (subad.isEmpty())
 				throw new EmptyListException();
 		} catch (EmptyListException e) {
-			throw new ServiceException("List is empty");
+			throw new ServiceException(LISTISEMPTY);
 		}
 		return subad;
 	}
 
 	@Override
-	public String sendHelpEmail(String mid, int gc_id, String desc) {
+	public String sendHelpEmail(String mid, int gcId, String desc) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -199,12 +200,11 @@ public class SubAdminServiceImpl implements SubAdminService {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("stng361@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
-			message.setSubject(mid + " Required Help for GreenCard Id " + gc_id);
+			message.setSubject(mid + " Required Help for GreenCard Id " + gcId);
 			message.setText(desc);
 
 			Transport.send(message);
 
-			System.out.println(" Mail sucessfully sent" + "");
 			return "Mail Successfully Sent to Admin";
 
 		} catch (MessagingException e) {
