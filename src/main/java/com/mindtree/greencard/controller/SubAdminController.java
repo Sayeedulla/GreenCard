@@ -3,12 +3,9 @@ package com.mindtree.greencard.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,15 +21,15 @@ import com.mindtree.greencard.model.NewGreenCard;
 import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.SubAdminService;
 
+
 @RestController
 @CrossOrigin
 public class SubAdminController {
 
-	private static final Logger LOGGER=LoggerFactory.getLogger(SubAdminController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SubAdminController.class);
+
 	@Autowired
 	SubAdminService subserv;
-
-	
 
 	@GetMapping("/getAllComplaints/{mid}")
 	public List<InProgressGreenCard> getComplaints(@PathVariable String mid) {
@@ -56,10 +53,8 @@ public class SubAdminController {
 	}
 
 	@PostMapping("/updateComplaint")
-	public String updateComplaint(@Valid @RequestBody InProgressGreenCard sub,BindingResult bb) {
+	public String updateComplaint(@RequestBody InProgressGreenCard sub) {
 		try {
-			if(bb.hasErrors())
-				throw new ServiceException("RootCause and CorrectiveAction must be in format [A-Za-z ,.:;]");
 			return subserv.updateComplaint(sub);
 		} catch (ServiceException e) {
 			return e.getMessage();

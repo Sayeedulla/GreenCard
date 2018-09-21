@@ -94,7 +94,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			throw new ServiceException("Particular Complaint not exist");
 		}
 	}
-
+	
 	@Override
 	public String updateComplaint(InProgressGreenCard sub) throws ServiceException {
 		try {
