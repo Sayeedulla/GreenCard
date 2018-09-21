@@ -1,6 +1,7 @@
 package com.mindtree.greencard.model;
 
 import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -22,7 +23,7 @@ public class GreenCardHistory {
 	private String landmark;
 	private String category;
 	private String priority;
-	
+
 	@Lob
 	byte[] image;
 
@@ -33,8 +34,6 @@ public class GreenCardHistory {
 	public void setgId(int gId) {
 		this.gId = gId;
 	}
-
-	
 
 	public String getPriority() {
 		return priority;
