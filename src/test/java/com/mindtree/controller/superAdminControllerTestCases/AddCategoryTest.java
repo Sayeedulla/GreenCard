@@ -24,13 +24,12 @@ public class AddCategoryTest {
 
 	@Mock
 	SuperAdminServiceImpl superAdminServiceImpl;
-	
+
 	@InjectMocks
 	SuperAdminController superAdminController;
-	
-	
+
 	MockMvc mockMvc;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -39,35 +38,32 @@ public class AddCategoryTest {
 
 	@Test
 	public void addCategory() throws Exception {
-       Category category = new Category();
-       category.setCategoryName("Safety");
-       
-       when(superAdminServiceImpl.addCategory(category)).thenReturn(category.getCategoryName());
-       
-       Gson gson = new Gson();
-       String body = gson.toJson(category);
-       
-       
-       mockMvc.perform(post("/GreenCard/addCategory")
-       .contentType(MediaType.APPLICATION_JSON).content(body))
-       .andExpect(status().isOk());
-       assertEquals(superAdminController.addCategory(category), "Safety");
+		Category category = new Category();
+		category.setCategoryName("Safety");
+
+		when(superAdminServiceImpl.addCategory(category)).thenReturn(category.getCategoryName());
+
+		Gson gson = new Gson();
+		String body = gson.toJson(category);
+
+		mockMvc.perform(post("/GreenCard/addCategory").contentType(MediaType.APPLICATION_JSON).content(body))
+				.andExpect(status().isOk());
+		assertEquals("Safety", superAdminController.addCategory(category));
 	}
-	
+
 	@Test
 	public void addCategory1() throws Exception {
-       Category category = new Category();
-       category.setCategoryName("Safety");
-       
-       when(superAdminServiceImpl.addCategory(category)).thenThrow(new SuperAdminServiceException("Category name already Exists"));
-       
-       Gson gson = new Gson();
-       String body = gson.toJson(category);
-       
-       
-       mockMvc.perform(post("/GreenCard/addCategory")
-       .contentType(MediaType.APPLICATION_JSON).content(body))
-       .andExpect(status().isOk());
-       assertEquals(superAdminController.addCategory(category), "Category name already Exists");
+		Category category = new Category();
+		category.setCategoryName("Safety");
+
+		when(superAdminServiceImpl.addCategory(category))
+				.thenThrow(new SuperAdminServiceException("Category name already Exists"));
+
+		Gson gson = new Gson();
+		String body = gson.toJson(category);
+
+		mockMvc.perform(post("/GreenCard/addCategory").contentType(MediaType.APPLICATION_JSON).content(body))
+				.andExpect(status().isOk());
+		assertEquals("Category name already Exists", superAdminController.addCategory(category));
 	}
 }

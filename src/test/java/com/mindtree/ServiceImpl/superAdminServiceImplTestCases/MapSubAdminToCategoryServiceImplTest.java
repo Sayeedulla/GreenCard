@@ -12,6 +12,7 @@ import org.mockito.Spy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.jprepository.superadminrepository.CategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
@@ -53,7 +54,7 @@ public class MapSubAdminToCategoryServiceImplTest {
 	}
 	
 	@Test
-	public void mapSubAdminToCategoryServiceImplTest() {
+	public void mapSubAdminToCategoryServiceImplTest() throws SuperAdminServiceException {
 		User user=new User();
 		Category category =new Category();
 		when(userRepository.getUserByMid(subAdminCategory.getMid())).thenReturn(user);

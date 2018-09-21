@@ -32,6 +32,8 @@ public class GreenCardServiceImpl implements GreenCardService {
 	@Autowired
 	GreenCardLifeCycleRepository greencardlifecyclerepository;
 
+	private final String timeZone = "Asia/Calcutta";
+
 	@Transactional
 
 	@Override
@@ -46,7 +48,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
-			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(timeZone)));
 			newgreencardrepository.save(newgreencard);
 			Optional<User> user1 = userrepository.findUser(mid);
 
@@ -60,7 +62,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 			greencardlifecycle.setStatus("Open");
 			greencardlifecycle.setNewgreencard(newgreencard);
-			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(timeZone)));
 			greencardlifecyclerepository.save(greencardlifecycle);
 
 			if (newgreencard.getLandmark() == null) {
@@ -85,12 +87,12 @@ public class GreenCardServiceImpl implements GreenCardService {
 			}
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
-			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(timeZone)));
 			newgreencardrepository.save(newgreencard);
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 			greencardlifecycle.setStatus("Open");
 			greencardlifecycle.setNewgreencard(newgreencard);
-			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(timeZone)));
 			greencardlifecyclerepository.save(greencardlifecycle);
 			if (newgreencard.getWhatHappened() == null) {
 				throw new SaveGreenCardByGuestException("sorry can't save the green card by guest");
@@ -103,10 +105,10 @@ public class GreenCardServiceImpl implements GreenCardService {
 	}
 
 	@Override
-	public GreenCardLifeCycle getGreenCardById(int green_card_id) throws GreenCardException {
+	public GreenCardLifeCycle getGreenCardById(int greenCardId) throws GreenCardException {
 		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		try {
-			NewGreenCard newGreenCard = this.newgreencardrepository.getOne(green_card_id);
+			NewGreenCard newGreenCard = this.newgreencardrepository.getOne(greenCardId);
 			greenCardLifeCycle = this.greencardlifecyclerepository.getGreenCardById(newGreenCard);
 			if (greenCardLifeCycle == null) {
 				throw new GreenCardLifeCycleException("sorry cant return greencardlifecycle");

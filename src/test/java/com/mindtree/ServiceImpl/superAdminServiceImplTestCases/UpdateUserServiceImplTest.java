@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.mindtree.greencard.exception.superAdminExceptions.SuperAdminServiceException;
 import com.mindtree.greencard.jprepository.superadminrepository.SuperAdminHistoryRepo;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.model.SuperAdminHistory;
@@ -39,7 +40,7 @@ public class UpdateUserServiceImplTest {
 	}
 	
 	@Test
-	public void updateUserServiceImplTest() {
+	public void updateUserServiceImplTest() throws SuperAdminServiceException {
 		User user = new User();
 		user.setMid("M1047048");
 		user.setName("Dillan");

@@ -22,5 +22,5 @@ public interface SubAdminService {
 
 	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException ;
 
-	public String sendHelpEmail(String mid, int gc_id, String desc);
+	public String sendHelpEmail(String mid, int gcId, String desc);
 }

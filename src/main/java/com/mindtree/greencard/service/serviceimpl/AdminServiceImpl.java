@@ -51,9 +51,10 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	GreenCardHistory gcH;
 
+	private final String timeZone = "Asia/Calcutta";
+
 	@Override
 	public List<NewGreenCard> newComplaints() {
-
 		List<NewGreenCard> gcl = new ArrayList<NewGreenCard>();
 		List<GreenCardLifeCycle> l = this.GLC.getOpenGreenCard();
 		l.forEach(e -> {
@@ -67,7 +68,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Optional<NewGreenCard> getCard(int gid) throws AdminException {
-
 		Optional<NewGreenCard> ngc = this.newgreencard.findById(gid);
 		try {
 			if (!ngc.isPresent()) {
@@ -81,7 +81,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public String assigncard(InProgressGreenCard card) {
-
 		NewGreenCard ngc1 = this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle glc1 = this.GLC.getGreenCardById(ngc1);
 		card.setlId(glc1.getLifeCycleId());
@@ -89,23 +88,19 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard newGreenCard = this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle glc = this.GLC.getGreenCardById(newGreenCard);
 		glc.setStatus("Assigned");
-		glc.setAssignedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		glc.setAssignedTime(LocalDateTime.now(ZoneId.of(timeZone)));
 		this.GLC.save(glc);
 		return "Assigned";
 	}
 
 	@Override
 	public List<InProgressGreenCard> viewprogress() {
-
 		return this.inprogresscard.findAll();
 	}
 
 	@Override
 	public List<GreenCardHistory> getAllFromHistory() {
-
-		List<GreenCardHistory> li = this.history.getAllExceptImg();
-		return li;
-
+		return this.history.getAllExceptImg();
 	}
 
 	@Override
@@ -115,18 +110,15 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Optional<GreenCardHistory> getByGid(int gId) {
-
 		return this.history.findById(gId);
 	}
 
 	@Override
 	public String rejectGreenCard(int gid) {
-
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
 		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
-		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(timeZone)));
 		greencardLC.setStatus("rejected");
-
 		GLC.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId("N/A");
@@ -141,15 +133,13 @@ public class AdminServiceImpl implements AdminService {
 		gcH.setWhatHappened(ngc.getWhatHappened());
 		history.save(gcH);
 		return "Rejected";
-
 	}
 
 	@Override
 	public String resolveCard(int gid, String rootcause, String correctiveaction) {
-
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
 		GreenCardLifeCycle greencardLC = GLC.getGreenCardById(ngc);
-		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
+		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(timeZone)));
 		greencardLC.setStatus("closed");
 		GLC.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
@@ -174,9 +164,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<GreenCardHistory> getForSubadmin(String mid) {
-
 		return this.history.getExceptImgForSubadmin(mid);
-
 	}
-
 }

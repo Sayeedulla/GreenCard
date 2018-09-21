@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
@@ -24,7 +23,6 @@ public class UserServiceTest {
 	@Mock
 	UserRepository userrepository;
 
-
 	@Before
 	public void testSetUp() {
 		MockitoAnnotations.initMocks(this);
@@ -32,7 +30,7 @@ public class UserServiceTest {
 		user.setMid("M1046890");
 		String sha256hex = DigestUtils.sha256Hex("Pass@123");
 		user.setPassword(sha256hex);
-		when(userrepository.findUserbymidPassword(user.getMid(), sha256hex)).thenReturn(user);
+		when(userrepository.findUserbymidPassword(user.getMid())).thenReturn(user);
 	}
 	@Test
 	public void getUserByMidPass() throws GreenCardException {
