@@ -40,17 +40,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Autowired
 	private SuperAdminHistoryRepo superAdminHistoryRepo;
 
-	private static final String invalidCategoryName = "Invalid Category Name";
+	private static final String INVALID_CATEGORY_NAME = "Invalid Category Name";
 
-	private static final String zone = "Asia/Calcutta";
+	private static final String ZONE = "Asia/Calcutta";
 
-	private static final String subadmin = "SubAdmin";
+	private static final String SUBADMIN = "SubAdmin";
 
-	private static final String namePattern = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
+	private static final String NAME_PATTERN = "^[A-Z][a-z]+([ ][A-Z][a-z]+)*$";
 
-	private static final String invalidMid = "Invalid Mid";
+	private static final String INVALID_MID = "Invalid Mid";
 
-	private static final String midPattern = "[Mm][1][0][0-9]{5}";
+	private static final String MID_PATTERN = "[Mm][1][0][0-9]{5}";
 
 	public String updateUser(User user) throws SuperAdminServiceException {
 		Optional<User> tempuser = this.userRepo.findUser(user.getMid());
@@ -61,14 +61,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			throw new SuperAdminServiceException("User not Found");
 		}
 		try {
-			if (!user.getMid().matches(midPattern)) {
+			if (!user.getMid().matches(MID_PATTERN)) {
 				throw new InvalidMidException();
 			}
 		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(invalidMid);
+			throw new SuperAdminServiceException(INVALID_MID);
 		}
 		try {
-			if (!user.getName().matches(namePattern))
+			if (!user.getName().matches(NAME_PATTERN))
 				throw new InvalidUserNameException();
 		} catch (InvalidUserNameException exception) {
 			throw new SuperAdminServiceException("Format of Name is InValid");
@@ -81,7 +81,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			throw new SuperAdminServiceException("Email Format is InValid");
 		}
 		try {
-			if (!(user.getType().equals("User") || user.getType().equals("Admin") || user.getType().equals(subadmin)))
+			if (!(user.getType().equals("User") || user.getType().equals("Admin") || user.getType().equals(SUBADMIN)))
 				throw new InvalidTypeException();
 		} catch (InvalidTypeException exception) {
 			throw new SuperAdminServiceException("Invalid Type");
@@ -100,13 +100,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		String from = this.userRepo.getType(user.getMid());
 		String type = from + "to" + user.getType();
 		sh.setType(type);
-		if (from.equals(subadmin)) {
+		if (from.equals(SUBADMIN)) {
 			from = from + this.subAdminCategoryRepo.getOne(user.getMid());
 		}
 		sh.setWhatischanged("edit");
-		sh.setTimelog(LocalDateTime.now(ZoneId.of(zone)));
+		sh.setTimelog(LocalDateTime.now(ZoneId.of(ZONE)));
 		this.userRepo.save(user);
-		if (user.getType().equals(subadmin)) {
+		if (user.getType().equals(SUBADMIN)) {
 			String str = from + "to" + user.getType() + " - "
 					+ this.subAdminCategoryRepo.getOne(user.getMid()).getCategoryName();
 			sh.setType(str);
@@ -125,7 +125,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	public String addCategory(Category category) throws SuperAdminServiceException {
 		try {
 			String categoryName = category.getCategoryName();
-			if (!categoryName.matches(namePattern))
+			if (!categoryName.matches(NAME_PATTERN))
 				throw new InvalidCategoryNameException();
 			Category checkCategory = this.categoryRepo.getCategory(categoryName);
 			if (checkCategory != null) {
@@ -137,13 +137,13 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			String name = "category" + category.getCategoryName();
 			sh.setType(name);
 			sh.setWhatischanged("added");
-			sh.setTimelog(LocalDateTime.now(ZoneId.of(zone)));
+			sh.setTimelog(LocalDateTime.now(ZoneId.of(ZONE)));
 			this.superAdminHistoryRepo.save(sh);
 			return category.getCategoryName();
 		} catch (CategoryNameAlreadyExists exception) {
 			throw new SuperAdminServiceException("Category name already exists");
 		} catch (InvalidCategoryNameException exception) {
-			throw new SuperAdminServiceException(invalidCategoryName);
+			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
 		}
 	}
 
@@ -156,10 +156,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
 		}
 		try {
-			if (!categoryName.matches(namePattern))
+			if (!categoryName.matches(NAME_PATTERN))
 				throw new InvalidCategoryNameException();
 		} catch (InvalidCategoryNameException exception) {
-			throw new SuperAdminServiceException(invalidCategoryName);
+			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
 		}
 
 		try {
@@ -175,7 +175,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 		sh.setMid("-");
 		sh.setType("category");
 		sh.setWhatischanged("deleted");
-		sh.setTimelog(LocalDateTime.now(ZoneId.of(zone)));
+		sh.setTimelog(LocalDateTime.now(ZoneId.of(ZONE)));
 		this.superAdminHistoryRepo.save(sh);
 		this.categoryRepo.deleteById(category.getCategoryId());
 		List<SubAdminCategory> list = this.subAdminCategoryRepo.getSubAdminCategories(categoryName);
@@ -192,11 +192,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
 	public String mapSubAdminToCategory(SubAdminCategory subAdminCategory) throws SuperAdminServiceException {
 		try {
-			if (!subAdminCategory.getMid().matches(midPattern)) {
+			if (!subAdminCategory.getMid().matches(MID_PATTERN)) {
 				throw new InvalidMidException();
 			}
 		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(invalidMid);
+			throw new SuperAdminServiceException(INVALID_MID);
 		}
 		try {
 			User user = this.userRepo.getUserByMid(subAdminCategory.getMid());
@@ -212,10 +212,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 			throw new SuperAdminServiceException("Default Category ,Operation Not Allowed");
 		}
 		try {
-			if (!subAdminCategory.getCategoryName().matches(namePattern))
+			if (!subAdminCategory.getCategoryName().matches(NAME_PATTERN))
 				throw new InvalidCategoryNameException();
 		} catch (InvalidCategoryNameException exception) {
-			throw new SuperAdminServiceException(invalidCategoryName);
+			throw new SuperAdminServiceException(INVALID_CATEGORY_NAME);
 		}
 
 		try {
@@ -233,11 +233,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 	@Override
 	public String deleteMappedSubAdmin(String mid) throws SuperAdminServiceException {
 		try {
-			if (!mid.matches(midPattern)) {
+			if (!mid.matches(MID_PATTERN)) {
 				throw new InvalidMidException();
 			}
 		} catch (InvalidMidException exception) {
-			throw new SuperAdminServiceException(invalidMid);
+			throw new SuperAdminServiceException(INVALID_MID);
 		}
 		try {
 			Optional<SubAdminCategory> subAdminCategory = this.subAdminCategoryRepo.findById(mid);

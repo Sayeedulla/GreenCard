@@ -21,7 +21,7 @@ import com.mindtree.greencard.model.SubAdminCategory;
 import com.mindtree.greencard.service.serviceimpl.SuperAdminServiceImpl;
 
 public class MapSubAdminToCategoryTest {
-
+	
 	@InjectMocks
 	SuperAdminController superAdminController;
 	

@@ -32,7 +32,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 	@Autowired
 	GreenCardLifeCycleRepository greencardlifecyclerepository;
 
-	private static final String timeZone = "Asia/Calcutta";
+	private static final String TIME_ZONE = "Asia/Calcutta";
 
 	@Transactional
 
@@ -48,7 +48,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
-			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(timeZone)));
+			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			newgreencardrepository.save(newgreencard);
 			Optional<User> user1 = userrepository.findUser(mid);
 
@@ -62,7 +62,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 			greencardlifecycle.setStatus("Open");
 			greencardlifecycle.setNewgreencard(newgreencard);
-			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(timeZone)));
+			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			greencardlifecyclerepository.save(greencardlifecycle);
 
 			if (newgreencard.getLandmark() == null) {
@@ -87,12 +87,12 @@ public class GreenCardServiceImpl implements GreenCardService {
 			}
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
-			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(timeZone)));
+			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			newgreencardrepository.save(newgreencard);
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();
 			greencardlifecycle.setStatus("Open");
 			greencardlifecycle.setNewgreencard(newgreencard);
-			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(timeZone)));
+			greencardlifecycle.setSubmittedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			greencardlifecyclerepository.save(greencardlifecycle);
 			if (newgreencard.getWhatHappened() == null) {
 				throw new SaveGreenCardByGuestException("sorry can't save the green card by guest");
