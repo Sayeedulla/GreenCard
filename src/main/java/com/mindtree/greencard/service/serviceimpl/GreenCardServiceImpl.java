@@ -85,7 +85,6 @@ public class GreenCardServiceImpl implements GreenCardService {
 			if (fileupload != null) {
 				newgreencard.setImage(fileupload.getBytes());
 			}
-			newgreencard.setImage(fileupload.getBytes());
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
 			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of("Asia/Calcutta")));
