@@ -13,8 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.quality.Strictness;
-import org.mockito.runners.MockitoJUnitRunner;
+
 
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.jprepository.greencardrepository.GreenCardLifeCycleRepository;

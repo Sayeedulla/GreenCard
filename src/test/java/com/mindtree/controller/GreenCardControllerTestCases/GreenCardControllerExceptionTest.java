@@ -18,11 +18,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindtree.greencard.controller.GreenCardController;
+import com.mindtree.greencard.entity.FeedBack;
+import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.exception.GreenCardException;
 import com.mindtree.greencard.exception.userserviceexception.FeedbackException;
 import com.mindtree.greencard.exception.userserviceexception.GetInfoByMidException;
-import com.mindtree.greencard.entity.FeedBack;
-import com.mindtree.greencard.entity.User;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 import com.mindtree.greencard.service.serviceimpl.UserServiceImpl;
 
@@ -71,7 +71,7 @@ assertEquals("sorry can't return the status", greenCardController.getUserInfoByM
 	@Test
 	public void addGreenCardByUserTest() throws Exception {
 		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent","Bahada","M1046908")).thenThrow(new GreenCardException("Sorry can't save the green card"));
-		//mockMvc.perform(post("/GreenCard/add/greenCard").contentType(MediaType.MULTIPART_FORM_DATA).accept(null,"ElectricCurrent","Bahada","M1046908")).andExpect(status().isOk());
+		
 		assertEquals("Sorry can't save the green card", greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada","M1046908"));
 	}
 	public static String asJsonString(final Object obj) {

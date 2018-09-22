@@ -41,7 +41,7 @@ public class UserFeedbackTest {
 		feedBack2.setComment(null);
 		feedBack2.setRating(null);
 		assertEquals("Thank you for providing Feedback", userServiceImpl.saveFeedBack(feedBack1));
-		// assertEquals(userServiceImpl.saveFeedBack(feedBack2),"can't save feedback");
+		
 
 	}
 

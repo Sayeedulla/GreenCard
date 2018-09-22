@@ -2,5 +2,5 @@ projectKey=GreenCard
 serverUrl=http://localhost:8081
 serverVersion=7.1.0.11001
 dashboardUrl=http://localhost:8081/dashboard/index/GreenCard
-ceTaskId=AWX8PjkRDAF2Ygz99NrP
-ceTaskUrl=http://localhost:8081/api/ce/task?id=AWX8PjkRDAF2Ygz99NrP
+ceTaskId=AWYC50-xDAF2Ygz99NrS
+ceTaskUrl=http://localhost:8081/api/ce/task?id=AWYC50-xDAF2Ygz99NrS

@@ -93,6 +93,11 @@ public class SubAdminController {
 
 	@PostMapping("/mailadmin")
 	public String sendEmail(@RequestParam("mid") String mid, int gcId, String desc) {
-		return subserv.sendHelpEmail(mid, gcId, desc);
+		try {
+			return subserv.sendHelpEmail(mid, gcId, desc);
+		} catch (ServiceException e) {
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 }
