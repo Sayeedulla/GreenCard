@@ -1,4 +1,4 @@
-package com.mindtree.controller.GreenCardControllerTestCases;
+package com.mindtree.controller.greencardcontrollertestcases;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -36,52 +36,59 @@ public class GreenCardControllerExceptionTest {
 	@Mock
 	GreenCardServiceImpl greenCardServiceImpl;
 	MockMvc mockMvc;
-	@Before
-    public void testSetUp() {
-           MockitoAnnotations.initMocks(this);
-           mockMvc = MockMvcBuilders.standaloneSetup(greenCardController).build();
 
-    }
+	@Before
+	public void testSetUp() {
+		MockitoAnnotations.initMocks(this);
+		mockMvc = MockMvcBuilders.standaloneSetup(greenCardController).build();
+
+	}
+
 	@Test
 	public void getUserByMidTest() throws Exception {
-		User user=new User();
+		User user = new User();
 		user.setMid("M1046908");
 		user.setName("Sayeed");
 		user.setPassword("Pass@123");
-		when(userServiceImpl.getUserInfoByMid(user)).thenThrow(new GetInfoByMidException("sorry can't return the status"));
-	       mockMvc.perform(post("/GreenCard/userInfoByMid").contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-           .andExpect(status().isOk());
+		when(userServiceImpl.getUserInfoByMid(user))
+				.thenThrow(new GetInfoByMidException("sorry can't return the status"));
+		mockMvc.perform(
+				post("/GreenCard/userInfoByMid").contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
+				.andExpect(status().isOk());
 
-assertEquals("sorry can't return the status", greenCardController.getUserInfoByMid(user));
+		assertEquals("sorry can't return the status", greenCardController.getUserInfoByMid(user));
 
-		
-		
 	}
+
 	@Test
 	public void sendFeedBackTest() throws Exception {
-		FeedBack feedBack=new FeedBack();
-		
+		FeedBack feedBack = new FeedBack();
+
 		feedBack.setId(1);
 		feedBack.setRating(4.0);
 		feedBack.setComment("Hello");
 		when(userServiceImpl.saveFeedBack(feedBack)).thenThrow(new FeedbackException("can't save feedback"));
-		mockMvc.perform(post("/GreenCard/feedback").contentType(MediaType.APPLICATION_JSON).content(asJsonString(feedBack))).andExpect(status().isOk());
+		mockMvc.perform(
+				post("/GreenCard/feedback").contentType(MediaType.APPLICATION_JSON).content(asJsonString(feedBack)))
+				.andExpect(status().isOk());
 		assertEquals("can't save feedback", greenCardController.sendFeedback(feedBack));
 	}
+
 	@Test
 	public void addGreenCardByUserTest() throws Exception {
-		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent","Bahada","M1046908")).thenThrow(new GreenCardException("Sorry can't save the green card"));
-		
-		assertEquals("Sorry can't save the green card", greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada","M1046908"));
+		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent", "Bahada", "M1046908"))
+				.thenThrow(new GreenCardException("Sorry can't save the green card"));
+
+		assertEquals("Sorry can't save the green card",
+				greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada", "M1046908"));
 	}
+
 	public static String asJsonString(final Object obj) {
-        try {
-               return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-               throw new RuntimeException(e);
-        }
- }
-
-
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

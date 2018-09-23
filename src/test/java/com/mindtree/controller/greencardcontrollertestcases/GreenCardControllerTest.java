@@ -1,4 +1,4 @@
-package com.mindtree.controller.GreenCardControllerTestCases;
+package com.mindtree.controller.greencardcontrollertestcases;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,52 +33,58 @@ public class GreenCardControllerTest {
 	@Mock
 	GreenCardServiceImpl greenCardServiceImpl;
 	MockMvc mockMvc;
-	@Before
-    public void testSetUp() {
-           MockitoAnnotations.initMocks(this);
-           mockMvc = MockMvcBuilders.standaloneSetup(greenCardController).build();
 
-    }
+	@Before
+	public void testSetUp() {
+		MockitoAnnotations.initMocks(this);
+		mockMvc = MockMvcBuilders.standaloneSetup(greenCardController).build();
+
+	}
+
 	@Test
 	public void getUserByMidTest() throws Exception {
-		User user=new User();
+		User user = new User();
 		user.setMid("M1046908");
 		user.setName("Sayeed");
 		user.setPassword("Pass@123");
 		when(userServiceImpl.getUserInfoByMid(user)).thenReturn("User");
-	       mockMvc.perform(post("/GreenCard/userInfoByMid").contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-           .andExpect(status().isOk());
+		mockMvc.perform(
+				post("/GreenCard/userInfoByMid").contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
+				.andExpect(status().isOk());
 
-assertEquals("User", greenCardController.getUserInfoByMid(user));
+		assertEquals("User", greenCardController.getUserInfoByMid(user));
 
-		
-		
 	}
+
 	@Test
 	public void sendFeedBackTest() throws Exception {
-		FeedBack feedBack=new FeedBack();
-		
+		FeedBack feedBack = new FeedBack();
+
 		feedBack.setId(1);
 		feedBack.setRating(4.0);
 		feedBack.setComment("Hello");
 		when(userServiceImpl.saveFeedBack(feedBack)).thenReturn("Thank you for providing Feedback");
-		mockMvc.perform(post("/GreenCard/feedback").contentType(MediaType.APPLICATION_JSON).content(asJsonString(feedBack))).andExpect(status().isOk());
+		mockMvc.perform(
+				post("/GreenCard/feedback").contentType(MediaType.APPLICATION_JSON).content(asJsonString(feedBack)))
+				.andExpect(status().isOk());
 		assertEquals("Thank you for providing Feedback", greenCardController.sendFeedback(feedBack));
 	}
+
 	@Test
 	public void addGreenCardByUserTest() throws Exception {
-		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent","Bahada","M1046908")).thenReturn("Your GreenCard Id is 1 Note it down for future Reference");
-		
-		assertEquals("Your GreenCard Id is 1 Note it down for future Reference", greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada","M1046908"));
+		when(greenCardServiceImpl.saveNewGreenCard(null, "ElectricCurrent", "Bahada", "M1046908"))
+				.thenReturn("Your GreenCard Id is 1 Note it down for future Reference");
+
+		assertEquals("Your GreenCard Id is 1 Note it down for future Reference",
+				greenCardController.saveNewGreenCardService(null, "ElectricCurrent", "Bahada", "M1046908"));
 	}
+
 	public static String asJsonString(final Object obj) {
-        try {
-               return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-               throw new RuntimeException(e);
-        }
- }
-
-
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }
