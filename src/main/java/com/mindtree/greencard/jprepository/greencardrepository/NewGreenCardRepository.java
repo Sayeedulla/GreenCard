@@ -10,12 +10,10 @@ import com.mindtree.greencard.entity.NewGreenCard;
 
 public interface NewGreenCardRepository extends JpaRepository<NewGreenCard, Integer> {
 	
-	@Query(value="select greenCardId,whatHappened,landmark,submittedDate from NewGreenCard")
+	@Query(value="select greenCardId,whatHappened,landmark,submittedDate from NewGreenCard where status='Open'")
 	public List<NewGreenCard> getNewCards();
 	
 	@Query(value="select g from NewGreenCard g where g.greenCardId=:gid")
 	public NewGreenCard getNewCard(@Param("gid") int g);
-	
-//	@Query(value="select count of g from NewGreencard g where g.")
 	
 }

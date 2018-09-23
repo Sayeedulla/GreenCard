@@ -55,15 +55,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
-		List<NewGreenCard> gcl = new ArrayList<>();
-		List<GreenCardLifeCycle> l = this.glc.getOpenGreenCard();
-		l.forEach(e -> {
-			NewGreenCard n = e.getNewgreencard();
-			NewGreenCard n1 = new NewGreenCard();
-			n1 = n;
-			gcl.add(n1);
-		});
-		return gcl;
+
+		return this.newgreencard.getNewCards();
 	}
 
 	@Override
@@ -87,6 +80,7 @@ public class AdminServiceImpl implements AdminService {
 		this.inprogresscard.save(card);
 		NewGreenCard newGreenCard = this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle gcLifeCycle = this.glc.getGreenCardById(newGreenCard);
+		newGreenCard.setStatus("Assigned");
 		gcLifeCycle.setStatus("Assigned");
 		gcLifeCycle.setAssignedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 		this.glc.save(gcLifeCycle);
@@ -118,7 +112,8 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
 		GreenCardLifeCycle greencardLC = glc.getGreenCardById(ngc);
 		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
-		greencardLC.setStatus("rejected");
+		greencardLC.setStatus("Rejected");
+		ngc.setStatus("Rejected");
 		glc.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId1("N/A");
@@ -140,7 +135,7 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
 		GreenCardLifeCycle greencardLC = glc.getGreenCardById(ngc);
 		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
-		greencardLC.setStatus("closed");
+		greencardLC.setStatus("Closed");
 		glc.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId1(userRepository.getAdmin() + " - Admin");
@@ -153,6 +148,7 @@ public class AdminServiceImpl implements AdminService {
 		gcH.setStatus1(greencardLC.getStatus());
 		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
 		gcH.setWhatHappened(ngc.getWhatHappened());
+		ngc.setStatus("Closed");
 		history.save(gcH);
 		return "Resolved";
 	}
