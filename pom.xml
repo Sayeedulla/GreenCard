@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.3.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 
 	<properties>
@@ -27,15 +27,14 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<sonar.host.url>http://localhost:8081</sonar.host.url>
 		<sonar.coverage.exclusions>
-			src/main/java/com/mindtree/greencard/entity/*.java
+			src/main/java/com/mindtree/greencard/exception/*.java
+			src/main/java/com/mindtree/greencard/jprepository/adminrepository/*.java
+			src/main/java/com/mindtree/greencard/jprepository/greencardrepository/*.java
+			src/main/java/com/mindtree/greencard/jprepository/superadminrepository/*.java
 		</sonar.coverage.exclusions>
-
 	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
-
-
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -120,24 +119,17 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-		<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-core</artifactId> 
-			<version>2.21.0</version> https://mvnrepository.com/artifact/org.mockito/mockito-all -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
 			<!-- <scope>test</scope> -->
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
