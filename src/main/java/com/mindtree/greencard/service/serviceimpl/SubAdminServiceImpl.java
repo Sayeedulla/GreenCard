@@ -179,6 +179,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
@@ -195,13 +196,14 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("stng361@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Kusal.Bandaru@mindtree.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sayeed150696@gmail.com"));
 			message.setSubject(mid + " Required Help for GreenCard Id " + gcId);
 			message.setText(desc);
 
 			Transport.send(message);
 
 			return "Mail Successfully Sent to Admin";
+			
 
 		} catch (MessagingException e) {
 			throw new ServiceException(e.getMessage());
