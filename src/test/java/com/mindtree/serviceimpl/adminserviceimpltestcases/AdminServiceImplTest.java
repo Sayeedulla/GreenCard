@@ -42,10 +42,12 @@ public class AdminServiceImplTest {
 	SubAdminCategoryRepository subAdminCategoryRepository;
 	@Mock
 	InProgressGreenCardRepository inProgressGreenCardRepository;
+
 	@Before
 	public void setUp() {
-        MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.initMocks(this);
 	}
+
 	@Test
 	public void getForSubAdminTest() {
 		GreenCardHistory greenCardHistory = new GreenCardHistory();
@@ -66,9 +68,10 @@ public class AdminServiceImplTest {
 		when(greenCardHistoryRepository.getExceptImgForSubadmin("M1046908")).thenReturn(l);
 		assertEquals(l, adminServiceImpl.getForSubadmin("M1046908"));
 	}
+
 	@Test
 	public void newCountTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -76,15 +79,16 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
 		when(grCardLifeCycleRepository.getOpenGreenCard()).thenReturn(l);
 		assertEquals(1, adminServiceImpl.newcount());
-		
+
 	}
+
 	@Test
 	public void assignedCountTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -92,14 +96,15 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
 		when(grCardLifeCycleRepository.getAssignedGreenCard()).thenReturn(l);
 		assertEquals(1, adminServiceImpl.assignedcount());
 	}
+
 	@Test
 	public void closedCountTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -107,14 +112,15 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
 		when(grCardLifeCycleRepository.getClosedGreenCard()).thenReturn(l);
 		assertEquals(1, adminServiceImpl.closedcount());
 	}
+
 	@Test
 	public void RejectedCountTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -122,14 +128,15 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
 		when(grCardLifeCycleRepository.getRejectedGreenCard()).thenReturn(l);
 		assertEquals(1, adminServiceImpl.rejectcount());
 	}
+
 	@Test
 	public void FullCountTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -137,14 +144,15 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
 		when(grCardLifeCycleRepository.getFullGreenCard()).thenReturn(l);
 		assertEquals(1, adminServiceImpl.fullcount());
 	}
+
 	@Test
-	public void getnewGreencardTest() {
-		GreenCardLifeCycle greenCardLifeCycle=new GreenCardLifeCycle();
+	public void getNewGreencardTest() {
+		GreenCardLifeCycle greenCardLifeCycle = new GreenCardLifeCycle();
 		greenCardLifeCycle.setAssignedTime(LocalDateTime.now());
 		greenCardLifeCycle.setLifeCycleId(1);
 		greenCardLifeCycle.setNewgreencard(null);
@@ -152,14 +160,14 @@ public class AdminServiceImplTest {
 		greenCardLifeCycle.setStatus("Open");
 		greenCardLifeCycle.setSubmittedTime(LocalDateTime.now());
 		greenCardLifeCycle.setTimePeriod("Time");
-		List<GreenCardLifeCycle>l=new ArrayList<GreenCardLifeCycle>();
+		List<GreenCardLifeCycle> l = new ArrayList<GreenCardLifeCycle>();
 		l.add(greenCardLifeCycle);
-		List<NewGreenCard> list=new ArrayList<NewGreenCard>();
-		list.add(null);
+		List<NewGreenCard> list = new ArrayList<>();
 		when(grCardLifeCycleRepository.getOpenGreenCard()).thenReturn(l);
 		assertEquals(list, adminServiceImpl.newComplaints());
-		
+
 	}
+
 	@Test
 	public void viewProgresstest() {
 		InProgressGreenCard inProgressGreenCard = new InProgressGreenCard();
@@ -175,6 +183,7 @@ public class AdminServiceImplTest {
 		when(inProgressGreenCardRepository.findAll()).thenReturn(l);
 		assertEquals(l, adminServiceImpl.viewprogress());
 	}
+
 	@Test
 	public void getAllFromhistorytest() {
 		GreenCardHistory greenCardHistory = new GreenCardHistory();
@@ -193,9 +202,10 @@ public class AdminServiceImplTest {
 		List<GreenCardHistory> l = new ArrayList<GreenCardHistory>();
 		l.add(greenCardHistory);
 		when(greenCardHistoryRepository.getAllExceptImg()).thenReturn(l);
-	
+
 		assertEquals(l, adminServiceImpl.getAllFromHistory());
 	}
+
 	@Test
 	public void getSubAdminstest() {
 		SubAdminCategory subAdminCategory = new SubAdminCategory();
@@ -204,9 +214,10 @@ public class AdminServiceImplTest {
 		List<SubAdminCategory> l = new ArrayList<SubAdminCategory>();
 		l.add(subAdminCategory);
 		when(subAdminCategoryRepository.findAll()).thenReturn(l);
-	
+
 		assertEquals(l, adminServiceImpl.getSubAdmins());
 	}
+
 	@Test
 	public void getbygidtest() {
 		GreenCardHistory greenCardHistory = new GreenCardHistory();
@@ -223,46 +234,44 @@ public class AdminServiceImplTest {
 		greenCardHistory.setSubmittedDateTime(LocalDateTime.now());
 		greenCardHistory.setWhatHappened("Idk");
 		Optional<GreenCardHistory> greenhistory;
-		greenhistory=Optional.ofNullable(greenCardHistory);
+		greenhistory = Optional.ofNullable(greenCardHistory);
 		when(greenCardHistoryRepository.findById(1)).thenReturn(greenhistory);
 		assertEquals(greenhistory, adminServiceImpl.getByGid(1));
 	}
+
 	@Test
-    public void getcard() {
-           Optional<NewGreenCard> ngc = Optional.of(getComplaint());
-           when(newGreenCardRepository.findById(1)).thenReturn(ngc);
-           assertEquals(ngc, adminServiceImpl.getCard(1));
-    }
-    
-    @Test
-    public void getprogresscard() {
-           Optional<InProgressGreenCard> ngc = Optional.of(getData());
-           when(inProgressGreenCardRepository.findById(1)).thenReturn(ngc);
-           assertEquals(ngc, adminServiceImpl.getprogressCard(1));
-    }
+	public void getcard() {
+		Optional<NewGreenCard> ngc = Optional.of(getComplaint());
+		when(newGreenCardRepository.findById(1)).thenReturn(ngc);
+		assertEquals(ngc, adminServiceImpl.getCard(1));
+	}
 
+	@Test
+	public void getprogresscard() {
+		Optional<InProgressGreenCard> ngc = Optional.of(getData());
+		when(inProgressGreenCardRepository.findById(1)).thenReturn(ngc);
+		assertEquals(ngc, adminServiceImpl.getprogressCard(1));
+	}
 
-    public NewGreenCard getComplaint() {
-           NewGreenCard ngc1 = new NewGreenCard();
-           ngc1.setGreenCardId(1);
-           ngc1.setImage(null);
-           ngc1.setLandmark("Amla");
-           ngc1.setSubmittedDate(LocalDateTime.now());
-           ngc1.setWhatHappened("Fire");
-           return ngc1;
-    }
-    
-    public InProgressGreenCard getData() {
-           InProgressGreenCard ngc1 = new InProgressGreenCard();
-           ngc1.setAssignedPersonId("M1046874");
-           ngc1.setCategory("Health");
-           ngc1.setGcId(1);
-           ngc1.setPriority("High");
-           ngc1.setlId(1);
-           ngc1.setStatus("Assigned");
-           return ngc1;
-    }
+	public NewGreenCard getComplaint() {
+		NewGreenCard ngc1 = new NewGreenCard();
+		ngc1.setGreenCardId(1);
+		ngc1.setImage(null);
+		ngc1.setLandmark("Amla");
+		ngc1.setSubmittedDate(LocalDateTime.now());
+		ngc1.setWhatHappened("Fire");
+		return ngc1;
+	}
 
-	
+	public InProgressGreenCard getData() {
+		InProgressGreenCard ngc1 = new InProgressGreenCard();
+		ngc1.setAssignedPersonId("M1046874");
+		ngc1.setCategory("Health");
+		ngc1.setGcId(1);
+		ngc1.setPriority("High");
+		ngc1.setlId(1);
+		ngc1.setStatus("Assigned");
+		return ngc1;
+	}
 
 }

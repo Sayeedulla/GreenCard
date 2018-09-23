@@ -55,7 +55,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NewGreenCard> newComplaints() {
-
 		return this.newgreencard.getNewCards();
 	}
 
