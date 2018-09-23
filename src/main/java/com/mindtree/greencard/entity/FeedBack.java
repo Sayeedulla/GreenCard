@@ -15,6 +15,7 @@ public class FeedBack {
 	Integer id;
 	@Column
 	Double rating;
+	
 	@Column
 	String comment;
 

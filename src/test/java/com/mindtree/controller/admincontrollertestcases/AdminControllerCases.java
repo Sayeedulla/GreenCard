@@ -28,6 +28,7 @@ import com.mindtree.greencard.entity.GreenCardHistory;
 import com.mindtree.greencard.entity.InProgressGreenCard;
 import com.mindtree.greencard.entity.NewGreenCard;
 import com.mindtree.greencard.entity.SubAdminCategory;
+import com.mindtree.greencard.exception.adminexceptions.AdminException;
 import com.mindtree.greencard.service.serviceimpl.AdminServiceImpl;
 import com.mindtree.greencard.service.serviceimpl.GreenCardServiceImpl;
 
@@ -261,6 +262,12 @@ public class AdminControllerCases {
 		when(this.adminServiceImpl.fullcount()).thenReturn(1);
 		mockMvc.perform(get("/GreenCard/admin/fullcount")).andExpect(status().isOk());
 		assertEquals(1, adminController.fullcount());
+	}
+	@Test
+	public void getCardExceptionTest() throws Exception {
+		when(adminServiceImpl.getCard(1)).thenThrow(new AdminException("No greenCard Found"));
+		mockMvc.perform(get("/GreenCard/admin/getCard/{gid}", 1)).andExpect(status().isOk());
+		assertEquals(null, adminController.getCard(1));
 	}
 
 	public static String asJsonString(final Object obj) {

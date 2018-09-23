@@ -48,6 +48,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
+			newgreencard.setStatus("Open");
 			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			newgreencardrepository.save(newgreencard);
 			Optional<User> user1 = userrepository.findUser(mid);
@@ -87,6 +88,7 @@ public class GreenCardServiceImpl implements GreenCardService {
 			}
 			newgreencard.setLandmark(location);
 			newgreencard.setWhatHappened(what);
+			newgreencard.setStatus("Open");
 			newgreencard.setSubmittedDate(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 			newgreencardrepository.save(newgreencard);
 			GreenCardLifeCycle greencardlifecycle = new GreenCardLifeCycle();

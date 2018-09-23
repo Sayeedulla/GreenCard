@@ -21,9 +21,19 @@ public class NewGreenCard {
 	String whatHappened;
 	String landmark;
 	LocalDateTime submittedDate;
+	
 
 	@Lob
 	byte[] image;
+	String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Integer getGreenCardId() {
 		return greenCardId;
