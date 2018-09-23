@@ -95,9 +95,9 @@ public class SubAdminController {
 	public String sendEmail(@RequestParam("mid") String mid, int gcId, String desc) {
 		try {
 			return subserv.sendHelpEmail(mid, gcId, desc);
-		} catch (ServiceException e) {
-			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			return e.getMessage();
 		}
-		return null;
+		
 	}
 }
