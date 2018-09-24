@@ -199,4 +199,10 @@ public class AdminServiceImpl implements AdminService {
 		return l.size();
 	}
 
+	@Override
+	public List<NewGreenCard> getBeware() {
+		
+		return this.newgreencard.getBeware();
+	}
+
 }
