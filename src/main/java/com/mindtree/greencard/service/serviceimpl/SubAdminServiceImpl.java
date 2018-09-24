@@ -133,7 +133,7 @@ MailApi mail;
 				throw new ComplaintNotFoundException();
 			}
 		} catch (ComplaintNotFoundException e) {
-			throw new ServiceException("Requested Complaint not exist");
+			throw new ServiceException("Requested complaint not exist");
 		}
 	}
 
@@ -148,7 +148,7 @@ MailApi mail;
 				throw new ComplaintNotFoundException();
 			}
 		} catch (ComplaintNotFoundException e) {
-			throw new ServiceException("Requested Complaint not exist");
+			throw new ServiceException("Requested complaint not exist");
 		}
 	}
 
@@ -178,8 +178,10 @@ MailApi mail;
 	}
 
 	@Override
+
 	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException, ConnectException, MessagingException {
 		mail.send(mid + " Required Help for GreenCard Id " + gcId, desc);
 		return "Mail Sent Successfully To Admin";
+
 	}
 }
