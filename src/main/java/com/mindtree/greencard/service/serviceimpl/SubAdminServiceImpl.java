@@ -129,7 +129,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 				throw new ComplaintNotFoundException();
 			}
 		} catch (ComplaintNotFoundException e) {
-			throw new ServiceException("Requested Complaint not exist");
+			throw new ServiceException("Requested complaint not exist");
 		}
 	}
 
@@ -144,7 +144,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 				throw new ComplaintNotFoundException();
 			}
 		} catch (ComplaintNotFoundException e) {
-			throw new ServiceException("Requested Complaint not exist");
+			throw new ServiceException("Requested complaint not exist");
 		}
 	}
 
