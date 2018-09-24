@@ -205,7 +205,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			
 
 		} catch (MessagingException e) {
-			throw new ServiceException(e.getMessage());
+			throw new RuntimeException(e.getMessage());
 
 		}
 
