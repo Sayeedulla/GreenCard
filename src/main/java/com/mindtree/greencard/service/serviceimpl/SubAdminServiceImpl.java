@@ -179,7 +179,6 @@ public class SubAdminServiceImpl implements SubAdminService {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.starttls.enable", "true");
-//		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "465");
@@ -206,7 +205,7 @@ public class SubAdminServiceImpl implements SubAdminService {
 			
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			throw new ServiceException(e.getMessage());
 
 		}
 

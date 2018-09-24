@@ -51,7 +51,10 @@ public class AdminServiceImpl implements AdminService {
 	GreenCardHistory gcH;
 
 	private static final String TIME_ZONE = "Asia/Calcutta";
+	
+    private static final String ASSIGNED = "Assigned";
 
+    private static final String REJECTED = "Rejected";
 	@Override
 	public List<NewGreenCard> newComplaints() {
 		return this.newgreencard.getNewCards();
@@ -78,11 +81,11 @@ public class AdminServiceImpl implements AdminService {
 		this.inprogresscard.save(card);
 		NewGreenCard newGreenCard = this.newgreencard.getOne(card.getGcId());
 		GreenCardLifeCycle gcLifeCycle = this.glc.getGreenCardById(newGreenCard);
-		newGreenCard.setStatus("Assigned");
-		gcLifeCycle.setStatus("Assigned");
+		newGreenCard.setStatus(ASSIGNED);
+		gcLifeCycle.setStatus(ASSIGNED);
 		gcLifeCycle.setAssignedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
 		this.glc.save(gcLifeCycle);
-		return "Assigned";
+		return ASSIGNED;
 	}
 
 	@Override
@@ -110,8 +113,8 @@ public class AdminServiceImpl implements AdminService {
 		NewGreenCard ngc = newgreencard.getNewCard(gid);
 		GreenCardLifeCycle greencardLC = glc.getGreenCardById(ngc);
 		greencardLC.setResolvedTime(LocalDateTime.now(ZoneId.of(TIME_ZONE)));
-		greencardLC.setStatus("Rejected");
-		ngc.setStatus("Rejected");
+		greencardLC.setStatus(REJECTED);
+		ngc.setStatus(REJECTED);
 		glc.save(greencardLC);
 		gcH.setgId(ngc.getGreenCardId());
 		gcH.setAssignedPersonId1("N/A");
@@ -125,7 +128,7 @@ public class AdminServiceImpl implements AdminService {
 		gcH.setSubmittedDateTime(greencardLC.getSubmittedTime());
 		gcH.setWhatHappened(ngc.getWhatHappened());
 		history.save(gcH);
-		return "Rejected";
+		return REJECTED;
 	}
 
 	@Override
