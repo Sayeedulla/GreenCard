@@ -1,5 +1,6 @@
 package com.mindtree.greencard.service.serviceimpl;
 
+import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import com.mindtree.greencard.jprepository.superadminrepository.CategoryReposito
 import com.mindtree.greencard.jprepository.superadminrepository.SubAdminCategoryRepository;
 import com.mindtree.greencard.jprepository.superadminrepository.UserRepository;
 import com.mindtree.greencard.service.SubAdminService;
+import com.mindtree.greencard.util.MailApi;
 
 @Service
 public class SubAdminServiceImpl implements SubAdminService {
@@ -67,6 +69,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 
 	@Autowired
 	SubAdminCategoryRepository subRepo;
+@Autowired
+MailApi mail;
 
 	@Override
 	public List<InProgressGreenCard> getComplaints(String mid) throws ServiceException {
@@ -174,40 +178,8 @@ public class SubAdminServiceImpl implements SubAdminService {
 	}
 
 	@Override
-	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException {
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		//props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.starttls.enable", "true");
-		//props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "587");
-		//props.put("mail.smtp.socketFactory.fallback", "true");
-
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("stng361@gmail.com", "STng18N-r");
-			}
-		});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("stng361@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sayeed150696@gmail.com"));
-			message.setSubject(mid + " Required Help for GreenCard Id " + gcId);
-			message.setText(desc);
-
-			Transport.send(message);
-
-			return "Mail Successfully Sent to Admin";
-			
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e.getMessage());
-
-		}
-
+	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException, ConnectException, MessagingException {
+		mail.send(mid + " Required Help for GreenCard Id " + gcId, desc);
+		return "Mail Sent Successfully To Admin";
 	}
 }

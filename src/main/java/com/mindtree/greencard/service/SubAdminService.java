@@ -1,6 +1,9 @@
 package com.mindtree.greencard.service;
 
+import java.net.ConnectException;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import com.mindtree.greencard.exception.subadminserviceexception.ServiceException;
 import com.mindtree.greencard.entity.Category;
@@ -22,5 +25,5 @@ public interface SubAdminService {
 
 	public List<SubAdminCategory> getSubadmins(String category) throws ServiceException ;
 
-	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException;
+	public String sendHelpEmail(String mid, int gcId, String desc) throws ServiceException, ConnectException, MessagingException;
 }
