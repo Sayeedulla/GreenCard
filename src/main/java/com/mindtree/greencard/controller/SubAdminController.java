@@ -97,7 +97,6 @@ public class SubAdminController {
 			return subserv.sendHelpEmail(mid, gcId, desc);
 		} catch (Exception e) {
 			return e.getMessage();
-		}
-		
+		}	
 	}
 }
