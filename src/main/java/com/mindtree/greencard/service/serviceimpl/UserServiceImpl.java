@@ -59,12 +59,14 @@ public class UserServiceImpl implements UserService {
 		try {
 			User checkUser = this.userrepository.getUserByMid(user.getMid());
 			if (checkUser == null) {
+				System.out.println("hello");
 				String sha256hex = DigestUtils.sha256Hex(user.getPassword());
 				user.setPassword(sha256hex);
 				this.userrepository.save(user);
 
 				return "User";
 			} else if (checkUser.getType().equals("User")) {
+				System.out.println("hello");
 				return "User";
 			} else if (checkUser.getType().equals("Admin")) {
 				return "Admin";
